@@ -1,6 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
+<MudSwitch @bind-Value="_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Dark/Light Mode" />
+
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -18,3 +20,8 @@
         @Body
     </MudMainContent>
 </MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode = true; 
+}

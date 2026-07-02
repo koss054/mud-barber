@@ -1,5 +1,8 @@
 {
   "appHost": {
     "path": "MudBarber.AppHost/MudBarber.AppHost.csproj"
+  },
+  "features": {
+    "defaultWatchEnabled": "true"
   }
 }
