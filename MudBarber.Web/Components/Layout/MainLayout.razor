@@ -13,11 +13,11 @@
     </MudAppBar>
 
     <MudDrawer Open="true">
-        <DisplayModeToggle @bind-DarkMode="_darkMode" />
     </MudDrawer>
 
     <MudMainContent>
         @Body
+        <DisplayModeToggle @bind-DarkMode="_darkMode" />
     </MudMainContent>
 </MudLayout>
 
