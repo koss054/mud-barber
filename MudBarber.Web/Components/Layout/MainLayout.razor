@@ -1,7 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBarber.Web.Components.Shared.Buttons
+@inherits LayoutComponentBase
 
-<MudThemeProvider @bind-IsDarkMode="_isDarkMode" Theme="_theme" />
-<MudSwitch @bind-Value="_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Dark/Light Mode" />
+<MudThemeProvider @bind-IsDarkMode="_darkMode" Theme="_theme" />
+<MudSwitch @bind-Value="_darkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Dark/Light Mode" />
 
 <MudPopoverProvider />
 <MudDialogProvider />
@@ -13,14 +14,7 @@
     </MudAppBar>
 
     <MudDrawer Open="true">
-        <MudToggleIconButton @bind-Toggled="_isDarkMode"
-                            Icon="@Icons.Material.Filled.AlarmOff"
-                            Color="@Color.Error"
-                            ToggledIcon="@Icons.Material.Filled.AlarmOn"
-                            ToggledColor="@Color.Success"
-                            title="@(_isDarkMode ? "On" : "Off")" />
-
-        <span>Alarm is @(_isDarkMode ? "On" : "Off")</span>
+        <DisplayModeToggle @bind-DarkMode="_darkMode" />
     </MudDrawer>
 
     <MudMainContent>
@@ -30,5 +24,5 @@
 
 @code {
     private MudTheme _theme = new();
-    private bool _isDarkMode = true; 
+    private bool _darkMode = true; 
 }

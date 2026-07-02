@@ -1,0 +1,23 @@
+<MudToggleIconButton Toggled="DarkMode"
+                    ToggledChanged="OnToggledChanged"
+                    Icon="@Icons.Material.Filled.AlarmOff"
+                    Color="@Color.Error"
+                    ToggledIcon="@Icons.Material.Filled.AlarmOn"
+                    ToggledColor="@Color.Success"
+                    title="@(DarkMode ? "On" : "Off")" />
+
+<span>Alarm is @(DarkMode ? "On" : "Off")</span>
+
+@code {
+    [Parameter]
+    public bool DarkMode { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> DarkModeChanged { get; set; }
+
+    private async Task OnToggledChanged(bool value)
+    {
+        DarkMode = value;
+        await DarkModeChanged.InvokeAsync(value);
+    }
+}
