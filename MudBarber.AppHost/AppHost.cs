@@ -8,7 +8,8 @@ var postgresdb = postgres.AddDatabase("postgresdb");
 
 var apiService = builder.AddProject<Projects.MudBarber_ApiService>("apiservice")
     .WithHttpHealthCheck("/health")
-    .WithReference(postgresdb);
+    .WithReference(postgresdb)
+    .WaitFor(postgresdb);
 
 builder.AddProject<Projects.MudBarber_Web>("webfrontend")
     .WithExternalHttpEndpoints()

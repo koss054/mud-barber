@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MudBarber.ServiceDefaults\MudBarber.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="9.6.0" />
+  </ItemGroup>
+
 </Project>
