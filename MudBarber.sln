@@ -1,0 +1,48 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.0.0
+MinimumVisualStudioVersion = 17.8.0.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBarber.AppHost", "MudBarber.AppHost\MudBarber.AppHost.csproj", "{D609B574-35CD-4AA5-955A-B848CD06F0B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBarber.ServiceDefaults", "MudBarber.ServiceDefaults\MudBarber.ServiceDefaults.csproj", "{63683601-990C-40A0-917C-F687C6AE8FE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBarber.ApiService", "MudBarber.ApiService\MudBarber.ApiService.csproj", "{D66BE75B-65E1-4D33-8454-06F1C0833CEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBarber.Tests", "MudBarber.Tests\MudBarber.Tests.csproj", "{DD9E2F4C-5FAB-44D2-9B41-E14613D24EB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBarber.Web", "MudBarber.Web\MudBarber.Web.csproj", "{02F29E1C-2CAE-4E29-9B52-0E94F4F29728}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D609B574-35CD-4AA5-955A-B848CD06F0B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D609B574-35CD-4AA5-955A-B848CD06F0B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D609B574-35CD-4AA5-955A-B848CD06F0B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D609B574-35CD-4AA5-955A-B848CD06F0B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63683601-990C-40A0-917C-F687C6AE8FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63683601-990C-40A0-917C-F687C6AE8FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63683601-990C-40A0-917C-F687C6AE8FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63683601-990C-40A0-917C-F687C6AE8FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D66BE75B-65E1-4D33-8454-06F1C0833CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66BE75B-65E1-4D33-8454-06F1C0833CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66BE75B-65E1-4D33-8454-06F1C0833CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66BE75B-65E1-4D33-8454-06F1C0833CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD9E2F4C-5FAB-44D2-9B41-E14613D24EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD9E2F4C-5FAB-44D2-9B41-E14613D24EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD9E2F4C-5FAB-44D2-9B41-E14613D24EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD9E2F4C-5FAB-44D2-9B41-E14613D24EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F29E1C-2CAE-4E29-9B52-0E94F4F29728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F29E1C-2CAE-4E29-9B52-0E94F4F29728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F29E1C-2CAE-4E29-9B52-0E94F4F29728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F29E1C-2CAE-4E29-9B52-0E94F4F29728}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38A05E88-6545-4918-8152-A1D0F98162CD}
+	EndGlobalSection
+EndGlobal
