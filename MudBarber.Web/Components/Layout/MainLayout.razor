@@ -12,7 +12,16 @@
         MudBarber
     </MudAppBar>
 
-    <MudDrawer Open="true">
+    <MudDrawer Open="_drawerOpen" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+        <div style="display: flex; justify-content: center;">
+            <MudToggleIconButton
+                Toggled="_drawerOpen"
+                ToggledChanged="ToggleDrawer"
+                Icon="@Icons.Material.Outlined.ChevronRight"
+                Color="@Color.Default"
+                ToggledIcon="@Icons.Material.Outlined.ChevronLeft"
+            />
+        </div>
     </MudDrawer>
 
     <MudMainContent>
@@ -24,4 +33,10 @@
 @code {
     private MudTheme _theme = new();
     private bool _darkMode = true; 
+    private bool _drawerOpen = true;
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
 }
