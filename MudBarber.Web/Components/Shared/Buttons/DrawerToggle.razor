@@ -1,5 +1,5 @@
-﻿<div style="height: 100%; display: flex; flex-direction: column;">
-    <div style="display: flex; justify-content: center;">
+﻿<div id="drawer-toggle-container">
+    <div id="drawer-toggle">
         <MudToggleIconButton
             Toggled="DrawerOpen"
             ToggledChanged="ToggleDrawerOpen"
@@ -13,7 +13,7 @@
 
 @code {
     [Parameter]
-    public bool DrawerOpen { get; set; } = true;
+    public bool DrawerOpen { get; set; } = false;
 
     [Parameter]
     public EventCallback<bool> DrawerOpenChanged { get; set; }
