@@ -1,4 +1,5 @@
 ﻿@using MudBarber.Web.Components.Shared.Buttons
+@using MudBarber.Web.Theme
 @inherits LayoutComponentBase
 
 <MudThemeProvider @bind-IsDarkMode="_darkMode" Theme="_theme" />
@@ -13,6 +14,7 @@
     </MudAppBar>
 
     <MudDrawer Open="_drawerOpen" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+        <MudIcon Icon="@CustomIcons.Scissors" Color="Color.Primary" Size="Size.Large" />
         <DrawerToggle @bind-DrawerOpen="_drawerOpen" />
     </MudDrawer>
 
