@@ -1,4 +1,4 @@
-﻿@using MudBarber.Web.Components.Shared.Buttons
+﻿@using MudBarber.Web.Components.Shared.Toggles
 @using MudBarber.Web.Components.Shared.Icons
 @using MudBarber.Web.Theme
 @inherits LayoutComponentBase
@@ -16,7 +16,6 @@
 
     <MudDrawer Open="_drawerOpen" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
         <ScissorsLogo />
-        <MudDivider />
         <MudIconButton Icon="@Icons.Material.Filled.EditCalendar" />
         <DrawerToggle @bind-DrawerOpen="_drawerOpen" />
     </MudDrawer>
