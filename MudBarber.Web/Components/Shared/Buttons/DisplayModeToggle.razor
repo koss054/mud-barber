@@ -1,7 +1,7 @@
 <div class="toggle-corner">
     <MudToggleIconButton
         Toggled="DarkMode"
-        ToggledChanged="OnToggledChanged"
+        ToggledChanged="ToggleDarkMode"
         Icon="@Icons.Material.Outlined.LightMode"
         Color="@Color.Default"
         ToggledIcon="@Icons.Material.Outlined.DarkMode"
@@ -17,7 +17,7 @@
     [Parameter]
     public EventCallback<bool> DarkModeChanged { get; set; }
 
-    private async Task OnToggledChanged(bool value)
+    private async Task ToggleDarkMode(bool value)
     {
         DarkMode = value;
         await DarkModeChanged.InvokeAsync(value);
