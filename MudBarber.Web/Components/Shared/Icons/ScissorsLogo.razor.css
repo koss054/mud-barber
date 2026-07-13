@@ -1,7 +1,7 @@
 #scissors-logo {
-    height: 8.75%;
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    top: 1rem;
+    align-items: center;
 }
