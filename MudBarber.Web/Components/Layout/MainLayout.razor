@@ -1,6 +1,7 @@
 ﻿@using MudBarber.Web.Components.Shared
-@using MudBarber.Web.Components.Shared.Toggles
 @using MudBarber.Web.Components.Shared.CustomIcons
+@using MudBarber.Web.Components.Shared.Toggles
+@using MudBarber.Web.Providers
 @inherits LayoutComponentBase
 
 <MudThemeProvider @bind-IsDarkMode="_darkMode" Theme="_theme" />
@@ -27,7 +28,15 @@
 </MudLayout>
 
 @code {
+    [CascadingParameter]
+    private DisplayModeStateProvider? DisplayModeStateProvider { get; set; }
+
     private MudTheme _theme = new();
-    private bool _darkMode = true; 
+    private bool _darkMode;
     private bool _drawerOpen = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _darkMode = DisplayModeStateProvider?.DarkMode ?? true;
+    }
 }

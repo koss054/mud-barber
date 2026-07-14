@@ -1,3 +1,5 @@
+@using MudBarber.Web.Providers;
+
 <div id="toggle-corner">
     <MudToggleIconButton
         Toggled="DarkMode"
@@ -11,14 +13,24 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    private DisplayModeStateProvider? DisplayModeStateProvider { get; set; }
+
     [Parameter]
-    public bool DarkMode { get; set; } = true;
+    public bool DarkMode { get; set; }
 
     [Parameter]
     public EventCallback<bool> DarkModeChanged { get; set; }
 
     private async Task ToggleDarkMode(bool value)
     {
+        if (DisplayModeStateProvider is not null)
+        {
+            await DisplayModeStateProvider.ToggleDarkMode();
+            DarkMode = DisplayModeStateProvider.DarkMode;
+            Console.WriteLine($"Is state provider dark mode: {DisplayModeStateProvider.DarkMode}");
+        }
+
         DarkMode = value;
         await DarkModeChanged.InvokeAsync(value);
     }

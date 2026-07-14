@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@if (_loaded)
+{
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+
+    Console.WriteLine("Dark mode state loaded.");
+}
+else
+{
+    Console.WriteLine("Dark mode state not loaded.");
+}
+
+@code {
+    private bool _loaded;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public bool DarkMode { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedSessionStore.GetAsync<bool>("darkMode");
+        DarkMode = result.Success ? result.Value : true;
+        _loaded = true;
+    }
+
+    public async Task ToggleDarkMode()
+    {
+        DarkMode = !DarkMode;
+        await ProtectedSessionStore.SetAsync("darkMode", DarkMode);
+    }
+}
