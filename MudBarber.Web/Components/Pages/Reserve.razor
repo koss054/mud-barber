@@ -4,7 +4,7 @@
 <MudPaper Style="width: 800px">
     <MudStepper
         @bind-ActiveIndex="_index"
-        CompletedStepColor="Color.Success"
+        CompletedStepColor="Color.Default"
         CurrentStepColor="Color.Primary"
         NavClass="border-b mud-border-lines-default"
         StepClass="pt-4"
@@ -35,11 +35,11 @@
             @if (context.IsActive) {
                 <MudIcon
                     Icon="@CustomIcons.Scissors"
-                    Color="context.Completed ? Color.Success : Color.Primary"
+                    Color="context.Completed ? Color.Default : Color.Primary"
                 />
             }
             else if (context.Completed) {
-                <div style="height: 10px; width:10px; background-color: var(--mud-palette-success); border-radius: 50%;" />
+                <div style="height: 10px; width:10px; background-color: var(--mud-palette-primary); border-radius: 50%;" />
             }
             else {
                 <div style="height: 10px; width:10px; background-color: #d4ddeb; border-radius: 50%;" />
@@ -68,7 +68,7 @@
             <MudStack Row Class="ma-3">
                 <MudIcon
                     Icon="@Icons.Material.Filled.Done"
-                    Color="Color.Success"
+                    Color="Color.Default"
                 />
 
                 <MudText>
