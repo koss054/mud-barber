@@ -1,3 +1,12 @@
-<div class="stepper-step-container">
-    
+<div class="stepper-step-wrapper">
+    <MudPaper Class="stepper-step-main">
+        <MudText Class="stepper-step-text">
+            @StepTitle
+        </MudText>
+    </MudPaper>
 </div>
+
+@code {
+    [Parameter]
+    public string StepTitle { get; set; } = "#. Step Title";
+}

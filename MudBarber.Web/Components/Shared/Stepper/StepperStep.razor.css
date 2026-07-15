@@ -1,5 +1,11 @@
-.stepper-step-container {
-    width: 120px;
-    height: 35px;
-    background-color: #0a2142;
+.stepper-step-wrapper ::deep .stepper-step-main {
+    background-color: var(--mud-palette-primary)!important;
+    width: 80px;
+    height: 18px;
+}
+
+.stepper-step-wrapper ::deep .stepper-step-text {
+    color: var(--mud-palette-text-primary)!important;
+    text-align: center;
+    font-size: small;
 }
