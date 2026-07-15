@@ -1,4 +1,5 @@
 @page "/reserve"
+@using MudBarber.Web.Theme
 
 <MudPaper Style="width: 800px">
     <MudStepper @bind-ActiveIndex="_index" CompletedStepColor="Color.Success" CurrentStepColor="Color.Primary" NavClass="border-b mud-border-lines-default" StepClass="pt-4" ShowResetButton>
@@ -13,7 +14,10 @@
         </ConnectorTemplate>
         <LabelTemplate>
             @if (context.IsActive) {
-                <MudIcon Icon="@Icons.Material.Filled.AirplanemodeActive" Style="rotate: 90deg;" Color="context.Completed ? Color.Success : Color.Primary"></MudIcon>
+                <MudIcon
+                    Icon="@CustomIcons.Scissors"
+                    Color="context.Completed ? Color.Success : Color.Primary"
+                />
             }
             else if (context.Completed) {
                 <div style="height: 10px; width:10px; background-color: var(--mud-palette-success); border-radius: 50%;"></div>
