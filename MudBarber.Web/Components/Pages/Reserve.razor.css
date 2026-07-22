@@ -1,0 +1,7 @@
+.stepper-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+}

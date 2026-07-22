@@ -1,10 +1,15 @@
 @page "/reserve"
 @using MudBarber.Web.Components.Shared.Stepper
 
-<StepperStep StepTitle="1. Service" />
-<StepperStep StepTitle="2. Barber" />
-<StepperStep StepTitle="3. Time" />
-<StepperStep StepTitle="4. Confirm" />
+<div class="stepper-row">
+    <StepperStep StepTitle="1. Service" />
+    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
+    <StepperStep StepTitle="2. Barber" />
+    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
+    <StepperStep StepTitle="3. Time" />
+    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
+    <StepperStep StepTitle="4. Confirm" />
+</div>
 
 @code {
     private int _index;
