@@ -3,6 +3,11 @@
     width: 80px;
     height: 18px;
     user-select: none;
+    transition: transform 0.18s ease-out;
+}
+
+.stepper-step-wrapper ::deep .stepper-step-main:hover {
+    transform: scale(1.05);
 }
 
 .stepper-step-wrapper ::deep .stepper-step-text {
