@@ -2,6 +2,7 @@
     background-color: var(--mud-palette-primary)!important;
     width: 80px;
     height: 18px;
+    user-select: none;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-text {
