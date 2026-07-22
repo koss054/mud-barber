@@ -1,5 +1,5 @@
 <div class="stepper-step-wrapper">
-    <MudPaper Class="stepper-step-main">
+    <MudPaper Class="@($"stepper-step-main {(IsCompleted ? "completed" : "")}")">
         <MudText Class="stepper-step-text">
             @StepTitle
         </MudText>
@@ -9,4 +9,7 @@
 @code {
     [Parameter]
     public string StepTitle { get; set; } = "#. Step Title";
+
+    [Parameter]
+    public bool IsCompleted { get; set; }
 }

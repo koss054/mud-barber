@@ -1,11 +1,15 @@
 .stepper-step-wrapper ::deep .stepper-step-main {
-    background-color: var(--mud-palette-primary)!important;
+    background-color: var(--mud-palette-surface)!important;
     width: 80px;
     height: 18px;
     user-select: none;
-    transition: transform 0.18s ease-out;
+    transition: transform 0.18s ease-out, background-color 0.3s ease;
     overflow: hidden;
     position: relative;
+}
+
+.stepper-step-wrapper ::deep .stepper-step-main.completed {
+    background-color: var(--mud-palette-primary)!important;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-main:hover {
