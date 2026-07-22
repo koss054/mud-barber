@@ -1,0 +1,43 @@
+@using MudBarber.Web.Models
+
+<div class="service-step">
+    <MudText Typo="Typo.h6" Class="mb-2">Choose a service</MudText>
+    <div class="service-grid">
+        @foreach (var service in _services)
+        {
+            <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service.Name)">
+                <MudText Typo="Typo.subtitle1">@service.Name</MudText>
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                    @service.Duration min · @service.Price lv
+                </MudText>
+            </MudPaper>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public BookingModel Model { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback OnChanged { get; set; }
+
+    private record ServiceOption(string Name, int Duration, int Price);
+
+    private readonly ServiceOption[] _services =
+    [
+        new("Classic cut", 30, 25),
+        new("Cut + beard trim", 45, 38),
+        new("Beard sculpt", 20, 18),
+        new("Kids cut", 25, 20)
+    ];
+
+    private string CardClass(string name) =>
+        $"service-card {(Model.Service == name ? "selected" : "")}";
+
+    private async Task Select(string name)
+    {
+        Model.Service = name;
+        await OnChanged.InvokeAsync();
+    }
+}

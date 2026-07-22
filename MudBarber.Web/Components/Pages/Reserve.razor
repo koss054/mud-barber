@@ -1,19 +1,80 @@
 @page "/reserve"
 @using MudBarber.Web.Components.Shared.Stepper
+@using MudBarber.Web.Components.Shared.Stepper.Steps
+@using MudBarber.Web.Models
 
 <div class="stepper-row">
-    <StepperStep StepTitle="1. Service" IsCompleted="true" />
-    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
-    <StepperStep StepTitle="2. Barber" IsCompleted="false" />
-    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
-    <StepperStep StepTitle="3. Time" IsCompleted="false" />
-    <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
-    <StepperStep StepTitle="4. Confirm" IsCompleted="false" />
+    @for (var i = 0; i < _titles.Length; i++)
+    {
+        <StepperStep
+            StepTitle="@_titles[i]"
+            State="StepStateFor(i)"
+            IsActive="_viewStep == i"
+            OnClick="(Action)(() => _viewStep = i)"
+        />
+
+        @if (i < _titles.Length - 1)
+        {
+            <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
+        }
+    }
 </div>
 
-<MudDivider />
+<MudDivider Class="my-4" />
+
+@switch (_viewStep)
+{
+    case 0:
+        <ServiceStep Model="_model" OnChanged="StateHasChanged" />
+        break;
+    default:
+        <MudText>Step "@_titles[_viewStep]" - coming soon.</MudText>
+        break;
+}
 
 @code {
-    private int _index;
-    private bool _completed;
+    private readonly BookingModel _model = new();
+    private int _viewStep;
+
+    private readonly string[] _titles =
+    [
+        "1. Service", "2. Barber", "3. Time", "4. Confirm"
+    ];
+
+    private StepState StepStateFor(int index)
+    {
+        if (IsStepComplete(index))
+        {
+            return StepState.Completed;
+        }
+
+        return index <= FirstIncomplete
+            ? StepState.Available
+            : StepState.Locked;
+    }
+
+    private bool IsStepComplete(int index) => index switch
+    {
+        0 => !string.IsNullOrEmpty(_model.Service),
+        1 => !string.IsNullOrEmpty(_model.Barber),
+        2 => _model.Date is not null && !string.IsNullOrEmpty(_model.Time),
+        3 => !string.IsNullOrEmpty(_model.Phone),
+        _ => false
+    };
+
+    private int FirstIncomplete
+    {
+        get
+        {
+            for (var i = 0; i < _titles.Length; i++)
+            {
+                if (!IsStepComplete(i))
+                {
+                    return i;
+                }
+            }
+
+            return _titles.Length;
+        }
+    }
 }

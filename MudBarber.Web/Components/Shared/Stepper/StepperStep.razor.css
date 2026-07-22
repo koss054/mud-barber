@@ -3,9 +3,24 @@
     width: 80px;
     height: 18px;
     user-select: none;
-    transition: transform 0.18s ease-out, background-color 0.3s ease;
+    transition:
+        transform 0.18s ease-out,
+        background-color 0.3s ease,
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
     overflow: hidden;
     position: relative;
+    cursor: pointer;
+}
+
+.stepper-step-wrapper ::deep .stepper-step-main.active {
+    box-shadow: 0 0 0 2px var(--mud-palette-primary), 0 0 8px 1px rgba(var(--mud-palette-primary-rgb), 0.5);
+}
+
+.stepper-step-wrapper ::deep .stepper-step-main.locked {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-main.completed {
@@ -15,7 +30,6 @@
 .stepper-step-wrapper ::deep .stepper-step-main:hover {
     transform: scale(1.05);
 }
-
 
 .stepper-step-wrapper ::deep .stepper-step-main::before {
     content: "";

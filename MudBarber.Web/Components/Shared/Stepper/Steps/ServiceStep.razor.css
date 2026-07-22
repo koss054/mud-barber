@@ -1,0 +1,20 @@
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.service-grid ::deep .service-card {
+    padding: 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.service-grid ::deep .service-card:hover {
+    transform: translateY(-2px);
+}
+
+.service-grid ::deep .service-card.selected {
+    border-color: var(--mud-palette-primary);
+}
