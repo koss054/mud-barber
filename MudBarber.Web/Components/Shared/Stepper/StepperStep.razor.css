@@ -4,10 +4,36 @@
     height: 18px;
     user-select: none;
     transition: transform 0.18s ease-out;
+    overflow: hidden;
+    position: relative;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-main:hover {
     transform: scale(1.05);
+}
+
+
+.stepper-step-wrapper ::deep .stepper-step-main::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 45%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.05) 55%,
+        transparent 100%
+    );
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.stepper-step-wrapper ::deep .stepper-step-main:hover::before {
+    left: 125%;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-text {
