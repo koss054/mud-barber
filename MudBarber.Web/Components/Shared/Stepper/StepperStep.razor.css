@@ -26,3 +26,7 @@
     text-align: center;
     font-size: small;
 }
+
+.stepper-step-wrapper ::deep .stepper-step-main.completed .stepper-step-text {
+    color: var(--mud-palette-primary-text)!important;
+}
