@@ -1,10 +1,10 @@
 @using MudBarber.Web.Models
 
-<div class="barber-step">
+<div class="barber-step @(Locked ? "locked" : "")">
     <MudText Typo="Typo.h6" Class="mb-2">
         Pick your barber
     </MudText>
-    <div class="barber-grid @(Locked ? "locked" : "")">
+    <div class="barber-grid">
         @foreach (var barber in _barbers)
         {
             <MudPaper Class="@CardClass(barber.Name)" @onclick="() => Select(barber.Name)">

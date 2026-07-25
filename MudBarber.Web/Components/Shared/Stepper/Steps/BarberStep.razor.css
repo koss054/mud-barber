@@ -1,3 +1,12 @@
+.barber-step {
+    transition: opacity 0.25s ease;
+}
+
+.barber-step.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
 .barber-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -17,9 +26,4 @@
 
 .barber-grid ::deep .barber-card.selected {
     border-color: var(--mud-palette-primary);
-}
-
-.barber-grid.locked {
-    opacity: 0.4;
-    pointer-events: none;
 }
