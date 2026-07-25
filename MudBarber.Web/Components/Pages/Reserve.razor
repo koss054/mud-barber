@@ -1,5 +1,6 @@
 @page "/reserve"
 @using MudBarber.Web.Components.Shared.Stepper
+@using MudBarber.Web.Components.Shared.Stepper.Barbers
 @using MudBarber.Web.Components.Shared.Stepper.Steps
 @using MudBarber.Web.Models
 
@@ -16,6 +17,7 @@
 {
     case 0:
         <ServiceStep Model="_model" OnChanged="StateHasChanged" />
+        <BarberStep Model="_model" OnChanged="StateHasChanged" />
         break;
     default:
         <MudText>Step "@_titles[_viewStep]" - coming soon.</MudText>
