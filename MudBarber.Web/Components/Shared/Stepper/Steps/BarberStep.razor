@@ -8,6 +8,16 @@
         @foreach (var barber in _barbers)
         {
             <MudPaper Class="@CardClass(barber.Name)" @onclick="() => Select(barber.Name)">
+                <MudAvatar Color="Color.Primary">
+                    @if (string.IsNullOrEmpty(barber.ImageUrl))
+                    {
+                        @Initial(barber.Name)
+                    }
+                    else
+                    {
+                        <MudImage Src="@barber.ImageUrl" />
+                    }
+                </MudAvatar>
                 <MudText Typo="Typo.subtitle1">
                     @barber.Name
                 </MudText>
@@ -29,16 +39,19 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private record BarberOption(string Name, double Rating);
+    private record BarberOption(string Name, double Rating, string? ImageUrl = null);
 
     private readonly BarberOption[] _barbers =
     [
-        new("Sir I", 4.8), 
+        new("Sir I", 4.8),
         new("Kosi Kosinov", 4.5),
         new("Mika Mik", 4.9)
     ];
 
-    private string CardClass(string name) => 
+    private static string Initial(string name) =>
+        string.IsNullOrWhiteSpace(name) ? "?" : name.Trim()[0].ToString().ToUpper();
+
+    private string CardClass(string name) =>
         $"barber-card {(Model.Barber == name ? " selected" : "")}";
 
     private async Task Select(string name)
