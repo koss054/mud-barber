@@ -19,7 +19,7 @@
 <BarberStep
     Model="_model"
     OnChanged="StateHasChanged"
-    Locked="!IsStepComplete(0)"
+    Locked="!IsStepComplete(Step.Service)"
 />
 
 @code {
@@ -30,9 +30,17 @@
         "1. Service", "2. Barber", "3. Time", "4. Confirm"
     ];
 
+    private enum Step
+    {
+        Service,
+        Barber,
+        Time,
+        Confirm
+    }
+
     private StepState StepStateFor(int index)
     {
-        if (IsStepComplete(index))
+        if (IsStepComplete((Step)index))
         {
             return StepState.Completed;
         }
@@ -42,12 +50,12 @@
             : StepState.Locked;
     }
 
-    private bool IsStepComplete(int index) => index switch
+    private bool IsStepComplete(Step step) => step switch
     {
-        0 => !string.IsNullOrEmpty(_model.Service),
-        1 => !string.IsNullOrEmpty(_model.Barber),
-        2 => _model.Date is not null && !string.IsNullOrEmpty(_model.Time),
-        3 => !string.IsNullOrEmpty(_model.Phone),
+        Step.Service => !string.IsNullOrEmpty(_model.Service),
+        Step.Barber => !string.IsNullOrEmpty(_model.Barber),
+        Step.Time => _model.Date is not null && !string.IsNullOrEmpty(_model.Time),
+        Step.Confirm => !string.IsNullOrEmpty(_model.Phone),
         _ => false
     };
 
@@ -57,7 +65,7 @@
         {
             for (var i = 0; i < _titles.Length; i++)
             {
-                if (!IsStepComplete(i))
+                if (!IsStepComplete((Step)i))
                 {
                     return i;
                 }
