@@ -3,23 +3,12 @@
 @using MudBarber.Web.Components.Shared.Stepper.Steps
 @using MudBarber.Web.Models
 
-<div class="stepper-row">
-    @for (var i = 0; i < _titles.Length; i++)
-    {
-        var index = i;
-        <StepperStep
-            StepTitle="@_titles[index]"
-            State="StepStateFor(index)"
-            IsActive="_viewStep == index"
-            OnClick="(Action)(() => _viewStep = index)"
-        />
-
-        @if (index < _titles.Length - 1)
-        {
-            <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
-        }
-    }
-</div>
+<Stepper
+    Titles="_titles"
+    ActiveIndex="_viewStep"
+    StateFor="StepStateFor"
+    OnStepClick="i => _viewStep = i"
+/>
 
 <MudDivider Class="my-4" />
 

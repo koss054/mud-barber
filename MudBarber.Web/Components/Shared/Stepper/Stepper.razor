@@ -1,0 +1,31 @@
+<div class="stepper-row">
+    @for (var i = 0; i < Titles.Length; i++)
+    {
+        var index = i;
+        <StepperStep
+            StepTitle="@Titles[index]"
+            State="StateFor(index)"
+            IsActive="ActiveIndex == index"
+            OnClick="(Action)(() => OnStepClick.InvokeAsync(index))"
+        />
+
+        @if (index < Titles.Length - 1)
+        {
+            <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
+        }
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string[] Titles { get; set; } = [];
+
+    [Parameter]
+    public int ActiveIndex { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<int, StepState> StateFor { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<int> OnStepClick { get; set; }
+}
