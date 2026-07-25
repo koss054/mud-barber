@@ -21,8 +21,14 @@
                 <MudText Typo="Typo.subtitle1">
                     @barber.Name
                 </MudText>
-                <MudText Typo="Typo.body2" Class="mud-text-secondary">
-                    Rating: @barber.Rating
+                <MudText Typo="Typo.body2" Class="mud-text-secondary barber-rating">
+                    <MudIcon
+                        Icon="@Icons.Material.Filled.Star"
+                        Color="Color.Warning"
+                        Class="barber-rating-icon"
+                        Size="Size.Small"
+                    />
+                    @barber.Rating
                 </MudText>
             </MudPaper>
         }

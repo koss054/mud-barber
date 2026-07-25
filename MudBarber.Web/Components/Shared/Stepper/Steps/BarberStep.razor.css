@@ -31,3 +31,12 @@
 .barber-grid ::deep .barber-card.selected {
     border-color: var(--mud-palette-primary);
 }
+
+.barber-grid ::deep .barber-rating {
+    display: flex;
+    gap: 4px;
+}
+
+.barber-grid ::deep .barber-rating-icon {
+    transform: translateY(-1.5px);
+}
