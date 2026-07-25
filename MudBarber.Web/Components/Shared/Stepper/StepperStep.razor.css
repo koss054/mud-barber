@@ -4,13 +4,9 @@
     height: 18px;
     user-select: none;
     transition:
-        transform 0.18s ease-out,
         background-color 0.3s ease,
         box-shadow 0.25s ease,
         opacity 0.25s ease;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-main.active {
@@ -19,49 +15,14 @@
 
 .stepper-step-wrapper ::deep .stepper-step-main.locked {
     opacity: 0.4;
-    cursor: default;
-    pointer-events: none;
 }
 
 .stepper-step-wrapper ::deep .stepper-step-main.completed {
     background-color: var(--mud-palette-primary)!important;
 }
 
-.stepper-step-wrapper ::deep .stepper-step-main:hover {
-    transform: scale(1.05);
-}
-
-.stepper-step-wrapper ::deep .stepper-step-main::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        transparent 0%,
-        color-mix(in srgb, var(--mud-palette-text-primary) 8%, transparent) 45%,
-        color-mix(in srgb, var(--mud-palette-text-primary) 40%, transparent) 50%,
-        color-mix(in srgb, var(--mud-palette-text-primary) 8%, transparent) 55%,
-        transparent 100%
-    );
-    transform: translateX(-180%);
-    pointer-events: none;
-}
-
-.stepper-step-wrapper ::deep .stepper-step-main:hover::before {
-    animation: stepper-glint-sweep 0.85s cubic-bezier(0.25, 0.65, 0.3, 1);
-}
-
 .stepper-step-wrapper ::deep .stepper-step-text {
     color: var(--mud-palette-text-primary)!important;
     text-align: center;
     font-size: small;
-}
-
-@keyframes stepper-glint-sweep {
-    to {
-        transform: translateX(230%);
-    }
 }

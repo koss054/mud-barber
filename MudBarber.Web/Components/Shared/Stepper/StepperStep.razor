@@ -1,5 +1,5 @@
 <div class="stepper-step-wrapper">
-    <MudPaper Class="@StepClass" @onclick="HandleClick">
+    <MudPaper Class="@StepClass">
         <MudText Class="stepper-step-text">
             @StepTitle
         </MudText>
@@ -16,17 +16,6 @@
     [Parameter]
     public bool IsActive { get; set; }
 
-    [Parameter]
-    public EventCallback OnClick { get; set; }
-
     private string StepClass =>
         $"stepper-step-main {State.ToString().ToLower()} {(IsActive ? "active" : "")}";
-
-    private async Task HandleClick()
-    {
-        if (State != StepState.Locked)
-        {
-            await OnClick.InvokeAsync();
-        }
-    }
 }

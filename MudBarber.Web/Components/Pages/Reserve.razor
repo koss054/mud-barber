@@ -7,7 +7,6 @@
     Titles="_titles"
     ActiveIndex="FirstIncomplete"
     StateFor="StepStateFor"
-    OnStepClick="i => _viewStep = i"
 />
 
 <MudDivider Class="my-4" />
@@ -25,8 +24,6 @@
 
 @code {
     private readonly BookingModel _model = new();
-
-    private int _viewStep;
 
     private readonly string[] _titles =
     [
