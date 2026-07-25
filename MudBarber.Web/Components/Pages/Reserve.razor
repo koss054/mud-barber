@@ -6,14 +6,15 @@
 <div class="stepper-row">
     @for (var i = 0; i < _titles.Length; i++)
     {
+        var index = i;
         <StepperStep
-            StepTitle="@_titles[i]"
-            State="StepStateFor(i)"
-            IsActive="_viewStep == i"
-            OnClick="(Action)(() => _viewStep = i)"
+            StepTitle="@_titles[index]"
+            State="StepStateFor(index)"
+            IsActive="_viewStep == index"
+            OnClick="(Action)(() => _viewStep = index)"
         />
 
-        @if (i < _titles.Length - 1)
+        @if (index < _titles.Length - 1)
         {
             <MudIcon Icon="@Icons.Material.Outlined.ChevronRight" Size="Size.Small" />
         }
@@ -34,6 +35,7 @@
 
 @code {
     private readonly BookingModel _model = new();
+
     private int _viewStep;
 
     private readonly string[] _titles =
