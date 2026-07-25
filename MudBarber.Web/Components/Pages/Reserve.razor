@@ -12,16 +12,16 @@
 
 <MudDivider Class="my-4" />
 
-@switch (_viewStep)
-{
-    case 0:
-        <ServiceStep Model="_model" OnChanged="StateHasChanged" />
-        <BarberStep Model="_model" OnChanged="StateHasChanged" Locked="!IsStepComplete(0)" />
-        break;
-    default:
-        <MudText>Step "@_titles[_viewStep]" - coming soon.</MudText>
-        break;
-}
+<ServiceStep
+    Model="_model"
+    OnChanged="StateHasChanged"
+/>
+ 
+<BarberStep
+    Model="_model"
+    OnChanged="StateHasChanged"
+    Locked="!IsStepComplete(0)"
+/>
 
 @code {
     private readonly BookingModel _model = new();
