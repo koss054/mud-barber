@@ -41,9 +41,9 @@
     background: linear-gradient(
         120deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.06) 45%,
-        rgba(255, 255, 255, 0.35) 50%,
-        rgba(255, 255, 255, 0.06) 55%,
+        color-mix(in srgb, var(--mud-palette-text-primary) 8%, transparent) 45%,
+        color-mix(in srgb, var(--mud-palette-text-primary) 40%, transparent) 50%,
+        color-mix(in srgb, var(--mud-palette-text-primary) 8%, transparent) 55%,
         transparent 100%
     );
     transform: translateX(-180%);
