@@ -18,3 +18,8 @@
 .barber-grid ::deep .barber-card.selected {
     border-color: var(--mud-palette-primary);
 }
+
+.barber-grid.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}

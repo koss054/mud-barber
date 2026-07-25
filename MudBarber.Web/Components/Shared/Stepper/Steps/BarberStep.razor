@@ -4,7 +4,7 @@
     <MudText Typo="Typo.h6" Class="mb-2">
         Pick your barber
     </MudText>
-    <div class="barber-grid">
+    <div class="barber-grid @(Locked ? "locked" : "")">
         @foreach (var barber in _barbers)
         {
             <MudPaper Class="@CardClass(barber.Name)" @onclick="() => Select(barber.Name)">
@@ -26,6 +26,9 @@
     [Parameter]
     public EventCallback OnChanged { get; set; }
 
+    [Parameter]
+    public bool Locked { get; set; }
+
     private record BarberOption(string Name, double Rating);
 
     private readonly BarberOption[] _barbers =
@@ -40,6 +43,11 @@
 
     private async Task Select(string name)
     {
+        if (Locked)
+        {
+            return;
+        }
+
         Model.Barber = name;
         await OnChanged.InvokeAsync();
     }
