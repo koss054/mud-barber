@@ -22,6 +22,12 @@
     Locked="!IsStepComplete(Step.Service)"
 />
 
+<TimeStep
+    Model="_model"
+    OnChanged="StateHasChanged"
+    Locked="!IsStepComplete(Step.Barber)"
+/>
+
 @code {
     private readonly BookingModel _model = new();
 

@@ -1,0 +1,55 @@
+@using MudBarber.Web.Models
+
+<div class="datetime-step @(Locked ? "locked" : "")">
+    <MudText Typo="Typo.h6" Class="mb-2">
+        Choose date and time
+    </MudText>
+    <div class="date-grid">
+        @foreach (var time in _times)
+        {
+            <MudPaper>
+                <MudText Typo="Typo.subtitle2">
+                    @time.Time.DayOfWeek.ToString().Substring(0, 3)
+                </MudText>
+                <MudText>
+                    @time.Time.ToString("dd")
+                </MudText>
+            </MudPaper>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public BookingModel Model { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback OnChanged { get; set; }
+
+    [Parameter]
+    public bool Locked { get; set; }
+
+    private record TimeOption(DateTime Time, bool Available);
+
+    private readonly TimeOption[] _times =
+    [
+        new(DateTime.Now, false),
+        new(DateTime.Now.AddDays(1), true),
+        new(DateTime.Now.AddDays(2), true),
+        new(DateTime.Now.AddDays(3), true),
+        new(DateTime.Now.AddDays(4), true),
+        new(DateTime.Now.AddDays(5), true),
+    ];
+
+    private async Task Select(TimeOption option)
+    {
+        if (Locked)
+        {
+            return;
+        }
+
+        // TODO: adjust booking model + time step properties
+        Model.Date = option.Time;
+        await OnChanged.InvokeAsync();
+    }
+}
