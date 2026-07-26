@@ -9,10 +9,10 @@
         {
             <MudPaper Class="@DateCardClass(time)" @onclick="() => Select(time)">
                 <MudText Typo="Typo.body2">
-                    @time.Time.DayOfWeek.ToString().Substring(0, 3)
+                    @time.Date.DayOfWeek.ToString().Substring(0, 3)
                 </MudText>
                 <MudText Typo="Typo.subtitle1">
-                    @time.Time.ToString("dd")
+                    @time.Date.ToString("dd")
                 </MudText>
             </MudPaper>
         }
@@ -29,23 +29,21 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private record TimeOption(DateTime Time, bool Available);
-
-    private readonly TimeOption[] _times =
+    private readonly BookingDate[] _times =
     [
-        new(DateTime.Now, false),
-        new(DateTime.Now.AddDays(1), true),
-        new(DateTime.Now.AddDays(2), true),
-        new(DateTime.Now.AddDays(3), true),
-        new(DateTime.Now.AddDays(4), true),
-        new(DateTime.Now.AddDays(5), true),
-        new(DateTime.Now.AddDays(6), true),
+        new() { Date = DateOnly.FromDateTime(DateTime.Now), Available = false },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(1)), Available = true },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(2)), Available = true },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(3)), Available = true },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(4)), Available = true },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(5)), Available = true },
+        new() { Date = DateOnly.FromDateTime(DateTime.Now.AddDays(6)), Available = true },
     ];
 
-    private string DateCardClass(TimeOption time) =>
-        $"date-card {(Model.Date == time.Time ? "selected" : "")}";
+    private string DateCardClass(BookingDate date) =>
+        $"date-card {(Model.Date == date? "selected" : "")}";
 
-    private async Task Select(TimeOption option)
+    private async Task Select(BookingDate option)
     {
         if (Locked)
         {
@@ -53,7 +51,7 @@
         }
 
         // TODO: adjust booking model + time step properties
-        Model.Date = option.Time;
+        Model.Date = option;
         await OnChanged.InvokeAsync();
     }
 }
