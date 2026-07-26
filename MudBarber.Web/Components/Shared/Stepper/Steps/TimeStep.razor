@@ -5,14 +5,14 @@
         Choose date and time
     </MudText>
     <div class="date-grid">
-        @foreach (var date in _dates)
+        @foreach (var date in Dates)
         {
             <MudPaper Class="@DateCardClass(date)" @onclick="() => SelectDate(date)">
                 <MudText Typo="Typo.body2">
-                    @date.Date.DayOfWeek.ToString().Substring(0, 3)
+                    @date.DayOfWeek.ToString().Substring(0, 3)
                 </MudText>
                 <MudText Typo="Typo.subtitle1">
-                    @date.Date.ToString("dd")
+                    @date.ToString("dd")
                 </MudText>
             </MudPaper>
         }
@@ -20,11 +20,11 @@
     @if (Model.Date is not null)
     {
         <div class="time-grid">
-            @foreach (var time in Model.Date.Time)
+            @foreach (var time in Times)
             {
                 <MudPaper Class="@TimeCardClass(time)" @onclick="() => SelectTime(time)">
                     <MudText Typo="Typo.body2">
-                        @time.Time.ToString("hh\\:mm")
+                        @time.ToString("hh\\:mm")
                     </MudText>
                 </MudPaper>
             }
@@ -42,81 +42,22 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private readonly static IEnumerable<BookingTime> _times =
-    [
-        new()
-        {
-            Time = new TimeOnly(9, 0),
-            Available = true,
-            Selected = false,
-        },
-        new()
-        {
-            Time = new TimeOnly(10, 0),
-            Available = true,
-            Selected = false,
-        },
-        new()
-        {
-            Time = new TimeOnly(11, 0),
-            Available = true,
-            Selected = false,
-        },
-        new()
-        {
-            Time = new TimeOnly(12, 0),
-            Available = true,
-            Selected = false,
-        },
-    ];
+    private static DateOnly StartDate =>
+        DateOnly.FromDateTime(DateTime.Today);
 
-    private readonly BookingDate[] _dates =
-    [
-        new()
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now),
-            Available = false,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(1)),
-            Available = true,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
-            Available = true,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(3)),
-            Available = true,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(4)),
-            Available = true,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(5)),
-            Available = true,
-            Time = _times
-        },
-        new() {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(6)),
-            Available = true,
-            Time = _times
-        }
-    ];
+    private static IEnumerable<DateOnly> Dates => 
+        Enumerable.Range(0, 7).Select(StartDate.AddDays);
 
-    private string DateCardClass(BookingDate date) =>
+    private static IEnumerable<TimeOnly> Times => 
+        Enumerable.Range(9, 8).Select(h => new TimeOnly(h, 0));
+    
+    private string DateCardClass(DateOnly date) =>
         $"date-card {(Model.Date == date? "selected" : "")}";
 
-    private string TimeCardClass(BookingTime time) =>
-        $"time-card {(time.Selected ? "selected" : "")}";
+    private string TimeCardClass(TimeOnly time) =>
+        $"time-card {(Model.Time == time ? "selected" : "")}";
 
-    private async Task SelectDate(BookingDate option)
+    private async Task SelectDate(DateOnly option)
     {
         // TODO: add Available check
         if (Locked)
@@ -124,13 +65,12 @@
             return;
         }
 
-        // TODO: add error handling for cases where date has no times
-        Model.Date?.Time.Where(t => t.Selected).FirstOrDefault()?.Selected = false;
+        Model.Time = null;
         Model.Date = option;
         await OnChanged.InvokeAsync();
     }
 
-    private async Task SelectTime(BookingTime option)
+    private async Task SelectTime(TimeOnly option)
     {
         // TODO: add Available check
         if (Locked)
@@ -143,9 +83,7 @@
             return;
         }
 
-        // TODO: add error handling for cases where date has no times
-        Model.Date.Time.Where(t => t.Selected).FirstOrDefault()?.Selected = false;
-        Model.Date.Time.Where(t => t == option).FirstOrDefault()!.Selected = true;
+        Model.Time = option;
         await OnChanged.InvokeAsync();
     }
 }

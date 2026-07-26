@@ -60,7 +60,7 @@
     {
         Step.Service => !string.IsNullOrEmpty(_model.Service),
         Step.Barber => !string.IsNullOrEmpty(_model.Barber),
-        Step.Time => _model.Date is not null && _model.Date.Time.Any(t => t.Selected),
+        Step.Time => _model.Date is not null && _model.Time is not null,
         Step.Confirm => !string.IsNullOrEmpty(_model.Phone),
         _ => false
     };
