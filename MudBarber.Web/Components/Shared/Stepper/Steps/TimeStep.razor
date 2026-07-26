@@ -22,7 +22,7 @@
         <div class="time-grid">
             @foreach (var time in Model.Date.Time)
             {
-                <MudPaper @onclick="() => SelectTime(time)">
+                <MudPaper Class="@TimeCardClass(time)" @onclick="() => SelectTime(time)">
                     <MudText Typo="Typo.body2">
                         @time.Time.ToString("hh\\:mm")
                     </MudText>
@@ -113,6 +113,9 @@
     private string DateCardClass(BookingDate date) =>
         $"date-card {(Model.Date == date? "selected" : "")}";
 
+    private string TimeCardClass(BookingTime time) =>
+        $"time-card {(time.Selected ? "selected" : "")}";
+
     private async Task SelectDate(BookingDate option)
     {
         // TODO: add Available check
@@ -121,6 +124,8 @@
             return;
         }
 
+        // TODO: add error handling for cases where date has no times
+        Model.Date?.Time.Where(t => t.Selected).FirstOrDefault()?.Selected = false;
         Model.Date = option;
         await OnChanged.InvokeAsync();
     }
@@ -139,6 +144,7 @@
         }
 
         // TODO: add error handling for cases where date has no times
+        Model.Date.Time.Where(t => t.Selected).FirstOrDefault()?.Selected = false;
         Model.Date.Time.Where(t => t == option).FirstOrDefault()!.Selected = true;
         await OnChanged.InvokeAsync();
     }
