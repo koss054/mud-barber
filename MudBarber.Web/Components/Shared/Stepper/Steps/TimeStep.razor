@@ -17,19 +17,16 @@
             </MudPaper>
         }
     </div>
-    @if (Model.Date is not null)
-    {
-        <div class="time-grid">
-            @foreach (var time in Times)
-            {
-                <MudPaper Class="@TimeCardClass(time)" @onclick="() => SelectTime(time)">
-                    <MudText Typo="Typo.body2">
-                        @time.ToString("HH\\:mm")
-                    </MudText>
-                </MudPaper>
-            }
-        </div>
-    }
+    <div class="time-grid @(Model.Date is null ? "locked" : "")">
+        @foreach (var time in Times)
+        {
+            <MudPaper Class="@TimeCardClass(time)" @onclick="() => SelectTime(time)">
+                <MudText Typo="Typo.body2">
+                    @time.ToString("HH\\:mm")
+                </MudText>
+            </MudPaper>
+        }
+    </div>
 </div>
 
 @code {

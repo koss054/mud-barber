@@ -2,7 +2,8 @@
     transition: opacity 0.25s ease;
 }
 
-.datetime-step.locked {
+.datetime-step.locked,
+.time-grid.locked {
     opacity: 0.4;
     pointer-events: none;
 }
@@ -11,6 +12,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 12px;
+    margin-bottom: 12px;
 }
 
 .date-grid ::deep .date-card {
@@ -34,18 +36,19 @@
 
 .time-grid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 12px;
 }
 
 .time-grid ::deep .time-card {
+    text-align: center;
     cursor: pointer;
     border: 1px solid transparent;
     transition: border-color 0.2s ease, transform 0.15s ease;
 }
 
 .time-grid ::deep .time-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .time-grid ::deep .time-card.selected {
