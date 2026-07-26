@@ -24,7 +24,7 @@
     transition: border-color 0.2s ease, transform 0.15s ease;
 }
 
-.date-grid ::deep .date-card {
+.date-grid ::deep .date-card:hover {
     transform: translateY(-2px);
 }
 
