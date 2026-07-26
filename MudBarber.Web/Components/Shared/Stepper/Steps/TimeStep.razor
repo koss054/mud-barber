@@ -7,11 +7,11 @@
     <div class="date-grid">
         @foreach (var time in _times)
         {
-            <MudPaper Class="date-card">
-                <MudText Typo="Typo.subtitle2">
+            <MudPaper Class="@DateCardClass(time)" @onclick="() => Select(time)">
+                <MudText Typo="Typo.body2">
                     @time.Time.DayOfWeek.ToString().Substring(0, 3)
                 </MudText>
-                <MudText>
+                <MudText Typo="Typo.subtitle1">
                     @time.Time.ToString("dd")
                 </MudText>
             </MudPaper>
@@ -41,6 +41,9 @@
         new(DateTime.Now.AddDays(5), true),
         new(DateTime.Now.AddDays(6), true),
     ];
+
+    private string DateCardClass(TimeOption time) =>
+        $"date-card {(Model.Date == time.Time ? "selected" : "")}";
 
     private async Task Select(TimeOption option)
     {

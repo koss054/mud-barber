@@ -27,3 +27,7 @@
 .date-grid ::deep .date-card {
     transform: translateY(-2px);
 }
+
+.date-grid ::deep .date-card.selected {
+    border-color: var(--mud-palette-primary);
+}
