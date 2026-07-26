@@ -1,0 +1,29 @@
+.datetime-step {
+    transition: opacity 0.25s ease;
+}
+
+.datetime-step.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+}
+
+.date-grid ::deep .date-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.date-grid ::deep .date-card {
+    transform: translateY(-2px);
+}

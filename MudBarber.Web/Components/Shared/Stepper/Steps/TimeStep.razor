@@ -7,7 +7,7 @@
     <div class="date-grid">
         @foreach (var time in _times)
         {
-            <MudPaper>
+            <MudPaper Class="date-card">
                 <MudText Typo="Typo.subtitle2">
                     @time.Time.DayOfWeek.ToString().Substring(0, 3)
                 </MudText>
@@ -39,6 +39,7 @@
         new(DateTime.Now.AddDays(3), true),
         new(DateTime.Now.AddDays(4), true),
         new(DateTime.Now.AddDays(5), true),
+        new(DateTime.Now.AddDays(6), true),
     ];
 
     private async Task Select(TimeOption option)
