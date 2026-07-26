@@ -17,6 +17,19 @@
             </MudPaper>
         }
     </div>
+    @if (Model.Date is not null)
+    {
+        <div class="time-grid">
+            @foreach (var time in Model.Date.Time)
+            {
+                <MudPaper @onclick="() => SelectTime(time)">
+                    <MudText Typo="Typo.body2">
+                        @time.Time.ToString("hh\\:mm")
+                    </MudText>
+                </MudPaper>
+            }
+        </div>
+    }
 </div>
 
 @code {
