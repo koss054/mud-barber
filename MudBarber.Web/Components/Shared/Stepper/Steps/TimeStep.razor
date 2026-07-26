@@ -42,14 +42,15 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private static DateOnly StartDate =>
-        DateOnly.FromDateTime(DateTime.Today);
+    private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
+    private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 7).Select(StartDate.AddDays);
 
-    private static IEnumerable<DateOnly> Dates => 
-        Enumerable.Range(0, 7).Select(StartDate.AddDays);
-
-    private static IEnumerable<TimeOnly> Times => 
-        Enumerable.Range(9, 8).Select(h => new TimeOnly(h, 0));
+    private const int _slotMinutes = 15;
+    private static readonly TimeOnly OpenAt = new(9, 0);
+    private static readonly TimeOnly CloseAt = new(17, 0);
+    private static IEnumerable<TimeOnly> Times => Enumerable
+        .Range(0, (int)(CloseAt - OpenAt).TotalMinutes / _slotMinutes)
+        .Select(i => OpenAt.AddMinutes(i * _slotMinutes));
     
     private string DateCardClass(DateOnly date) =>
         $"date-card {(Model.Date == date? "selected" : "")}";
@@ -64,7 +65,11 @@
             return;
         }
 
-        Model.Time = null;
+        if (Model.Date != option)
+        {
+            Model.Time = null;
+        }
+
         Model.Date = option;
         await OnChanged.InvokeAsync();
     }
