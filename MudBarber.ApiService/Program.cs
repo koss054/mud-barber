@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MudBarber.ApiService.Data;
 using MudBarber.ApiService.Endpoints;
 
@@ -11,6 +12,12 @@ builder.Services.AddOpenApi();
 builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MudBarberDbContext>();
+    await db.Database.MigrateAsync();
+}
 
 app.UseExceptionHandler();
 
