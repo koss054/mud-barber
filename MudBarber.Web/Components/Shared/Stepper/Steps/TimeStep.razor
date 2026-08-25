@@ -42,7 +42,7 @@
     private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
     private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 7).Select(StartDate.AddDays);
 
-    private const int _slotMinutes = 15;
+    private const int _slotMinutes = 30;
     private static readonly TimeOnly OpenAt = new(9, 0);
     private static readonly TimeOnly CloseAt = new(17, 0);
     private static IEnumerable<TimeOnly> Times => Enumerable
