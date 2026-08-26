@@ -7,7 +7,7 @@ namespace MudBarber.Web.Models;
 public class BookingModel
 {
     public string? Service { get; set; }
-    public string? Barber { get; set; }
+    public Guid? BarberId { get; set; }
     public DateOnly? Date { get; set; }
     public TimeOnly? Time { get; set; }
     public string? Phone { get; set; }
