@@ -27,6 +27,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapBookingEndpoints();
+app.MapBarberEndpoints();
 app.MapDefaultEndpoints();
 
 app.Run();
