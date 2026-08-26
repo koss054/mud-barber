@@ -14,6 +14,7 @@ public static class BarberEndpoints
 
         group.MapPost("/", Create);
         group.MapGet("/", GetAll);
+        group.MapDelete("/{id:guid}", Delete);
 
         return group;
     }
@@ -34,8 +35,26 @@ public static class BarberEndpoints
     {
         var barbers = await db.Barbers
             .AsNoTracking()
+            .Where(b => b.IsActive)
             .ToListAsync(ct);
 
         return TypedResults.Ok(barbers.Select(b => b.ToDto()).ToList());
+    }
+
+    private static async Task<Results<NoContent, NotFound>> Delete(
+        Guid id, MudBarberDbContext db, CancellationToken ct)
+    {
+        var barber = await db.Barbers
+            .FirstOrDefaultAsync(b => b.Id == id && b.IsActive, ct);
+
+        if (barber == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        barber.IsActive = false;
+        await db.SaveChangesAsync(ct);
+
+        return TypedResults.NoContent();
     }
 }
