@@ -30,7 +30,7 @@
             </MudButton>
         </MudAlert>
     }
-    else if (_barbers.Count == 0)
+    else if (Barbers is null || Barbers.Count == 0)
     {
         <MudAlert Severity="Severity.Info" Class="my-2">
             No barbers are available right now.
@@ -39,7 +39,7 @@
     else
     {
         <div class="barber-grid">
-            @foreach (var barber in _barbers)
+            @foreach (var barber in Barbers)
             {
                 <MudPaper Class="@CardClass(barber.Id)" @onclick="() => Select(barber.Id)">
                     <MudAvatar Color="Color.Primary">
@@ -88,11 +88,26 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private IReadOnlyList<BarberDto> _barbers = [];
-    private bool _loading = true;
+    /// <summary>
+    /// Persisted across the prerender to interactive handover, so the circuit
+    /// instance reuses the prerendered list instead of fetching it again.
+    /// Null means nothing was handed over and this instance must load it.
+    /// </summary>
+    [PersistentState]
+    public List<BarberDto>? Barbers { get; set; }
+
+    // Must not default to true: when state is restored we never call Load,
+    // and a true default would leave the skeleton up forever.
+    private bool _loading;
     private bool _failed;
 
-    protected override async Task OnInitializedAsync() => await Load();
+    protected override async Task OnInitializedAsync()
+    {
+        if (Barbers is null)
+        {
+            await Load();
+        }
+    }
 
     private async Task Load()
     {
@@ -101,11 +116,11 @@
 
         try
         {
-            _barbers = await BarberApi.GetBarbersAsync();
+            Barbers = [.. await BarberApi.GetBarbersAsync()];
         }
         catch (Exception)
         {
-            _barbers = [];
+            Barbers = null;
             _failed = true;
         }
         finally
