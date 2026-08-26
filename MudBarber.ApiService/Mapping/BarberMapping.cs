@@ -19,8 +19,8 @@ public static class BarberMapping
         new()
         {
             Id = Guid.CreateVersion7(),
-            FirstName = request.FirstName,
-            LastName = request.LastName,
+            FirstName = request.FirstName.Trim(),
+            LastName = request.LastName.Trim(),
             IsActive = true
         };
 }

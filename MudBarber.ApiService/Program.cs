@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Services.AddProblemDetails();
+builder.Services.AddValidation();
 builder.Services.AddOpenApi();
 
 builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");
