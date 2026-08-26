@@ -41,3 +41,12 @@
 .barber-grid ::deep .barber-rating-icon {
     transform: translateY(-1.5px);
 }
+
+/* Placeholder cards match the real card height so the grid doesn't jump on load. */
+.barber-grid ::deep .barber-skeleton {
+    border-radius: var(--mud-default-borderradius);
+}
+
+.barber-grid ::deep .barber-new-chip {
+    margin: 0;
+}

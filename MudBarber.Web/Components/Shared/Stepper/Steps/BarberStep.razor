@@ -1,38 +1,81 @@
+@using MudBarber.Shared.Barbers
 @using MudBarber.Web.Models
+@using MudBarber.Web.Services
+@inject BarberApiClient BarberApi
 
 <div class="barber-step @(Locked ? "locked" : "")">
     <MudText Typo="Typo.h6" Class="mb-2">
         Pick your barber
     </MudText>
-    <div class="barber-grid">
-        @foreach (var barber in _barbers)
-        {
-            <MudPaper Class="@CardClass(barber.Name)" @onclick="() => Select(barber.Name)">
-                <MudAvatar Color="Color.Primary">
-                    @if (string.IsNullOrEmpty(barber.ImageUrl))
+
+    @if (_loading)
+    {
+        <div class="barber-grid">
+            @foreach (var _ in Enumerable.Range(0, 3))
+            {
+                <MudSkeleton
+                    SkeletonType="SkeletonType.Rectangle"
+                    Height="118px"
+                    Class="barber-skeleton"
+                />
+            }
+        </div>
+    }
+    else if (_failed)
+    {
+        <MudAlert Severity="Severity.Error" Class="my-2">
+            Couldn't load barbers.
+            <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="Load">
+                Retry
+            </MudButton>
+        </MudAlert>
+    }
+    else if (_barbers.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Class="my-2">
+            No barbers are available right now.
+        </MudAlert>
+    }
+    else
+    {
+        <div class="barber-grid">
+            @foreach (var barber in _barbers)
+            {
+                <MudPaper Class="@CardClass(barber.Id)" @onclick="() => Select(barber.Id)">
+                    <MudAvatar Color="Color.Primary">
+                        @Initial(barber)
+                    </MudAvatar>
+                    <MudText Typo="Typo.subtitle1">
+                        @DisplayName(barber)
+                    </MudText>
+                    @if (barber.Rating > 0)
                     {
-                        @Initial(barber.Name)
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary barber-rating">
+                            <MudIcon
+                                Icon="@Icons.Material.Filled.Star"
+                                Color="Color.Warning"
+                                Class="barber-rating-icon"
+                                Size="Size.Small"
+                            />
+                            @barber.Rating.ToString("F1")
+                        </MudText>
                     }
                     else
                     {
-                        <MudImage Src="@barber.ImageUrl" />
+                        <MudChip
+                            T="string"
+                            Size="Size.Small"
+                            Color="Color.Info"
+                            Variant="Variant.Outlined"
+                            Class="barber-new-chip"
+                        >
+                            New
+                        </MudChip>
                     }
-                </MudAvatar>
-                <MudText Typo="Typo.subtitle1">
-                    @barber.Name
-                </MudText>
-                <MudText Typo="Typo.body2" Class="mud-text-secondary barber-rating">
-                    <MudIcon
-                        Icon="@Icons.Material.Filled.Star"
-                        Color="Color.Warning"
-                        Class="barber-rating-icon"
-                        Size="Size.Small"
-                    />
-                    @barber.Rating
-                </MudText>
-            </MudPaper>
-        }
-    </div>
+                </MudPaper>
+            }
+        </div>
+    }
 </div>
 
 @code {
@@ -45,29 +88,51 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private record BarberOption(string Name, double Rating, string? ImageUrl = null);
+    private IReadOnlyList<BarberDto> _barbers = [];
+    private bool _loading = true;
+    private bool _failed;
 
-    private readonly BarberOption[] _barbers =
-    [
-        new("Sir I", 4.8),
-        new("Kosi Kosinov", 4.5),
-        new("Mika Mik", 4.9)
-    ];
+    protected override async Task OnInitializedAsync() => await Load();
 
-    private static string Initial(string name) =>
-        string.IsNullOrWhiteSpace(name) ? "?" : name.Trim()[0].ToString().ToUpper();
+    private async Task Load()
+    {
+        _loading = true;
+        _failed = false;
 
-    private string CardClass(string name) =>
-        $"barber-card {(Model.Barber == name ? " selected" : "")}";
+        try
+        {
+            _barbers = await BarberApi.GetBarbersAsync();
+        }
+        catch (Exception)
+        {
+            _barbers = [];
+            _failed = true;
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
 
-    private async Task Select(string name)
+    private static string DisplayName(BarberDto barber) =>
+        $"{barber.FirstName} {barber.LastName}".Trim();
+
+    private static string Initial(BarberDto barber) =>
+        string.IsNullOrWhiteSpace(barber.FirstName)
+            ? "?"
+            : barber.FirstName.Trim()[0].ToString().ToUpperInvariant();
+
+    private string CardClass(Guid id) =>
+        $"barber-card {(Model.BarberId == id ? "selected" : "")}";
+
+    private async Task Select(Guid id)
     {
         if (Locked)
         {
             return;
         }
 
-        Model.Barber = name;
+        Model.BarberId = id;
         await OnChanged.InvokeAsync();
     }
 }
