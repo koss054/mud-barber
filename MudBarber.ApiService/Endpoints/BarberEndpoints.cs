@@ -35,24 +35,24 @@ public static class BarberEndpoints
     {
         var barbers = await db.Barbers
             .AsNoTracking()
-            .Where(b => b.IsActive)
             .ToListAsync(ct);
 
         return TypedResults.Ok(barbers.Select(b => b.ToDto()).ToList());
     }
 
     private static async Task<Results<NoContent, NotFound>> Delete(
-        Guid id, MudBarberDbContext db, CancellationToken ct)
+        Guid id, MudBarberDbContext db, TimeProvider timeProvider, CancellationToken ct)
     {
-        var barber = await db.Barbers
-            .FirstOrDefaultAsync(b => b.Id == id && b.IsActive, ct);
+        // The global query filter already excludes retired barbers,
+        // so deleting one twice returns NotFound without an extra predicate.
+        var barber = await db.Barbers.FirstOrDefaultAsync(b => b.Id == id, ct);
 
         if (barber == null)
         {
             return TypedResults.NotFound();
         }
 
-        barber.IsActive = false;
+        barber.RetiredAt = timeProvider.GetUtcNow();
         await db.SaveChangesAsync(ct);
 
         return TypedResults.NoContent();

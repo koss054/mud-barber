@@ -10,7 +10,7 @@ public class Barber
 
     public decimal Rating { get; set; }
 
-    public bool IsActive { get; set; }
+    public DateTimeOffset? RetiredAt { get; set; }
 
     // TODO: model for available hours depending on barber's upcoming bookings
 }

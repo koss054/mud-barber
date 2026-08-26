@@ -12,7 +12,7 @@ public static class BarberMapping
             FirstName = barber.FirstName,
             LastName = barber.LastName,
             Rating = barber.Rating,
-            IsActive = barber.IsActive
+            RetiredAt = barber.RetiredAt
         };
 
     public static Barber ToEntity(this CreateBarberRequest request) =>
@@ -20,7 +20,6 @@ public static class BarberMapping
         {
             Id = Guid.CreateVersion7(),
             FirstName = request.FirstName.Trim(),
-            LastName = request.LastName.Trim(),
-            IsActive = true
+            LastName = request.LastName.Trim()
         };
 }

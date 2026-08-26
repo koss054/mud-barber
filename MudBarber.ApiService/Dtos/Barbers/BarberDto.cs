@@ -10,5 +10,5 @@ public class BarberDto
 
     public decimal Rating { get; set; }
 
-    public bool IsActive { get; set; }
+    public DateTimeOffset? RetiredAt { get; set; }
 }

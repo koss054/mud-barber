@@ -8,6 +8,7 @@ builder.AddServiceDefaults();
 
 builder.Services.AddProblemDetails();
 builder.Services.AddValidation();
+builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddOpenApi();
 
 builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");

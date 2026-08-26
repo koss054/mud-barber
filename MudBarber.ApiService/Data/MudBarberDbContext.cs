@@ -12,4 +12,12 @@ public class MudBarberDbContext : DbContext
     public DbSet<Booking> Bookings { get; set; }
 
     public DbSet<Barber> Barbers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Retired barbers are excluded from every query by default.
+        // Admin reads opt out explicitly with IgnoreQueryFilters().
+        modelBuilder.Entity<Barber>()
+            .HasQueryFilter(b => b.RetiredAt == null);
+    }
 }
