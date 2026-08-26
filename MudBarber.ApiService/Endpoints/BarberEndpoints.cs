@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MudBarber.ApiService.Data;
-using MudBarber.ApiService.Dtos.Barbers;
 using MudBarber.ApiService.Mapping;
+using MudBarber.Shared.Barbers;
 
 namespace MudBarber.ApiService.Endpoints;
 

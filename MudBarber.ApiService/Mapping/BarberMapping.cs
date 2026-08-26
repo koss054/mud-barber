@@ -1,5 +1,5 @@
 using MudBarber.ApiService.Data.Entities;
-using MudBarber.ApiService.Dtos.Barbers;
+using MudBarber.Shared.Barbers;
 
 namespace MudBarber.ApiService.Mapping;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MudBarber.ApiService.Dtos.Barbers;
+namespace MudBarber.Shared.Barbers;
 
 public record CreateBarberRequest(
     [property: Required, StringLength(50)] string FirstName,

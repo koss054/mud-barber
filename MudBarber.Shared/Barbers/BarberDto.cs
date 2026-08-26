@@ -1,4 +1,4 @@
-namespace MudBarber.ApiService.Dtos.Barbers;
+namespace MudBarber.Shared.Barbers;
 
 public class BarberDto
 {
