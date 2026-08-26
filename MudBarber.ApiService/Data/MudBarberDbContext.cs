@@ -10,4 +10,6 @@ public class MudBarberDbContext : DbContext
     }
 
     public DbSet<Booking> Bookings { get; set; }
+
+    public DbSet<Barber> Barbers { get; set; }
 }
