@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MudBarber.ServiceDefaults\MudBarber.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\MudBarber.Shared\MudBarber.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
