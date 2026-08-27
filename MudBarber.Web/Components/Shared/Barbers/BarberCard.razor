@@ -8,7 +8,19 @@
         <MudText Typo="Typo.subtitle1">
             @DisplayName
         </MudText>
-        @if (Barber.Rating > 0)
+        @if (IsRetired)
+        {
+            <MudChip
+                T="string"
+                Size="Size.Small"
+                Color="Color.Default"
+                Variant="Variant.Outlined"
+                Class="barber-card-chip"
+            >
+                Retired
+            </MudChip>
+        }
+        else if (Barber.Rating > 0)
         {
             <MudText Typo="Typo.body2" Class="mud-text-secondary barber-rating">
                 <MudIcon
@@ -27,7 +39,7 @@
                 Size="Size.Small"
                 Color="Color.Info"
                 Variant="Variant.Outlined"
-                Class="barber-new-chip"
+                Class="barber-card-chip"
             >
                 New
             </MudChip>
@@ -45,7 +57,10 @@
     [Parameter]
     public EventCallback<Guid> OnSelect { get; set; }
 
-    private string CardClass => $"barber-card {(Selected ? "selected" : "")}";
+    private bool IsRetired => Barber.RetiredAt != null;
+
+    private string CardClass =>
+        $"barber-card {(Selected ? "selected" : "")} {(IsRetired ? "retired" : "")}";
 
     private string DisplayName => $"{Barber.FirstName} {Barber.LastName}".Trim();
 

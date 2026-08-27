@@ -1,4 +1,5 @@
 @using MudBarber.Shared.Barbers
+@using MudBarber.Web.Components.Shared.Barbers
 @using MudBarber.Web.Models
 @using MudBarber.Web.Services
 @inject BarberApiClient BarberApi
@@ -70,7 +71,7 @@
     [PersistentState]
     public List<BarberDto>? Barbers { get; set; }
 
-    // Must not default to true: when state is restored we never call Load,
+    // Must not default to true. When state is restored we never call Load,
     // and a true default would leave the skeleton up forever.
     private bool _loading;
     private bool _failed;

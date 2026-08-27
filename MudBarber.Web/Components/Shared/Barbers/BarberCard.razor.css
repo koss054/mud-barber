@@ -23,6 +23,17 @@
     border-color: var(--mud-palette-primary);
 }
 
+.barber-card-host ::deep .barber-card.retired {
+    border-style: dashed;
+    border-color: var(--mud-palette-lines-default);
+    opacity: 0.6;
+}
+
+.barber-card-host ::deep .barber-card.retired.selected {
+    border-color: var(--mud-palette-primary);
+    opacity: 1;
+}
+
 .barber-card-host ::deep .barber-rating {
     display: flex;
     gap: 4px;
@@ -32,6 +43,6 @@
     transform: translateY(-1.5px);
 }
 
-.barber-card-host ::deep .barber-new-chip {
+.barber-card-host ::deep .barber-card-chip {
     margin: 0;
 }
