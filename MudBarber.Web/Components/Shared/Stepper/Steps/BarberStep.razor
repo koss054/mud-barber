@@ -41,38 +41,12 @@
         <div class="barber-grid">
             @foreach (var barber in Barbers)
             {
-                <MudPaper Class="@CardClass(barber.Id)" @onclick="() => Select(barber.Id)">
-                    <MudAvatar Color="Color.Primary">
-                        @Initial(barber)
-                    </MudAvatar>
-                    <MudText Typo="Typo.subtitle1">
-                        @DisplayName(barber)
-                    </MudText>
-                    @if (barber.Rating > 0)
-                    {
-                        <MudText Typo="Typo.body2" Class="mud-text-secondary barber-rating">
-                            <MudIcon
-                                Icon="@Icons.Material.Filled.Star"
-                                Color="Color.Warning"
-                                Class="barber-rating-icon"
-                                Size="Size.Small"
-                            />
-                            @barber.Rating.ToString("F1")
-                        </MudText>
-                    }
-                    else
-                    {
-                        <MudChip
-                            T="string"
-                            Size="Size.Small"
-                            Color="Color.Info"
-                            Variant="Variant.Outlined"
-                            Class="barber-new-chip"
-                        >
-                            New
-                        </MudChip>
-                    }
-                </MudPaper>
+                <BarberCard
+                    @key="barber.Id"
+                    Barber="barber"
+                    Selected="@(Model.BarberId == barber.Id)"
+                    OnSelect="Select"
+                />
             }
         </div>
     }
@@ -128,17 +102,6 @@
             _loading = false;
         }
     }
-
-    private static string DisplayName(BarberDto barber) =>
-        $"{barber.FirstName} {barber.LastName}".Trim();
-
-    private static string Initial(BarberDto barber) =>
-        string.IsNullOrWhiteSpace(barber.FirstName)
-            ? "?"
-            : barber.FirstName.Trim()[0].ToString().ToUpperInvariant();
-
-    private string CardClass(Guid id) =>
-        $"barber-card {(Model.BarberId == id ? "selected" : "")}";
 
     private async Task Select(Guid id)
     {
