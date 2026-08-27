@@ -1,0 +1,89 @@
+@using MudBarber.Shared.Barbers
+@using MudBarber.Web.Services
+
+@inject BarberApiClient BarberApi
+
+@if (_loading)
+{
+    <div class="barber-grid">
+        @foreach (var _ in Enumerable.Range(0, 3))
+        {
+            <MudSkeleton
+                SkeletonType="SkeletonType.Rectangle"
+                Height="118px"
+                Class="barber-skeleton"
+            />
+        }
+    </div>
+}
+else if (_failed)
+{
+    <MudAlert Severity="Severity.Error" Class="my-2">
+        Couldn't load barbers.
+        <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="Load">
+            Retry
+        </MudButton>
+    </MudAlert>
+}
+else if (Barbers is null || Barbers.Count == 0)
+{
+    <MudAlert Severity="Severity.Info" Class="my-2">
+        No barbers are available right now.
+    </MudAlert>
+}
+else
+{
+    <div class="barber-grid">
+        @foreach (var barber in Barbers)
+        {
+            <BarberCard
+                @key="barber.Id"
+                Barber="barber"
+                Selected="@(SelectedId == barber.Id)"
+                OnSelect="OnSelect"
+            />
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid? SelectedId { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnSelect { get; set; }
+
+    [PersistentState]
+    public List<BarberDto>? Barbers { get; set; }
+
+    private bool _loading;
+    private bool _failed;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Barbers is null)
+        {
+            await Load();
+        }
+    }
+
+    private async Task Load()
+    {
+        _loading = true;
+        _failed = false;
+
+        try
+        {
+            Barbers = [.. await BarberApi.GetBarbersAsync()];
+        }
+        catch (Exception)
+        {
+            Barbers = null;
+            _failed = true;
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+}

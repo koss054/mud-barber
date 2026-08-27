@@ -6,14 +6,3 @@
     opacity: 0.4;
     pointer-events: none;
 }
-
-.barber-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-/* Placeholder cards match the real card height so the grid doesn't jump on load. */
-.barber-grid ::deep .barber-skeleton {
-    border-radius: var(--mud-default-borderradius);
-}

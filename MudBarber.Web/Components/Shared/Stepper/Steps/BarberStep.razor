@@ -1,56 +1,16 @@
-@using MudBarber.Shared.Barbers
 @using MudBarber.Web.Components.Shared.Barbers
 @using MudBarber.Web.Models
-@using MudBarber.Web.Services
-@inject BarberApiClient BarberApi
 
 <div class="barber-step @(Locked ? "locked" : "")">
     <MudText Typo="Typo.h6" Class="mb-2">
         Pick your barber
     </MudText>
 
-    @if (_loading)
-    {
-        <div class="barber-grid">
-            @foreach (var _ in Enumerable.Range(0, 3))
-            {
-                <MudSkeleton
-                    SkeletonType="SkeletonType.Rectangle"
-                    Height="118px"
-                    Class="barber-skeleton"
-                />
-            }
-        </div>
-    }
-    else if (_failed)
-    {
-        <MudAlert Severity="Severity.Error" Class="my-2">
-            Couldn't load barbers.
-            <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="Load">
-                Retry
-            </MudButton>
-        </MudAlert>
-    }
-    else if (Barbers is null || Barbers.Count == 0)
-    {
-        <MudAlert Severity="Severity.Info" Class="my-2">
-            No barbers are available right now.
-        </MudAlert>
-    }
-    else
-    {
-        <div class="barber-grid">
-            @foreach (var barber in Barbers)
-            {
-                <BarberCard
-                    @key="barber.Id"
-                    Barber="barber"
-                    Selected="@(Model.BarberId == barber.Id)"
-                    OnSelect="Select"
-                />
-            }
-        </div>
-    }
+    <BarberGrid
+        SelectedId="Model.BarberId"
+        OnSelect="Select"
+    />
+    
 </div>
 
 @code {
@@ -62,47 +22,6 @@
 
     [Parameter]
     public bool Locked { get; set; }
-
-    /// <summary>
-    /// Persisted across the prerender to interactive handover, so the circuit
-    /// instance reuses the prerendered list instead of fetching it again.
-    /// Null means nothing was handed over and this instance must load it.
-    /// </summary>
-    [PersistentState]
-    public List<BarberDto>? Barbers { get; set; }
-
-    // Must not default to true. When state is restored we never call Load,
-    // and a true default would leave the skeleton up forever.
-    private bool _loading;
-    private bool _failed;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Barbers is null)
-        {
-            await Load();
-        }
-    }
-
-    private async Task Load()
-    {
-        _loading = true;
-        _failed = false;
-
-        try
-        {
-            Barbers = [.. await BarberApi.GetBarbersAsync()];
-        }
-        catch (Exception)
-        {
-            Barbers = null;
-            _failed = true;
-        }
-        finally
-        {
-            _loading = false;
-        }
-    }
 
     private async Task Select(Guid id)
     {

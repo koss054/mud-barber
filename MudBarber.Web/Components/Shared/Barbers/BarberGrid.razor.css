@@ -1,0 +1,9 @@
+.barber-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.barber-grid ::deep .barber-skeleton {
+    border-radius: var(--mud-default-borderradius);
+}
