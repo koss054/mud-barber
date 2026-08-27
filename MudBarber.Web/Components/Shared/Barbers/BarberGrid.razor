@@ -6,7 +6,7 @@
 
 @if (_busy && Barbers is null)
 {
-    <div class="barber-grid">
+    <div class="barber-grid" style="@GridStyle">
         @foreach (var _ in Enumerable.Range(0, PageSize))
         {
             <MudSkeleton
@@ -34,7 +34,7 @@ else if (Barbers is null || Barbers.Items.Count == 0)
 }
 else
 {
-    <div class="barber-grid">
+    <div class="barber-grid" style="@GridStyle">
         @foreach (var barber in Barbers.Items)
         {
             <BarberCard
@@ -80,6 +80,11 @@ else
 
     [Parameter]
     public bool IncludeRetired { get; set; }
+
+    [Parameter]
+    public int Columns { get; set; } = 3;
+
+    private string GridStyle => $"--barber-grid-columns: {Columns};";
 
     [PersistentState]
     public PagedResult<BarberDto>? Barbers { get; set; }
