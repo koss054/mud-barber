@@ -5,6 +5,14 @@ namespace MudBarber.Web.Services;
 
 public class BarberApiClient(HttpClient httpClient)
 {
+    public async Task<BarberDto?> CreateBarberAsync(
+        CreateBarberRequest request, CancellationToken ct = default)
+    {
+        var response = await httpClient.PostAsJsonAsync("/barbers", request, ct);
+
+        return await ReadBarberAsync(response, ct);
+    }
+
     public async Task<IReadOnlyList<BarberDto>> GetBarbersAsync(
         bool includeRetired = false, CancellationToken ct = default)
     {
