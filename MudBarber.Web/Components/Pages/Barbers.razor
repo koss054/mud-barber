@@ -1,0 +1,18 @@
+@page "/barbers"
+
+@using MudBarber.Web.Components.Shared.Barbers
+
+<BarberGrid
+    SelectedId="_selectedId"
+    OnSelect="Select"
+/>
+
+
+@code {
+    private Guid? _selectedId;
+
+    private void Select(Guid id)
+    {
+        _selectedId = id;
+    }
+}
