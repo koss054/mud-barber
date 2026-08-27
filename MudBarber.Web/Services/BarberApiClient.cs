@@ -1,5 +1,6 @@
 using System.Net;
 using MudBarber.Shared.Barbers;
+using MudBarber.Shared.Paging;
 
 namespace MudBarber.Web.Services;
 
@@ -13,12 +14,16 @@ public class BarberApiClient(HttpClient httpClient)
         return await ReadBarberAsync(response, ct);
     }
 
-    public async Task<IReadOnlyList<BarberDto>> GetBarbersAsync(
-        bool includeRetired = false, CancellationToken ct = default)
+    public async Task<PagedResult<BarberDto>> GetBarbersAsync(
+        int page = 1,
+        int pageSize = 12,
+        bool includeRetired = false,
+        CancellationToken ct = default)
     {
-        var url = includeRetired ? "/barbers?includeRetired=true" : "/barbers";
+        var url = $"/barbers?page={page}&pageSize={pageSize}&includeRetired={(includeRetired ? "true" : "false")}";
 
-        return await httpClient.GetFromJsonAsync<List<BarberDto>>(url, ct) ?? [];
+        return await httpClient.GetFromJsonAsync<PagedResult<BarberDto>>(url, ct)
+            ?? new PagedResult<BarberDto> { Page = page, PageSize = pageSize };
     }
 
     public async Task<BarberDto?> GetBarberAsync(

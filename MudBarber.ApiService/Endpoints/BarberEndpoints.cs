@@ -3,11 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using MudBarber.ApiService.Data;
 using MudBarber.ApiService.Mapping;
 using MudBarber.Shared.Barbers;
+using MudBarber.Shared.Paging;
 
 namespace MudBarber.ApiService.Endpoints;
 
 public static class BarberEndpoints
 {
+    private const int DefaultPageSize = 12;
+    private const int MaxPageSize = 50;
+
     public static RouteGroupBuilder MapBarberEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/barbers").WithTags("Barbers");
@@ -33,9 +37,16 @@ public static class BarberEndpoints
         return TypedResults.Created($"/barbers/{barber.Id}", barber.ToDto());
     }
 
-    private static async Task<Ok<List<BarberDto>>> GetAll(
-        MudBarberDbContext db, bool includeRetired = false, CancellationToken ct = default)
+    private static async Task<Ok<PagedResult<BarberDto>>> GetAll(
+        MudBarberDbContext db,
+        bool includeRetired = false,
+        int page = 1,
+        int pageSize = DefaultPageSize,
+        CancellationToken ct = default)
     {
+        page = Math.Max(page, 1);
+        pageSize = Math.Clamp(pageSize, 1, MaxPageSize);
+
         var query = db.Barbers.AsNoTracking();
 
         if (includeRetired)
@@ -43,9 +54,22 @@ public static class BarberEndpoints
             query = query.IgnoreQueryFilters();
         }
 
-        var barbers = await query.ToListAsync(ct);
+        var totalCount = await query.CountAsync(ct);
 
-        return TypedResults.Ok(barbers.Select(b => b.ToDto()).ToList());
+        var barbers = await query
+            .OrderBy(b => b.FirstName)
+            .ThenBy(b => b.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
+
+        return TypedResults.Ok(new PagedResult<BarberDto>
+        {
+            Items = [.. barbers.Select(b => b.ToDto())],
+            Page = page,
+            PageSize = pageSize,
+            TotalCount = totalCount
+        });
     }
 
     private static async Task<Results<Ok<BarberDto>, NotFound>> GetById(

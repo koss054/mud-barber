@@ -1,12 +1,13 @@
 @using MudBarber.Shared.Barbers
+@using MudBarber.Shared.Paging
 @using MudBarber.Web.Services
 
 @inject BarberApiClient BarberApi
 
-@if (_loading)
+@if (_busy && Barbers is null)
 {
     <div class="barber-grid">
-        @foreach (var _ in Enumerable.Range(0, 3))
+        @foreach (var _ in Enumerable.Range(0, PageSize))
         {
             <MudSkeleton
                 SkeletonType="SkeletonType.Rectangle"
@@ -25,7 +26,7 @@ else if (_failed)
         </MudButton>
     </MudAlert>
 }
-else if (Barbers is null || Barbers.Count == 0)
+else if (Barbers is null || Barbers.Items.Count == 0)
 {
     <MudAlert Severity="Severity.Info" Class="my-2">
         No barbers are available right now.
@@ -34,7 +35,7 @@ else if (Barbers is null || Barbers.Count == 0)
 else
 {
     <div class="barber-grid">
-        @foreach (var barber in Barbers)
+        @foreach (var barber in Barbers.Items)
         {
             <BarberCard
                 @key="barber.Id"
@@ -44,6 +45,27 @@ else
             />
         }
     </div>
+
+    @if (Barbers.TotalPages > 1)
+    {
+        <div class="barber-pager">
+            <MudIconButton
+                Icon="@Icons.Material.Filled.ChevronLeft"
+                Size="Size.Small"
+                Disabled="@(_busy || !Barbers.HasPrevious)"
+                OnClick="@(() => GoToPage(Barbers.Page - 1))"
+            />
+            <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                @Barbers.Page / @Barbers.TotalPages
+            </MudText>
+            <MudIconButton
+                Icon="@Icons.Material.Filled.ChevronRight"
+                Size="Size.Small"
+                Disabled="@(_busy || !Barbers.HasNext)"
+                OnClick="@(() => GoToPage(Barbers.Page + 1))"
+            />
+        </div>
+    }
 }
 
 @code {
@@ -53,10 +75,17 @@ else
     [Parameter]
     public EventCallback<Guid> OnSelect { get; set; }
 
-    [PersistentState]
-    public List<BarberDto>? Barbers { get; set; }
+    [Parameter]
+    public int PageSize { get; set; } = 12;
 
-    private bool _loading;
+    [Parameter]
+    public bool IncludeRetired { get; set; }
+
+    [PersistentState]
+    public PagedResult<BarberDto>? Barbers { get; set; }
+
+    private int _page = 1;
+    private bool _busy;
     private bool _failed;
 
     protected override async Task OnInitializedAsync()
@@ -65,16 +94,27 @@ else
         {
             await Load();
         }
+        else
+        {
+            _page = Barbers.Page;
+        }
+    }
+
+    private async Task GoToPage(int page)
+    {
+        _page = page;
+        await Load();
     }
 
     private async Task Load()
     {
-        _loading = true;
+        _busy = true;
         _failed = false;
 
         try
         {
-            Barbers = [.. await BarberApi.GetBarbersAsync()];
+            Barbers = await BarberApi.GetBarbersAsync(_page, PageSize, IncludeRetired);
+            _page = Barbers.Page;
         }
         catch (Exception)
         {
@@ -83,7 +123,7 @@ else
         }
         finally
         {
-            _loading = false;
+            _busy = false;
         }
     }
 }
