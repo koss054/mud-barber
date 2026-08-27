@@ -14,13 +14,16 @@ public static class BarberEndpoints
 
         group.MapPost("/", Create);
         group.MapGet("/", GetAll);
+        group.MapGet("/{id:guid}", GetById);
+        group.MapPut("/{id:guid}", Update);
+        group.MapPost("/{id:guid}/restore", Restore);
         group.MapDelete("/{id:guid}", Delete);
 
         return group;
     }
 
     private static async Task<Created<BarberDto>> Create(
-        CreateBarberRequest request, MudBarberDbContext db, CancellationToken ct)
+        CreateBarberRequest request, MudBarberDbContext db, CancellationToken ct = default)
     {
         var barber = request.ToEntity();
 
@@ -31,20 +34,35 @@ public static class BarberEndpoints
     }
 
     private static async Task<Ok<List<BarberDto>>> GetAll(
-        MudBarberDbContext db, CancellationToken ct)
+        MudBarberDbContext db, bool includeRetired = false, CancellationToken ct = default)
     {
-        var barbers = await db.Barbers
-            .AsNoTracking()
-            .ToListAsync(ct);
+        var query = db.Barbers.AsNoTracking();
+
+        if (includeRetired)
+        {
+            query = query.IgnoreQueryFilters();
+        }
+
+        var barbers = await query.ToListAsync(ct);
 
         return TypedResults.Ok(barbers.Select(b => b.ToDto()).ToList());
     }
 
-    private static async Task<Results<NoContent, NotFound>> Delete(
-        Guid id, MudBarberDbContext db, TimeProvider timeProvider, CancellationToken ct)
+    private static async Task<Results<Ok<BarberDto>, NotFound>> GetById(
+        Guid id, MudBarberDbContext db, CancellationToken ct = default)
     {
-        // The global query filter already excludes retired barbers,
-        // so deleting one twice returns NotFound without an extra predicate.
+        var barber = await db.Barbers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(b => b.Id == id, ct);
+
+        return barber == null
+            ? TypedResults.NotFound()
+            : TypedResults.Ok(barber.ToDto());
+    }
+
+    private static async Task<Results<Ok<BarberDto>, NotFound>> Update(
+        Guid id, UpdateBarberRequest request, MudBarberDbContext db, CancellationToken ct = default)
+    {
         var barber = await db.Barbers.FirstOrDefaultAsync(b => b.Id == id, ct);
 
         if (barber == null)
@@ -52,9 +70,48 @@ public static class BarberEndpoints
             return TypedResults.NotFound();
         }
 
+        request.ApplyTo(barber);
+        await db.SaveChangesAsync(ct);
+
+        return TypedResults.Ok(barber.ToDto());
+    }
+
+    private static async Task<Results<NoContent, NotFound>> Delete(
+        Guid id, MudBarberDbContext db, TimeProvider timeProvider, CancellationToken ct = default)
+    {
+        // The global query filter already excludes retired barbers.
+        var barber = await db.Barbers.FirstOrDefaultAsync(b => b.Id == id, ct);
+
+        if (barber == null)
+        {
+            // Deleting one twice returns NotFound.
+            return TypedResults.NotFound();
+        }
+
         barber.RetiredAt = timeProvider.GetUtcNow();
         await db.SaveChangesAsync(ct);
 
         return TypedResults.NoContent();
+    }
+
+    private static async Task<Results<Ok<BarberDto>, NotFound>> Restore(
+        Guid id, MudBarberDbContext db, CancellationToken ct = default)
+    {
+        var barber = await db.Barbers
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(b => b.Id == id, ct);
+
+        if (barber == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        if (barber.RetiredAt != null)
+        {
+            barber.RetiredAt = null;
+            await db.SaveChangesAsync(ct);
+        }
+
+        return TypedResults.Ok(barber.ToDto());
     }
 }

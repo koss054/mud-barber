@@ -22,4 +22,10 @@ public static class BarberMapping
             FirstName = request.FirstName.Trim(),
             LastName = request.LastName.Trim()
         };
+
+    public static void ApplyTo(this UpdateBarberRequest request, Barber barber)
+    {
+        barber.FirstName = request.FirstName.Trim();
+        barber.LastName = request.LastName.Trim();
+    }
 }
