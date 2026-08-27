@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MudBarber.ApiService.Data;
 using MudBarber.ApiService.Endpoints;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.MapBookingEndpoints();
