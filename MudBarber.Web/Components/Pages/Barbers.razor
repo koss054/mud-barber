@@ -30,7 +30,19 @@
                 />
             }
 
-            @if (_selectedBarber.RetiredAt is null)
+            @if (BarberRating == 0) 
+            {
+                <MudChip
+                    T="string"
+                    Class="mt-2"
+                    Size="Size.Large"
+                    Color="Color.Info"
+                    Variant="Variant.Outlined"
+                >
+                    New
+                </MudChip>
+            }
+            else if (_selectedBarber.RetiredAt is null)
             {
                 <MudChip
                     T="string"
