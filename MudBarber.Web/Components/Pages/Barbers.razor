@@ -18,6 +18,14 @@
         <MudText Class="barbers-name" Typo="Typo.h2">
             @BarberFullName
         </MudText>
+        @if (_selectedBarber is not null && BarberRating > 0)
+        {
+            <MudRating
+                Class="mt-3"
+                ReadOnly="true"
+                SelectedValue="@BarberRating"
+            />
+        }
     </MudPaper>
 </div>
 
@@ -29,10 +37,16 @@
         _selectedBarber = barber;
     }
 
+    // TODO: decide if these barber specific values should live here or somewhere else.
     private string BarberFullName =>
         _selectedBarber is null
             ? ""
             : $"{_selectedBarber.FirstName} {_selectedBarber.LastName}";
+
+    private int BarberRating =>
+        _selectedBarber is null
+            ? 0
+            : Decimal.ToInt32(_selectedBarber.Rating);
 
     // TODO: DRY this (repeated in BarberCard.razor)
     private string BarberInitial => 
