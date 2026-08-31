@@ -1,0 +1,20 @@
+.barbers-container {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    padding: 32px;
+    flex-direction: row;
+    align-items:flex-start;
+}
+
+.barbers-container ::deep .barbers-grid,
+.barbers-container ::deep .barbers-form {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+@media (max-width: 1200px) {
+    .barbers-container {
+        flex-direction: column;
+    }
+}

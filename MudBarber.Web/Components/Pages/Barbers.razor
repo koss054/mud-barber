@@ -2,12 +2,18 @@
 
 @using MudBarber.Web.Components.Shared.Barbers
 
-<BarberGrid
-    SelectedId="_selectedId"
-    OnSelect="Select"
-    Columns=5
-/>
+<div class="barbers-container">
+    <BarberGrid
+        Class="barbers-grid"
+        SelectedId="_selectedId"
+        OnSelect="Select"
+        Columns=5
+    />
+    <MudPaper Class="barbers-form">
 
+        <h1>Test</h1>
+    </MudPaper>
+</div>
 
 @code {
     private Guid? _selectedId;
