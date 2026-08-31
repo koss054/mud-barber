@@ -1,5 +1,6 @@
 @page "/barbers"
 
+@using MudBarber.Shared.Barbers
 @using MudBarber.Web.Components.Shared.Barbers
 
 <div class="barbers-container">
@@ -11,7 +12,6 @@
         Columns=3
     />
     <MudPaper Class="barbers-form">
-
         <h1>Test</h1>
     </MudPaper>
 </div>
@@ -19,8 +19,8 @@
 @code {
     private Guid? _selectedId;
 
-    private void Select(Guid id)
+    private void Select(BarberDto barber)
     {
-        _selectedId = id;
+        _selectedId = barber.Id;
     }
 }

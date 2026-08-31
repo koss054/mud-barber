@@ -1,3 +1,4 @@
+@using MudBarber.Shared.Barbers
 @using MudBarber.Web.Components.Shared.Barbers
 @using MudBarber.Web.Models
 
@@ -24,14 +25,14 @@
     [Parameter]
     public bool Locked { get; set; }
 
-    private async Task Select(Guid id)
+    private async Task Select(BarberDto barber)
     {
         if (Locked)
         {
             return;
         }
 
-        Model.BarberId = id;
+        Model.BarberId = barber.Id;
         await OnChanged.InvokeAsync();
     }
 }

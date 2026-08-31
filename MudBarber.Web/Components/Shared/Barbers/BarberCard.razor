@@ -1,7 +1,7 @@
 @using MudBarber.Shared.Barbers
 
 <div class="barber-card-host">
-    <MudPaper Class="@CardClass" @onclick="() => OnSelect.InvokeAsync(Barber.Id)">
+    <MudPaper Class="@CardClass" @onclick="() => OnSelect.InvokeAsync(Barber)">
         <MudAvatar Color="Color.Primary">
             @Initial
         </MudAvatar>
@@ -55,7 +55,7 @@
     public bool Selected { get; set; }
 
     [Parameter]
-    public EventCallback<Guid> OnSelect { get; set; }
+    public EventCallback<BarberDto> OnSelect { get; set; }
 
     private bool IsRetired => Barber.RetiredAt != null;
 
