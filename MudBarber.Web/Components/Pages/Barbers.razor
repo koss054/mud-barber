@@ -13,8 +13,11 @@
     />
     <MudPaper Class="barbers-form">
         <MudAvatar Class="barbers-avatar" Color="Color.Primary"> 
-            @Initial
+            @BarberInitial
         </MudAvatar>
+        <MudText Class="barbers-name" Typo="Typo.h2">
+            @BarberFullName
+        </MudText>
     </MudPaper>
 </div>
 
@@ -26,8 +29,13 @@
         _selectedBarber = barber;
     }
 
+    private string BarberFullName =>
+        _selectedBarber is null
+            ? ""
+            : $"{_selectedBarber.FirstName} {_selectedBarber.LastName}";
+
     // TODO: DRY this (repeated in BarberCard.razor)
-    private string Initial => 
+    private string BarberInitial => 
         string.IsNullOrWhiteSpace(_selectedBarber?.FirstName)
             ? "?"
             : _selectedBarber.FirstName.Trim()[0].ToString().ToUpperInvariant();

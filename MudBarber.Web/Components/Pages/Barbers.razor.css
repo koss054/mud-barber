@@ -24,11 +24,17 @@
     align-items: center;
 }
 
+/* TODO: research if I should be using "px", "em" or "rem" in the classes below */
 .barbers-container ::deep .barbers-avatar {
     width: 15rem;
     height: 15rem;
     font-size: 5rem;
     margin-top: 5rem;
+}
+
+.barbers-container ::deep .barbers-name {
+    font-size: 4rem;
+    margin-top: 2rem;
 }
 
 @media (max-width: 1200px) {
@@ -41,5 +47,9 @@
         height: 8rem;
         font-size: 2.5rem;
         margin-top: 2.5rem;
+    }
+
+    .barbers-container ::deep .barbers-name {
+        font-size: 2rem;
     }
 }
