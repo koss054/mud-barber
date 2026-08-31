@@ -12,7 +12,9 @@
         Columns=3
     />
     <MudPaper Class="barbers-form">
-        <h1>Test</h1>
+        <MudAvatar Class="barbers-avatar" Color="Color.Primary"> 
+            @Initial
+        </MudAvatar>
     </MudPaper>
 </div>
 
@@ -23,4 +25,10 @@
     {
         _selectedBarber = barber;
     }
+
+    // TODO: DRY this (repeated in BarberCard.razor)
+    private string Initial => 
+        string.IsNullOrWhiteSpace(_selectedBarber?.FirstName)
+            ? "?"
+            : _selectedBarber.FirstName.Trim()[0].ToString().ToUpperInvariant();
 }
