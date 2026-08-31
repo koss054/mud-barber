@@ -7,7 +7,7 @@
     <BarberGrid
         Class="barbers-grid"
         AlwaysShowPager="true"
-        SelectedId="_selectedId"
+        SelectedId="_selectedBarber?.Id"
         OnSelect="Select"
         Columns=3
     />
@@ -17,10 +17,10 @@
 </div>
 
 @code {
-    private Guid? _selectedId;
+    private BarberDto? _selectedBarber;
 
     private void Select(BarberDto barber)
     {
-        _selectedId = barber.Id;
+        _selectedBarber = barber;
     }
 }
