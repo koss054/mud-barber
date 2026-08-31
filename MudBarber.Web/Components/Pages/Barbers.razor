@@ -6,6 +6,7 @@
 <div class="barbers-container">
     <BarberGrid
         Class="barbers-grid"
+        IncludeRetired="true"
         AlwaysShowPager="true"
         SelectedId="_selectedBarber?.Id"
         OnSelect="Select"
@@ -18,13 +19,41 @@
         <MudText Class="barbers-name" Typo="Typo.h2">
             @BarberFullName
         </MudText>
-        @if (_selectedBarber is not null && BarberRating > 0)
+        @if (_selectedBarber is not null)
         {
-            <MudRating
-                Class="mt-3"
-                ReadOnly="true"
-                SelectedValue="@BarberRating"
-            />
+            @if (BarberRating > 0)
+            {
+                <MudRating
+                    Class="mt-2"
+                    ReadOnly="true"
+                    SelectedValue="@BarberRating"
+                />
+            }
+
+            @if (_selectedBarber.RetiredAt is null)
+            {
+                <MudChip
+                    T="string"
+                    Class="mt-2"
+                    Size="Size.Large"
+                    Color="Color.Success"
+                    Variant="Variant.Outlined"
+                >
+                    Active
+                </MudChip>
+            }
+            else
+            {
+                <MudChip
+                    T="string"
+                    Class="mt-2"
+                    Size="Size.Large"
+                    Color="Color.Error"
+                    Variant="Variant.Outlined"
+                >
+                    Retired
+                </MudChip>
+            }
         }
     </MudPaper>
 </div>
