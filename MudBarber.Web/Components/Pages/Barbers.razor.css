@@ -13,6 +13,11 @@
     min-width: 0;
 }
 
+.barbers-container ::deep .barbers-grid {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (max-width: 1200px) {
     .barbers-container {
         flex-direction: column;

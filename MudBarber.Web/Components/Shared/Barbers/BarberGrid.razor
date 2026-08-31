@@ -47,7 +47,7 @@
             }
         </div>
 
-        @if (Barbers.TotalPages > 1)
+        @if (AlwaysShowPager || Barbers.TotalPages > 1)
         {
             <div class="barber-pager">
                 <MudIconButton
@@ -82,6 +82,9 @@
 
     [Parameter]
     public bool IncludeRetired { get; set; }
+
+    [Parameter]
+    public bool AlwaysShowPager { get; set; }
 
     [Parameter]
     public int Columns { get; set; } = 3;
