@@ -26,6 +26,27 @@
 
         @if (_selectedBarber is not null)
         {
+            @if (_selectedBarber.RetiredAt is null)
+            {
+                <MudButton
+                    Class="barbers-form-button"
+                    Variant="Variant.Outlined"
+                    Color="Color.Error"
+                >
+                    Retire Barber
+                </MudButton>
+            }
+            else
+            {
+                <MudButton
+                    Class="barbers-form-button"
+                    Variant="Variant.Outlined"
+                    Color="Color.Success"
+                >
+                    Reactivate Barber
+                </MudButton>
+            }
+
             @if (BarberRating > 0)
             {
                 <MudRating
@@ -49,14 +70,6 @@
             }
             else if (_selectedBarber.RetiredAt is null)
             {
-                <MudButton
-                    Class="barbers-form-button"
-                    Variant="Variant.Outlined"
-                    Color="Color.Error"
-                >
-                    Retire Barber
-                </MudButton>
-
                 <MudChip
                     T="string"
                     Class="mt-2 barbers-form-chip"
@@ -69,14 +82,6 @@
             }
             else
             {
-                <MudButton
-                    Class="barbers-form-button"
-                    Variant="Variant.Outlined"
-                    Color="Color.Success"
-                >
-                    Reactivate Barber
-                </MudButton>
-
                 <MudChip
                     T="string"
                     Class="mt-2 barbers-form-chip"
