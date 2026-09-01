@@ -16,6 +16,8 @@
 
     <MudPaper Class="barbers-form">
 
+
+
         <MudAvatar Class="barbers-avatar" Color="Color.Primary"> 
             @BarberInitial
         </MudAvatar>
@@ -61,6 +63,14 @@
             }
             else
             {
+                <MudButton
+                    Class="barbers-form-button"
+                    Variant="Variant.Outlined"
+                    Color="Color.Tertiary"
+                >
+                    Reactivate Barber
+                </MudButton>
+
                 <MudChip
                     T="string"
                     Class="mt-2"
