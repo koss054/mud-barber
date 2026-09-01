@@ -101,6 +101,10 @@
     private bool _busy;
     private bool _failed;
 
+    // TODO: check if there's a better way of doing this
+    //       right now it's used to rerender the grid when a barber is retired on Barbers.razor
+    public void Rerender() => StateHasChanged();
+
     protected override async Task OnInitializedAsync()
     {
         if (Barbers is null)

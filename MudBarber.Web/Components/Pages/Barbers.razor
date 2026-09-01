@@ -9,6 +9,7 @@
 <div class="barbers-container">
 
     <BarberGrid
+        @ref="_grid"
         Class="barbers-grid"
         IncludeRetired="true"
         AlwaysShowPager="true"
@@ -35,7 +36,8 @@
                     Class="barbers-form-button"
                     Variant="Variant.Outlined"
                     Color="Color.Error"
-                    @onclick="() => RetireBarber(_selectedBarber.Id)"
+                    Disabled="_busy"
+                    OnClick="RetireBarber"
                 >
                     Retire Barber
                 </MudButton>
@@ -46,7 +48,8 @@
                     Class="barbers-form-button"
                     Variant="Variant.Outlined"
                     Color="Color.Success"
-                    @onclick="() => RestoreBarber(_selectedBarber.Id)"
+                    Disabled="_busy"
+                    OnClick="RestoreBarber"
                 >
                     Restore Barber
                 </MudButton>
@@ -104,34 +107,75 @@
 </div>
 
 @code {
+    private BarberGrid? _grid;
     private BarberDto? _selectedBarber;
+    private bool _busy;
 
     private void Select(BarberDto barber)
     {
         _selectedBarber = barber;
     }
 
-    private async Task<bool> RetireBarber(Guid barberId)
+    private async Task RetireBarber()
     {
-        if (_selectedBarber is null)
+        if (_selectedBarber is null || _busy)
         {
-            return false;
+            return;
         }
 
-        var result = await BarberApi.RetireBarberAsync(barberId);
-        return result;
+        _busy = true;
+
+        try
+        {
+            if (await BarberApi.RetireBarberAsync(_selectedBarber.Id))
+            {
+                // TODO: maybe return the retired at date from the endpoint above and use the value here?
+                _selectedBarber.RetiredAt = DateTimeOffset.UtcNow;
+                _grid?.Rerender();
+            }
+            else
+            {
+            }
+        }
+        catch (Exception)
+        {
+            // TODO: toast for failure
+        }
+        finally
+        {
+            _busy = false;
+        }
     }
 
     // TODO: update this when the BarberApiClient.RestoreBarberAsync's TODO is done.
-    private async Task<bool> RestoreBarber(Guid barberId)
+    private async Task RestoreBarber()
     {
-        if (_selectedBarber is null)
+        if (_selectedBarber is null || _busy)
         {
-            return false;
+            return;
         }
 
-        var result = await BarberApi.RestoreBarberAsync(barberId);
-        return result is not null;
+        _busy = true;
+
+        try
+        {
+            if (await BarberApi.RestoreBarberAsync(_selectedBarber.Id) is not null)
+            {
+                _selectedBarber.RetiredAt = null;
+                _grid?.Rerender();
+            }
+            else
+            {
+            }
+        }
+        catch (Exception)
+        {
+            // TODO: toast for failure
+        }
+        finally
+        {
+            _busy = false;
+        }
     }
 
     // TODO: decide if these barber specific values should live here or somewhere else.
