@@ -45,6 +45,8 @@
     font-size: 12px;
 }
 
+
+
 .barbers-container ::deep .barbers-form-chip {
     font-size: 16px;
     width: 6rem;
@@ -65,6 +67,7 @@
 
     .barbers-container ::deep .barbers-name {
         font-size: 2rem;
+        margin-top: 1rem;
     }
 
     .barbers-container ::deep .barbers-form-button {
@@ -75,5 +78,6 @@
         font-size: 12px;
         width: 5rem;
         height: 2rem;
+        margin-bottom: 1rem;
     }
 }
