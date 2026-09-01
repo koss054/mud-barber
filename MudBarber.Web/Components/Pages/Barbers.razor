@@ -4,6 +4,7 @@
 @using MudBarber.Web.Components.Shared.Barbers
 
 <div class="barbers-container">
+
     <BarberGrid
         Class="barbers-grid"
         IncludeRetired="true"
@@ -12,13 +13,17 @@
         OnSelect="Select"
         Columns=3
     />
+
     <MudPaper Class="barbers-form">
+
         <MudAvatar Class="barbers-avatar" Color="Color.Primary"> 
             @BarberInitial
         </MudAvatar>
+
         <MudText Class="barbers-name" Typo="Typo.h2">
             @BarberFullName
         </MudText>
+
         @if (_selectedBarber is not null)
         {
             @if (BarberRating > 0)
@@ -67,7 +72,9 @@
                 </MudChip>
             }
         }
+
     </MudPaper>
+
 </div>
 
 @code {
