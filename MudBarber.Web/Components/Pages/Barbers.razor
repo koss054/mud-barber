@@ -16,8 +16,6 @@
 
     <MudPaper Class="barbers-form">
 
-
-
         <MudAvatar Class="barbers-avatar" Color="Color.Primary"> 
             @BarberInitial
         </MudAvatar>
@@ -51,6 +49,14 @@
             }
             else if (_selectedBarber.RetiredAt is null)
             {
+                <MudButton
+                    Class="barbers-form-button"
+                    Variant="Variant.Outlined"
+                    Color="Color.Error"
+                >
+                    Retire Barber
+                </MudButton>
+
                 <MudChip
                     T="string"
                     Class="mt-2 barbers-form-chip"
@@ -66,7 +72,7 @@
                 <MudButton
                     Class="barbers-form-button"
                     Variant="Variant.Outlined"
-                    Color="Color.Tertiary"
+                    Color="Color.Success"
                 >
                     Reactivate Barber
                 </MudButton>
