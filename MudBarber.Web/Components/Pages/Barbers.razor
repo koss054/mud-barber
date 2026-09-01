@@ -2,6 +2,9 @@
 
 @using MudBarber.Shared.Barbers
 @using MudBarber.Web.Components.Shared.Barbers
+@using MudBarber.Web.Services
+
+@inject BarberApiClient BarberApi
 
 <div class="barbers-container">
 
@@ -32,6 +35,7 @@
                     Class="barbers-form-button"
                     Variant="Variant.Outlined"
                     Color="Color.Error"
+                    @onclick="() => RetireBarber(_selectedBarber.Id)"
                 >
                     Retire Barber
                 </MudButton>
@@ -42,8 +46,9 @@
                     Class="barbers-form-button"
                     Variant="Variant.Outlined"
                     Color="Color.Success"
+                    @onclick="() => RestoreBarber(_selectedBarber.Id)"
                 >
-                    Reactivate Barber
+                    Restore Barber
                 </MudButton>
             }
 
@@ -104,6 +109,29 @@
     private void Select(BarberDto barber)
     {
         _selectedBarber = barber;
+    }
+
+    private async Task<bool> RetireBarber(Guid barberId)
+    {
+        if (_selectedBarber is null)
+        {
+            return false;
+        }
+
+        var result = await BarberApi.RetireBarberAsync(barberId);
+        return result;
+    }
+
+    // TODO: update this when the BarberApiClient.RestoreBarberAsync's TODO is done.
+    private async Task<bool> RestoreBarber(Guid barberId)
+    {
+        if (_selectedBarber is null)
+        {
+            return false;
+        }
+
+        var result = await BarberApi.RestoreBarberAsync(barberId);
+        return result is not null;
     }
 
     // TODO: decide if these barber specific values should live here or somewhere else.

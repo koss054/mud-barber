@@ -57,6 +57,8 @@ public class BarberApiClient(HttpClient httpClient)
         return true;
     }
 
+    // TODO: change this so it returns bool like RetireBarberAsync
+    //       might need to dig in the ApiService/Endpoints as well.
     public async Task<BarberDto?> RestoreBarberAsync(
         Guid id, CancellationToken ct = default)
     {
