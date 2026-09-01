@@ -29,7 +29,7 @@
     width: 15rem;
     height: 15rem;
     font-size: 5rem;
-    margin-top: 5rem;
+    margin-top: 2.5rem;
 }
 
 .barbers-container ::deep .barbers-name {
@@ -46,7 +46,7 @@
         width: 8rem;
         height: 8rem;
         font-size: 2.5rem;
-        margin-top: 2.5rem;
+        margin-top: 1.25rem;
     }
 
     .barbers-container ::deep .barbers-name {
