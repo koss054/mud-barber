@@ -45,6 +45,12 @@
     font-size: 12px;
 }
 
+.barbers-container ::deep .barbers-form-chip {
+    font-size: 16px;
+    width: 6rem;
+    user-select: none;
+}
+
 @media (max-width: 1200px) {
     .barbers-container {
         flex-direction: column;
@@ -63,5 +69,11 @@
 
     .barbers-container ::deep .barbers-form-button {
         font-size: 9px;
+    }
+
+    .barbers-container ::deep .barbers-form-chip {
+        font-size: 12px;
+        width: 5rem;
+        height: 2rem;
     }
 }
