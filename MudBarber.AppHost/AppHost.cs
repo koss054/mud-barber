@@ -1,17 +1,12 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-/*
-TODO: adjust for local development so I don't need to uncomment this locally
-var postgres = builder.AddPostgres("postgres")
-    .WithDataVolume(isReadOnly: false)
-    .WithPgWeb();
-
-var postgresdb = postgres.AddDatabase("postgresdb");
-*/
-
 var postgres = builder
     .AddAzurePostgresFlexibleServer("postgres")
-    .RunAsContainer();
+    .RunAsContainer(configure => configure
+        .WithLifetime(ContainerLifetime.Persistent)
+        .WithDataVolume(isReadOnly: false)
+        .WithPgWeb()
+    );
 
 var postgresdb = postgres.AddDatabase("postgresdb");
 
