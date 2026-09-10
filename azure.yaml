@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: mud-barber
+services:  
+  app:
+    language: dotnet
+    project: ./MudBarber.AppHost/MudBarber.AppHost.csproj
+    host: containerapp
