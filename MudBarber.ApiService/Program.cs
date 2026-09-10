@@ -12,7 +12,8 @@ builder.Services.AddValidation();
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddOpenApi();
 
-builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");
+// builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");
+builder.AddAzureNpgsqlDbContext<MudBarberDbContext>("postgresdb");
 
 var app = builder.Build();
 
