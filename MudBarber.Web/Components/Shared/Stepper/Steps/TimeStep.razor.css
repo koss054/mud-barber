@@ -4,7 +4,7 @@
 
 .date-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 12px;
     margin-bottom: 12px;
 }
@@ -30,15 +30,26 @@
 
 .time-grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
+    margin-top: 12px;
+}
+
+.time-grid.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .time-grid ::deep .time-card {
     text-align: center;
+    padding: 12px 6px;
     cursor: pointer;
     border: 1px solid transparent;
     transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.time-grid.locked ::deep .time-card {
+    cursor: not-allowed;
 }
 
 .time-grid ::deep .time-card:hover {

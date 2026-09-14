@@ -17,6 +17,7 @@
             </MudPaper>
         }
     </div>
+    <MudDivider />
     <div class="time-grid @(Model.Date is null ? "locked" : "")">
         @foreach (var time in Times)
         {
@@ -37,7 +38,7 @@
     public EventCallback OnChanged { get; set; }
 
     private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
-    private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 7).Select(StartDate.AddDays);
+    private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 8).Select(StartDate.AddDays);
 
     private const int _slotMinutes = 30;
     private static readonly TimeOnly OpenAt = new(9, 0);
