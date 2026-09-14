@@ -1,6 +1,6 @@
 namespace MudBarber.Web.Theme;
 
-public static class CustomIcons
+public static class ImportedIcons
 {
     public const string Scissors =
         """
