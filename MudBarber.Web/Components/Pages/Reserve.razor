@@ -1,4 +1,5 @@
 @page "/reserve"
+
 @using MudBarber.Web.Components.Shared
 @using MudBarber.Web.Components.Shared.Stepper
 @using MudBarber.Web.Components.Shared.Stepper.Steps
@@ -7,6 +8,7 @@
 
 <FlowForm 
     FlowIcon="@ImportedIcons.Scissors"
+    FlowSteps="_flowSteps"
 />
 
 <Stepper
@@ -36,6 +38,46 @@
 
 @code {
     private readonly BookingModel _model = new();
+
+    private IReadOnlyList<FlowStepModel> _flowSteps = [];
+
+    protected override void OnInitialized()
+    {
+        _flowSteps = new List<FlowStepModel>
+        {
+            new FlowStepModel
+            {
+                Title = "1. Service",
+                RenderFragment = @<ServiceStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "2. Barber",
+                RenderFragment = @<BarberStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                    Locked="!IsStepComplete(Step.Service)"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "3. Time",
+                RenderFragment = @<TimeStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                    Locked="!IsStepComplete(Step.Barber)"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "4. Confirm",
+                RenderFragment = @<MudText>Confirm step goes here.</MudText>
+            }
+        };
+    }
 
     private readonly string[] _titles =
     [

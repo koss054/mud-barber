@@ -1,3 +1,5 @@
+@using MudBarber.Web.Models
+
 <MudPaper Style="width: 800px">
     <MudStepper
         @bind-ActiveIndex="_index"
@@ -10,6 +12,7 @@
         <TitleTemplate>
             @*This empty template prevents rendering the title*@
         </TitleTemplate>
+
         <ConnectorTemplate Context="step">
             <div class="mud-stepper-nav-connector">
                 @{
@@ -26,6 +29,7 @@
                 }
             </div>
         </ConnectorTemplate>
+
         <LabelTemplate>
             @if (context.IsActive) {
                 <MudIcon
@@ -44,8 +48,15 @@
                 />
             }
         </LabelTemplate>
+
         <ChildContent>
-            <MudStep Title="Verify passenger data">
+            @foreach (var flowStep in FlowSteps)
+            {
+                <MudStep Title="@flowStep.Title">
+                    @flowStep.RenderFragment
+                </MudStep>
+            }
+            @* <MudStep Title="Verify passenger data">
                 Check-in Step 1: Verify passenger data
             </MudStep>
             <MudStep Title="Upgrade to first class" Skippable="true">
@@ -56,8 +67,9 @@
             </MudStep>
             <MudStep Title="Complete check-in" @bind-Completed="_completed">
                 Check-in Final Step: Complete check-in
-            </MudStep>
+            </MudStep> *@
         </ChildContent>
+
         <CompletedContent>
             <MudStack Row Class="ma-3">
                 <MudIcon
@@ -69,6 +81,7 @@
                 </MudText>
             </MudStack>
         </CompletedContent>
+
         <ActionContent Context="stepper">
             <MudButton OnClick="@(() => stepper.ResetAsync())">
                 Reset
@@ -102,6 +115,10 @@
 @code {
     [Parameter]
     public string FlowIcon { get; set; } = null!;
+
+    [Parameter]
+    public IReadOnlyList<FlowStepModel> FlowSteps { get; set; } = [];
+
     private int _index;
     private bool _completed;
 }
