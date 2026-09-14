@@ -36,7 +36,6 @@
                 RenderFragment = @<BarberStep
                     Model="_model"
                     OnChanged="StateHasChanged"
-                    Locked="!IsStepComplete(Step.Service)"
                 />
             },
             new FlowStepModel
@@ -46,7 +45,6 @@
                 RenderFragment = @<TimeStep
                     Model="_model"
                     OnChanged="StateHasChanged"
-                    Locked="!IsStepComplete(Step.Barber)"
                 />
             },
             new FlowStepModel

@@ -2,12 +2,6 @@
     transition: opacity 0.25s ease;
 }
 
-.datetime-step.locked,
-.time-grid.locked {
-    opacity: 0.4;
-    pointer-events: none;
-}
-
 .date-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);

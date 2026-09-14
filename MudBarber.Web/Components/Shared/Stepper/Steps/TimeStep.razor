@@ -1,6 +1,6 @@
 @using MudBarber.Web.Models
 
-<div class="datetime-step @(Locked ? "locked" : "")">
+<div class="datetime-step">
     <MudText Typo="Typo.h6" Class="mb-2">
         Choose date and time
     </MudText>
@@ -36,9 +36,6 @@
     [Parameter]
     public EventCallback OnChanged { get; set; }
 
-    [Parameter]
-    public bool Locked { get; set; }
-
     private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
     private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 7).Select(StartDate.AddDays);
 
@@ -57,11 +54,6 @@
 
     private async Task SelectDate(DateOnly option)
     {
-        if (Locked)
-        {
-            return;
-        }
-
         if (Model.Date != option)
         {
             Model.Time = null;
@@ -73,11 +65,6 @@
 
     private async Task SelectTime(TimeOnly option)
     {
-        if (Locked)
-        {
-            return;
-        }
-
         if (Model.Date is null)
         {
             return;
