@@ -1,5 +1,3 @@
-@using MudBarber.Web.Theme
-
 <MudPaper Style="width: 800px">
     <MudStepper
         @bind-ActiveIndex="_index"
@@ -31,7 +29,7 @@
         <LabelTemplate>
             @if (context.IsActive) {
                 <MudIcon
-                    Icon="@ImportedIcons.Scissors"
+                    Icon="@FlowIcon"
                     Color="context.Completed ? Color.Success : Color.Primary"
                 />
             }
@@ -102,6 +100,8 @@
 </MudPaper>
 
 @code {
+    [Parameter]
+    public string FlowIcon { get; set; } = null!;
     private int _index;
     private bool _completed;
 }
