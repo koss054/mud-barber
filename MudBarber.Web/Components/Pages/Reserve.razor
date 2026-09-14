@@ -11,31 +11,6 @@
     FlowSteps="_flowSteps"
 />
 
-<Stepper
-    Titles="_titles"
-    ActiveIndex="FirstIncomplete"
-    StateFor="StepStateFor"
-/>
-
-<MudDivider Class="my-4" />
-
-<ServiceStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-/>
- 
-<BarberStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-    Locked="!IsStepComplete(Step.Service)"
-/>
-
-<TimeStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-    Locked="!IsStepComplete(Step.Barber)"
-/>
-
 @code {
     private readonly BookingModel _model = new();
 
