@@ -74,7 +74,7 @@
             <MudButton OnClick="@(() => stepper.ResetAsync())">
                 Reset
             </MudButton>
-            @if (!_completed) {
+            @if (!stepper.IsCompleted) {
                 <MudIconButton
                     OnClick="@(() => stepper.PreviousStepAsync())"
                     Icon="@Icons.Material.Filled.ArrowBack"
@@ -94,7 +94,7 @@
                     OnClick="@(() => stepper.NextStepAsync())"
                     Icon="@Icons.Material.Filled.ArrowForward"
                     Color="Color.Primary"
-                    Disabled="@(!FlowSteps.ElementAt(_index).IsStepComplete)"
+                    Disabled="@(!CurrentStepComplete)"
                 />
             }
         </ActionContent>
@@ -109,5 +109,6 @@
     public IReadOnlyList<FlowStepModel> FlowSteps { get; set; } = [];
 
     private int _index;
-    private bool _completed;
+
+    private bool CurrentStepComplete => FlowSteps[_index].IsComplete();
 }
