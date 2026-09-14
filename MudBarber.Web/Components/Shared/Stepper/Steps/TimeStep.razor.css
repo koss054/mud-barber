@@ -19,6 +19,15 @@
     flex: 0 0 var(--chevron-size);
 }
 
+.date-grid-container ::deep .date-chevron {
+    cursor: pointer;
+}
+
+.date-grid-container ::deep .date-chevron.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .date-grid {
     flex: 1;
     min-width: 0;

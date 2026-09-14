@@ -5,7 +5,11 @@
         Choose date and time
     </MudText>
     <div class="date-grid-container">
-        <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" />
+        <MudIcon
+            Class="@ChevronClass(CanShiftDateBack)"
+            Icon="@Icons.Material.Filled.ChevronLeft"
+            @onclick="() => ShiftDateGrid(-1)"
+        />
         <div class="date-grid">
             @foreach (var date in Dates)
             {
@@ -19,7 +23,11 @@
                 </MudPaper>
             }
         </div>
-        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" />
+        <MudIcon
+            Class="@ChevronClass(CanShiftDateForward)"
+            Icon="@Icons.Material.Filled.ChevronRight"
+            @onclick="() => ShiftDateGrid(1)"
+        />
     </div>
     <MudDivider Class="step-divider" />
     <div class="time-grid @(Model.Date is null ? "locked" : "")">
@@ -41,8 +49,24 @@
     [Parameter]
     public EventCallback OnChanged { get; set; }
 
+    private const int _dateGridDayCount = 8;
+    private const int _maxDateGridOffset = 30;  
+
+    private int _dateGridOffset;
+
     private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
-    private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 8).Select(StartDate.AddDays);
+    private IEnumerable<DateOnly> Dates => Enumerable
+        .Range(0, _dateGridDayCount)
+        .Select(i => StartDate.AddDays(_dateGridOffset + i));
+
+    private bool CanShiftDateBack => _dateGridOffset > 0;
+    private bool CanShiftDateForward => _dateGridOffset < _maxDateGridOffset;
+
+    private static string ChevronClass(bool enabled) =>
+        $"date-chevron {(enabled ? "" : "disabled")}";
+
+    private void ShiftDateGrid(int days) => 
+        _dateGridOffset = Math.Clamp(_dateGridOffset + days, 0, _maxDateGridOffset);
 
     private const int _slotMinutes = 30;
     private static readonly TimeOnly OpenAt = new(9, 0);
