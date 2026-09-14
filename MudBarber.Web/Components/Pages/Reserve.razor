@@ -23,6 +23,7 @@
             new FlowStepModel
             {
                 Title = "1. Service",
+                IsStepComplete = IsStepComplete(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -31,6 +32,7 @@
             new FlowStepModel
             {
                 Title = "2. Barber",
+                IsStepComplete = IsStepComplete(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -40,6 +42,7 @@
             new FlowStepModel
             {
                 Title = "3. Time",
+                IsStepComplete = IsStepComplete(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -49,6 +52,7 @@
             new FlowStepModel
             {
                 Title = "4. Confirm",
+                IsStepComplete = IsStepComplete(Step.Confirm),
                 RenderFragment = @<MudText>Confirm step goes here.</MudText>
             }
         };

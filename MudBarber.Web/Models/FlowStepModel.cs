@@ -6,5 +6,7 @@ public class FlowStepModel
 {
     public string Title { get; set; } = null!;
 
+    public bool IsStepComplete { get; set; }
+
     public RenderFragment RenderFragment { get; set; } = null!;
 }

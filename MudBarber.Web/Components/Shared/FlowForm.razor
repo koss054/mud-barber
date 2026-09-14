@@ -94,6 +94,7 @@
                     OnClick="@(() => stepper.NextStepAsync())"
                     Icon="@Icons.Material.Filled.ArrowForward"
                     Color="Color.Primary"
+                    Disabled="@(!FlowSteps.ElementAt(_index).IsStepComplete)"
                 />
             }
         </ActionContent>
