@@ -4,20 +4,24 @@
     <MudText Align="Align.Center" Typo="Typo.h6" Class="mb-3">
         Choose date and time
     </MudText>
-    <div class="date-grid">
-        @foreach (var date in Dates)
-        {
-            <MudPaper Class="@DateCardClass(date)" @onclick="() => SelectDate(date)">
-                <MudText Typo="Typo.body2">
-                    @date.DayOfWeek.ToString().Substring(0, 3)
-                </MudText>
-                <MudText Typo="Typo.subtitle1">
-                    @date.ToString("dd")
-                </MudText>
-            </MudPaper>
-        }
+    <div class="date-grid-container">
+        <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" />
+        <div class="date-grid">
+            @foreach (var date in Dates)
+            {
+                <MudPaper Class="@DateCardClass(date)" @onclick="() => SelectDate(date)">
+                    <MudText Typo="Typo.body2">
+                        @date.DayOfWeek.ToString().Substring(0, 3)
+                    </MudText>
+                    <MudText Typo="Typo.subtitle1">
+                        @date.ToString("dd")
+                    </MudText>
+                </MudPaper>
+            }
+        </div>
+        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" />
     </div>
-    <MudDivider />
+    <MudDivider Class="step-divider" />
     <div class="time-grid @(Model.Date is null ? "locked" : "")">
         @foreach (var time in Times)
         {

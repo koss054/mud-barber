@@ -1,12 +1,30 @@
 .datetime-step {
+    --grid-gap: 12px;
+    --chevron-size: 1.5rem;
+    /* Width the chevrons take out of the date row. */
+    --grid-inset: calc(var(--chevron-size) + var(--grid-gap));
     transition: opacity 0.25s ease;
 }
 
+.date-grid-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--grid-gap);
+    width: 100%;
+    margin-bottom: var(--grid-gap);
+}
+
+.date-grid-container ::deep .mud-icon-root {
+    flex: 0 0 var(--chevron-size);
+}
+
 .date-grid {
+    flex: 1;
+    min-width: 0;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: var(--grid-gap);
 }
 
 .date-grid ::deep .date-card {
@@ -28,11 +46,19 @@
     border-color: var(--mud-palette-primary);
 }
 
+.datetime-step ::deep .step-divider {
+    /* Overrides .mud-divider-fullwidth's width:100%, which would ignore the margins. */
+    width: auto;
+    margin-inline: var(--grid-inset);
+}
+
 .time-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 12px;
+    gap: var(--grid-gap);
+    margin-top: var(--grid-gap);
+    /* Inset by the chevrons so 1 time column spans exactly 2 date columns. */
+    margin-inline: var(--grid-inset);
 }
 
 .time-grid.locked {
