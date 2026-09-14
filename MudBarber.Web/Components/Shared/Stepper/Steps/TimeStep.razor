@@ -1,22 +1,35 @@
 @using MudBarber.Web.Models
 
-<div class="datetime-step @(Locked ? "locked" : "")">
-    <MudText Typo="Typo.h6" Class="mb-2">
+<div class="datetime-step">
+    <MudText Align="Align.Center" Typo="Typo.h6" Class="mb-3">
         Choose date and time
     </MudText>
-    <div class="date-grid">
-        @foreach (var date in Dates)
-        {
-            <MudPaper Class="@DateCardClass(date)" @onclick="() => SelectDate(date)">
-                <MudText Typo="Typo.body2">
-                    @date.DayOfWeek.ToString().Substring(0, 3)
-                </MudText>
-                <MudText Typo="Typo.subtitle1">
-                    @date.ToString("dd")
-                </MudText>
-            </MudPaper>
-        }
+    <div class="date-grid-container">
+        <MudIcon
+            Class="@ChevronClass(CanShiftDateBack)"
+            Icon="@Icons.Material.Filled.ChevronLeft"
+            @onclick="() => ShiftDateGrid(-1)"
+        />
+        <div class="date-grid">
+            @foreach (var date in Dates)
+            {
+                <MudPaper Class="@DateCardClass(date)" @onclick="() => SelectDate(date)">
+                    <MudText Typo="Typo.body2">
+                        @date.DayOfWeek.ToString().Substring(0, 3)
+                    </MudText>
+                    <MudText Typo="Typo.subtitle1">
+                        @date.ToString("dd")
+                    </MudText>
+                </MudPaper>
+            }
+        </div>
+        <MudIcon
+            Class="@ChevronClass(CanShiftDateForward)"
+            Icon="@Icons.Material.Filled.ChevronRight"
+            @onclick="() => ShiftDateGrid(1)"
+        />
     </div>
+    <MudDivider Class="step-divider" />
     <div class="time-grid @(Model.Date is null ? "locked" : "")">
         @foreach (var time in Times)
         {
@@ -30,17 +43,33 @@
 </div>
 
 @code {
+    // TODO: extract date grid stuff in DateGrid.razor
+    // TODO: extract time grid stuff in TimeGrid.razor
+    //          same idea as BarberGrid
     [Parameter, EditorRequired]
     public BookingModel Model { get; set; } = default!;
 
     [Parameter]
     public EventCallback OnChanged { get; set; }
 
-    [Parameter]
-    public bool Locked { get; set; }
+    private const int _dateGridDayCount = 8;
+    private const int _maxDateGridOffset = 30;  
+
+    private int _dateGridOffset;
 
     private static DateOnly StartDate => DateOnly.FromDateTime(DateTime.Today);
-    private static IEnumerable<DateOnly> Dates => Enumerable.Range(0, 7).Select(StartDate.AddDays);
+    private IEnumerable<DateOnly> Dates => Enumerable
+        .Range(0, _dateGridDayCount)
+        .Select(i => StartDate.AddDays(_dateGridOffset + i));
+
+    private bool CanShiftDateBack => _dateGridOffset > 0;
+    private bool CanShiftDateForward => _dateGridOffset < _maxDateGridOffset;
+
+    private static string ChevronClass(bool enabled) =>
+        $"date-chevron {(enabled ? "" : "disabled")}";
+
+    private void ShiftDateGrid(int days) => 
+        _dateGridOffset = Math.Clamp(_dateGridOffset + days, 0, _maxDateGridOffset);
 
     private const int _slotMinutes = 30;
     private static readonly TimeOnly OpenAt = new(9, 0);
@@ -57,11 +86,6 @@
 
     private async Task SelectDate(DateOnly option)
     {
-        if (Locked)
-        {
-            return;
-        }
-
         if (Model.Date != option)
         {
             Model.Time = null;
@@ -73,11 +97,6 @@
 
     private async Task SelectTime(TimeOnly option)
     {
-        if (Locked)
-        {
-            return;
-        }
-
         if (Model.Date is null)
         {
             return;

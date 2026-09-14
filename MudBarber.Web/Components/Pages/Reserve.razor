@@ -1,35 +1,61 @@
 @page "/reserve"
+
+@using MudBarber.Web.Components.Shared
+@* TODO: decide if chaning the stepper folder structure is needed - replaced the custom stepper with custom flow form *@
 @using MudBarber.Web.Components.Shared.Stepper
 @using MudBarber.Web.Components.Shared.Stepper.Steps
 @using MudBarber.Web.Models
+@using MudBarber.Web.Theme
 
-<Stepper
-    Titles="_titles"
-    ActiveIndex="FirstIncomplete"
-    StateFor="StepStateFor"
-/>
-
-<MudDivider Class="my-4" />
-
-<ServiceStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-/>
- 
-<BarberStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-    Locked="!IsStepComplete(Step.Service)"
-/>
-
-<TimeStep
-    Model="_model"
-    OnChanged="StateHasChanged"
-    Locked="!IsStepComplete(Step.Barber)"
+<FlowForm 
+    FlowIcon="@ImportedIcons.Scissors"
+    FlowSteps="_flowSteps"
 />
 
 @code {
     private readonly BookingModel _model = new();
+
+    private IReadOnlyList<FlowStepModel> _flowSteps = [];
+
+    protected override void OnInitialized()
+    {
+        _flowSteps = new List<FlowStepModel>
+        {
+            new FlowStepModel
+            {
+                Title = "1. Service",
+                IsComplete = () => IsStepComplete(Step.Service),
+                RenderFragment = @<ServiceStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "2. Barber",
+                IsComplete = () => IsStepComplete(Step.Barber),
+                RenderFragment = @<BarberStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "3. Time",
+                IsComplete = () => IsStepComplete(Step.Time),
+                RenderFragment = @<TimeStep
+                    Model="_model"
+                    OnChanged="StateHasChanged"
+                />
+            },
+            new FlowStepModel
+            {
+                Title = "4. Confirm",
+                IsComplete = () => IsStepComplete(Step.Confirm),
+                RenderFragment = @<MudText>Confirm step goes here.</MudText>
+            }
+        };
+    }
 
     private readonly string[] _titles =
     [
@@ -42,18 +68,6 @@
         Barber,
         Time,
         Confirm
-    }
-
-    private StepState StepStateFor(int index)
-    {
-        if (IsStepComplete((Step)index))
-        {
-            return StepState.Completed;
-        }
-
-        return index <= FirstIncomplete
-            ? StepState.Available
-            : StepState.Locked;
     }
 
     private bool IsStepComplete(Step step) => step switch
