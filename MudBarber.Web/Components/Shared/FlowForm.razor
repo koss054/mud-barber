@@ -1,3 +1,5 @@
+@using MudBarber.Web.Theme
+
 <MudPaper Style="width: 800px">
     <MudStepper
         @bind-ActiveIndex="_index"
@@ -29,8 +31,7 @@
         <LabelTemplate>
             @if (context.IsActive) {
                 <MudIcon
-                    Icon="@Icons.Material.Filled.AirplanemodeActive"
-                    Style="rotate: 90deg;"
+                    Icon="@ImportedIcons.Scissors"
                     Color="context.Completed ? Color.Success : Color.Primary"
                 />
             }
