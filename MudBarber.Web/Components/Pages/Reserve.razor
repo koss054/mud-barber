@@ -52,7 +52,9 @@
             {
                 Title = "4. Confirm",
                 IsComplete = () => IsStepComplete(Step.Confirm),
-                RenderFragment = @<ConfirmStep />
+                RenderFragment = @<ConfirmStep
+                    Model="_model"
+                />
             }
         };
     }

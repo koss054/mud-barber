@@ -1,0 +1,33 @@
+@using MudBarber.Web.Models
+
+<div class="confirm-step">
+    <MudText Align="Align.Center" Typo="Typo.h6">
+        Confirm your booking
+    </MudText>
+    <MudTextField 
+        @bind-Value="Model.Service"
+        Label="Service"
+        Variant="Variant.Outlined"
+        Typo="Typo.h6"
+        ReadOnly="true"
+    />
+    <MudTextField
+        @bind-Value="Model.Date"
+        Label="Date"
+        Variant="Variant.Outlined"
+        Typo="Typo.h6"
+        ReadOnly="true"
+    />
+    <MudTextField
+        @bind-Value="Model.Time"
+        Label="Time"
+        Variant="Variant.Outlined"
+        Typo="Typo.h6"
+        ReadOnly="true"
+    />
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public BookingModel Model { get; set; } = default!; 
+}
