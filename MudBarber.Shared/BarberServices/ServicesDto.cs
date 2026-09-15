@@ -8,5 +8,6 @@ public class ServicesDto
 
     public decimal Price { get; init; }
 
+    // TODO: decide if this is a good name for this property
     public int Minutes { get; init; }
 }
