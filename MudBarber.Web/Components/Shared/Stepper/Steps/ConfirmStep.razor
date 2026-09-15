@@ -1,13 +1,14 @@
 @using MudBarber.Web.Models
 
 @* TODO: add onclick to MudTextFields which open the step responsible for the data in it *@
+@*          might need to use another, more suitable MudBlazor component for this or a custom one *@
 
 <div class="confirm-step">
     <MudText Align="Align.Center" Typo="Typo.h6">
         Confirm your booking
     </MudText>
     <MudTextField 
-        Class="mb-4"
+        Class="mb-4 confirm-step-field"
         Text="@ServiceName"
         Label="Service"
         Variant="Variant.Outlined"
@@ -17,7 +18,7 @@
         @onclick="@(() => Console.WriteLine("Service clicked"))" 
     />
     <MudTextField
-        Class="mb-4"
+        Class="mb-4 confirm-step-field"
         Text="@BarberName"
         Label="Barber"
         Variant="Variant.Outlined"
@@ -26,7 +27,7 @@
         T="string"
     />
     <MudTextField
-        Class="mb-4"
+        Class="mb-4 confirm-step-field"
         Text="@Date"
         Label="Date"
         Variant="Variant.Outlined"
@@ -35,6 +36,7 @@
         T="string"
     />
     <MudTextField
+        Class="confirm-step-field"
         Text="@Time"
         Label="Time"
         Variant="Variant.Outlined"
