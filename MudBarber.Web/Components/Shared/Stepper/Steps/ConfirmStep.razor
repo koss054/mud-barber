@@ -1,5 +1,7 @@
 @using MudBarber.Web.Models
 
+@* TODO: add onclick to MudTextFields which open the step responsible for the data in it *@
+
 <div class="confirm-step">
     <MudText Align="Align.Center" Typo="Typo.h6">
         Confirm your booking
@@ -12,6 +14,7 @@
         Typo="Typo.body1"
         ReadOnly="true"
         T="string"
+        @onclick="@(() => Console.WriteLine("Service clicked"))" 
     />
     <MudTextField
         Class="mb-4"
