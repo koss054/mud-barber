@@ -1,6 +1,6 @@
 namespace MudBarber.Shared.BarberServices;
 
-public class ServicesDto
+public class ServiceDto
 {
     public Guid Id { get; init; }
 
