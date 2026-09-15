@@ -5,36 +5,63 @@
         Confirm your booking
     </MudText>
     <MudTextField 
-        @bind-Value="Model.Service"
+        Class="mb-4"
+        Text="@ServiceName"
         Label="Service"
         Variant="Variant.Outlined"
-        Typo="Typo.h6"
+        Typo="Typo.body1"
         ReadOnly="true"
+        T="string"
     />
     <MudTextField
-        @bind-Value="Model.Barber!.FirstName"
+        Class="mb-4"
+        Text="@BarberName"
         Label="Barber"
         Variant="Variant.Outlined"
-        Typo="Typo.h6"
+        Typo="Typo.body1"
         ReadOnly="true"
+        T="string"
     />
     <MudTextField
-        @bind-Value="Model.Date"
+        Class="mb-4"
+        Text="@Date"
         Label="Date"
         Variant="Variant.Outlined"
-        Typo="Typo.h6"
+        Typo="Typo.body1"
         ReadOnly="true"
+        T="string"
     />
     <MudTextField
-        @bind-Value="Model.Time"
+        Text="@Time"
         Label="Time"
         Variant="Variant.Outlined"
-        Typo="Typo.h6"
+        Typo="Typo.body1"
         ReadOnly="true"
+        T="string"
     />
 </div>
 
 @code {
     [Parameter, EditorRequired]
-    public BookingModel Model { get; set; } = default!; 
+    public BookingModel Model { get; set; } = default!;
+
+    private const string _emptyFieldPlaceholder = "---";
+
+    private string ServiceName =>
+        Model.Service?.Name ?? _emptyFieldPlaceholder;
+
+    private string BarberName
+        => Model.Barber is not null
+            ? $"{Model.Barber.FirstName} {Model.Barber.LastName}"
+            : _emptyFieldPlaceholder;
+
+    private string Date =>
+        Model.Date is not null
+            ? Model.Date!.Value.ToString("yyyy-MM-dd")
+            : _emptyFieldPlaceholder;
+
+    private string Time =>
+        Model.Time is not null
+            ? $"{Model.Time!.Value.ToString("HH:mm")} - {Model.Time!.Value.AddMinutes(Model.Service!.Minutes).ToString("HH:mm")}"
+            : _emptyFieldPlaceholder;
 }
