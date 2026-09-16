@@ -67,6 +67,6 @@
 
     private string Time =>
         Model.Time is not null
-            ? $"{Model.Time!.Value.ToString("HH:mm")} - {Model.Time!.Value.AddMinutes(Model.Service!.Minutes).ToString("HH:mm")}"
+            ? $"{Model.Time!.Value.ToString("HH:mm")} - {Model.Time!.Value.AddMinutes(Model.Service!.EstimatedMinutes).ToString("HH:mm")}"
             : _emptyFieldPlaceholder;
 }

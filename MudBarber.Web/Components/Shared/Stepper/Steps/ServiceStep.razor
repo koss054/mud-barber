@@ -13,7 +13,7 @@
                     @service.Name
                 </MudText>
                 <MudText Typo="Typo.body2" Class="mud-text-secondary">
-                    @service.Minutes min · @service.Price lv
+                    @service.EstimatedMinutes min · @service.Price lv
                 </MudText>
             </MudPaper>
         }
@@ -32,10 +32,10 @@
     // TODO: replace with actual API result
     // TODO: readonly struct for Price, maybe Money with Currency enum and Value decimal?
     private IReadOnlyList<ServiceDto> _services = [
-        new() { Id = Guid.NewGuid(), Name = "Classic cut", Minutes = 30, Price = 25 },
-        new() { Id = Guid.NewGuid(), Name = "Cut + beard trim", Minutes = 45, Price = 38 },
-        new() { Id = Guid.NewGuid(), Name = "Beard sculpt", Minutes = 20, Price = 18 },
-        new() { Id = Guid.NewGuid(), Name = "Kids cut", Minutes = 25, Price = 20 }
+        new() { Id = Guid.NewGuid(), Name = "Classic cut", EstimatedMinutes = 30, Price = 25 },
+        new() { Id = Guid.NewGuid(), Name = "Cut + beard trim", EstimatedMinutes = 45, Price = 38 },
+        new() { Id = Guid.NewGuid(), Name = "Beard sculpt", EstimatedMinutes = 20, Price = 18 },
+        new() { Id = Guid.NewGuid(), Name = "Kids cut", EstimatedMinutes = 25, Price = 20 }
     ];
 
     private string CardClass(string name) =>
