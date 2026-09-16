@@ -19,7 +19,26 @@ public class MudBarberDbContext : DbContext
     {
         // Retired barbers are excluded from every query by default.
         // Admin reads opt out explicitly with IgnoreQueryFilters().
+        // TODO: check how the Service approach below (with a named query filter) would work for this
         modelBuilder.Entity<Barber>()
             .HasQueryFilter(b => b.RetiredAt == null);
+
+        modelBuilder.Entity<Service>()
+            .HasQueryFilter("NotRetired", s => s.RetiredAt == null);
+
+        modelBuilder.Entity<Booking>(booking =>
+        {
+            booking.HasOne(b => b.Barber)
+                .WithMany()
+                .HasForeignKey(b => b.BarberId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            booking.HasOne(b => b.Service)
+                .WithMany()
+                .HasForeignKey(b => b.ServiceId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+        });
     }
 }
