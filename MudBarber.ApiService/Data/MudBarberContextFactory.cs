@@ -12,6 +12,7 @@ public class MudBarberDbContextFactory : IDesignTimeDbContextFactory<MudBarberDb
         // Loads the Npgsql provider so it generates Postgres SQL.
         var options = new DbContextOptionsBuilder<MudBarberDbContext>()
             .UseNpgsql("Host=localhost;Database=mudbarber;Username=postgres;Password=postgres")
+            .UseSnakeCaseNamingConvention()
             .Options;
 
         return new MudBarberDbContext(options);

@@ -13,7 +13,10 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddOpenApi();
 
 // builder.AddNpgsqlDbContext<MudBarberDbContext>("postgresdb");
-builder.AddAzureNpgsqlDbContext<MudBarberDbContext>("postgresdb");
+builder.AddAzureNpgsqlDbContext<MudBarberDbContext>(
+    "postgresdb",
+    configureDbContextOptions: o => o.UseSnakeCaseNamingConvention()
+);
 
 var app = builder.Build();
 
