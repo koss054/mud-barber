@@ -26,7 +26,7 @@ public static class BookingEndpoints
                 Id = b.Id,
                 BarberId = b.BarberId,
                 Start = b.Start,
-                DurationMinutes = b.DurationMinutes,
+                ActualMinutes = b.ActualMinutes,
                 CustomerName = b.CustomerName
             })
             .ToListAsync(ct);

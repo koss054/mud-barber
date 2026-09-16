@@ -8,7 +8,7 @@ public class BookingDto
 
     public DateTimeOffset Start { get; set; }
 
-    public int DurationMinutes { get; set; }
+    public int? ActualMinutes { get; set; }
 
     // TODO: introduce customer model and use it here.
     public string CustomerName { get; set; } = string.Empty;
