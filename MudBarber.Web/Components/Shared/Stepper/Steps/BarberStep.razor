@@ -8,7 +8,7 @@
     </MudText>
 
     <BarberGrid
-        SelectedId="Model.BarberId"
+        SelectedBarber="Model.Barber"
         OnSelect="Select"
         PageSize="3"
     />
@@ -24,7 +24,7 @@
 
     private async Task Select(BarberDto barber)
     {   
-        Model.BarberId = barber.Id;
+        Model.Barber = barber;
         await OnChanged.InvokeAsync();
     }
 }

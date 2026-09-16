@@ -1,0 +1,4 @@
+.confirm-step ::deep .mud-input-root-outlined {
+    cursor: pointer!important;
+    user-select: none!important;
+}

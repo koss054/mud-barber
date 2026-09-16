@@ -42,7 +42,7 @@
                 <BarberCard
                     @key="barber.Id"
                     Barber="barber"
-                    Selected="@(SelectedId == barber.Id)"
+                    Selected="@(SelectedBarber == barber)"
                     OnSelect="OnSelect"
                 />
             }
@@ -73,7 +73,7 @@
 
 @code {
     [Parameter]
-    public Guid? SelectedId { get; set; }
+    public BarberDto? SelectedBarber { get; set; }
 
     [Parameter]
     public EventCallback<BarberDto> OnSelect { get; set; }

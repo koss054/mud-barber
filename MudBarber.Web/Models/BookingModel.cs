@@ -1,3 +1,6 @@
+using MudBarber.Shared.Barbers;
+using MudBarber.Shared.BarberServices;
+
 namespace MudBarber.Web.Models;
 
 /// <summary>
@@ -6,8 +9,8 @@ namespace MudBarber.Web.Models;
 /// </summary>
 public class BookingModel
 {
-    public string? Service { get; set; }
-    public Guid? BarberId { get; set; }
+    public ServiceDto? Service { get; set; }
+    public BarberDto? Barber { get; set; }
     public DateOnly? Date { get; set; }
     public TimeOnly? Time { get; set; }
     public string? Phone { get; set; }

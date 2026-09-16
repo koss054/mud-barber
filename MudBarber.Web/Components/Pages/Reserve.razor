@@ -52,7 +52,9 @@
             {
                 Title = "4. Confirm",
                 IsComplete = () => IsStepComplete(Step.Confirm),
-                RenderFragment = @<MudText>Confirm step goes here.</MudText>
+                RenderFragment = @<ConfirmStep
+                    Model="_model"
+                />
             }
         };
     }
@@ -72,8 +74,8 @@
 
     private bool IsStepComplete(Step step) => step switch
     {
-        Step.Service => !string.IsNullOrEmpty(_model.Service),
-        Step.Barber => _model.BarberId is not null,
+        Step.Service => _model.Service is not null,
+        Step.Barber => _model.Barber is not null,
         Step.Time => _model.Date is not null && _model.Time is not null,
         Step.Confirm => !string.IsNullOrEmpty(_model.Phone),
         _ => false

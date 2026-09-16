@@ -1,3 +1,4 @@
+@using MudBarber.Shared.BarberServices
 @using MudBarber.Web.Models
 
 <div class="service-step">
@@ -7,12 +8,12 @@
     <div class="service-grid">
         @foreach (var service in _services)
         {
-            <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service.Name)">
+            <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service)">
                 <MudText Typo="Typo.subtitle1">
                     @service.Name
                 </MudText>
                 <MudText Typo="Typo.body2" Class="mud-text-secondary">
-                    @service.Duration min · @service.Price lv
+                    @service.Minutes min · @service.Price lv
                 </MudText>
             </MudPaper>
         }
@@ -28,20 +29,21 @@
 
     private record ServiceOption(string Name, int Duration, int Price);
 
-    private readonly ServiceOption[] _services =
-    [
-        new("Classic cut", 30, 25),
-        new("Cut + beard trim", 45, 38),
-        new("Beard sculpt", 20, 18),
-        new("Kids cut", 25, 20)
+    // TODO: replace with actual API result
+    // TODO: readonly struct for Price, maybe Money with Currency enum and Value decimal?
+    private IReadOnlyList<ServiceDto> _services = [
+        new() { Id = Guid.NewGuid(), Name = "Classic cut", Minutes = 30, Price = 25 },
+        new() { Id = Guid.NewGuid(), Name = "Cut + beard trim", Minutes = 45, Price = 38 },
+        new() { Id = Guid.NewGuid(), Name = "Beard sculpt", Minutes = 20, Price = 18 },
+        new() { Id = Guid.NewGuid(), Name = "Kids cut", Minutes = 25, Price = 20 }
     ];
 
     private string CardClass(string name) =>
-        $"service-card {(Model.Service == name ? "selected" : "")}";
+        $"service-card {(Model.Service?.Name == name ? "selected" : "")}";
 
-    private async Task Select(string name)
+    private async Task Select(ServiceDto service)
     {
-        Model.Service = name;
+        Model.Service = service;
         await OnChanged.InvokeAsync();
     }
 }
