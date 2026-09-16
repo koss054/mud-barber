@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace MudBarber.ApiService.Data;
 
+// TODO: reconsider this approach
 public class MudBarberDbContextFactory : IDesignTimeDbContextFactory<MudBarberDbContext>
 {
     public MudBarberDbContext CreateDbContext(string[] args)

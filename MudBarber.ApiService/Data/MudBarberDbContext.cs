@@ -13,6 +13,8 @@ public class MudBarberDbContext : DbContext
 
     public DbSet<Barber> Barbers { get; set; }
 
+    public DbSet<Service> Services { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Retired barbers are excluded from every query by default.
