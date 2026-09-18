@@ -9,21 +9,53 @@
     <MudText Align="Align.Center" Typo="Typo.h6" Class="mb-3">
         Choose a service
     </MudText>
-    <div class="service-grid">
-        @* TODO: add if check for count - similar to BarberGrid.razor *@
-        @foreach (var service in Services?.Items ?? Enumerable.Empty<BarberServiceDto>())
-        {
-            <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service)">
-                <MudText Typo="Typo.subtitle1">
-                    @service.Name
-                </MudText>
-                <MudText Typo="Typo.body2" Class="mud-text-secondary">
-                    @service.EstimatedMinutes min · @service.Price lv
-                </MudText>
-            </MudPaper>
-        }
+    @if (_busy && Services is null)
+    {
+        <div class="service-grid">
+            @foreach (var _ in Enumerable.Range(0, PageSize)) 
+            {
+                @* TODO: update styling so it matches actual grid step *@
+                <MudSkeleton 
+                    SkeletonType="SkeletonType.Rectangle"
+                    Animation="Animation.Wave"
+                    Height="118px"
+                />   
+            }
+        </div>
+    }
+    else if (_failed)
+    {
+        <MudAlert Severity="Severity.Error" Class="my-2">
+            Couldn't load services.
+            <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="Load">
+                Retry
+            </MudButton>
+        </MudAlert>
+    }
+    else if (Services is null || Services.Items.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Class="my-2">
+            No services are available right now.
+        </MudAlert>
+    }
+    else
+    {
+        <div class="service-grid">
+            @* TODO: add if check for count - similar to BarberGrid.razor *@
+            @foreach (var service in Services?.Items ?? Enumerable.Empty<BarberServiceDto>())
+            {
+                <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service)">
+                    <MudText Typo="Typo.subtitle1">
+                        @service.Name
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        @service.EstimatedMinutes min · @service.Price lv
+                    </MudText>
+                </MudPaper>
+            }
+        </div>
+    }
     </div>
-</div>
 
 @code {
     [Parameter, EditorRequired]
