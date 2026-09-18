@@ -13,6 +13,7 @@ public class BookingModel
     public BarberDto? Barber { get; set; }
     public DateOnly? Date { get; set; }
     public TimeOnly? Time { get; set; }
+    public string? CustomerName { get; set; }
     public string? Phone { get; set; }
     public string? Note { get; set; }
 }

@@ -3,6 +3,8 @@ using MudBarber.Shared.Bookings;
 
 namespace MudBarber.ApiService.Mapping;
 
+// Postgres 'timestamp with time zone' only accepts offset 0, so a Start written here
+// is normalised to UTC rather than every caller having to know the store's constraint.
 public static class BookingMapping
 {
     public static BookingDto ToDto(this Booking booking) =>
@@ -26,7 +28,7 @@ public static class BookingMapping
             Id = Guid.CreateVersion7(),
             BarberId = request.BarberId,
             ServiceId = service.Id,
-            Start = request.Start,
+            Start = request.Start.ToUniversalTime(),
             EstimatedMinutes = service.EstimatedMinutes,
             Price = service.Price,
             CustomerName = request.CustomerName.Trim()
@@ -34,7 +36,7 @@ public static class BookingMapping
 
     public static void ApplyTo(this UpdateBookingRequest request, Booking booking)
     {
-        booking.Start = request.Start;
+        booking.Start = request.Start.ToUniversalTime();
         booking.CustomerName = request.CustomerName.Trim();
         booking.ActualMinutes = request.ActualMinutes;
     }
