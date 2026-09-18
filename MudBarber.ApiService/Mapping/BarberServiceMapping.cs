@@ -22,4 +22,13 @@ public static class BarberServiceMapping
             Price = request.Price,
             EstimatedMinutes = request.EstimatedMinutes
         };
+
+    public static void ApplyTo(
+        this UpdateBarberServiceRequest request, 
+        BarberService service)
+    {
+        service.Name = request.Name;
+        service.Price = request.Price;
+        service.EstimatedMinutes = request.EstimatedMinutes;
+    }
 }

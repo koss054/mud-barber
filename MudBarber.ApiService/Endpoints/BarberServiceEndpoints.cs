@@ -83,4 +83,24 @@ public static class BarberServiceEndpoints
             ? TypedResults.NotFound()
             : TypedResults.Ok(service.ToDto());
     }
+
+    private static async Task<Results<Ok<BarberServiceDto>, NotFound>> Update(
+        Guid id,
+        UpdateBarberServiceRequest request,
+        MudBarberDbContext db,
+        CancellationToken ct = default)
+    {
+        var service = await db.BarberServices
+            .FirstOrDefaultAsync(s => s.Id == id, ct);
+
+        if (service == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        request.ApplyTo(service);
+        await db.SaveChangesAsync(ct);
+
+        return TypedResults.Ok(service.ToDto());
+    }
 }
