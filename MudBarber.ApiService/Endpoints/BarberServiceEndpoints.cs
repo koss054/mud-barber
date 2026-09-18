@@ -69,4 +69,18 @@ public static class BarberServiceEndpoints
             TotalCount = totalCount
         });
     }
+
+    private static async Task<Results<Ok<BarberServiceDto>, NotFound>> GetById(
+        Guid id,
+        MudBarberDbContext db,
+        CancellationToken ct = default)
+    {
+        var service = await db.BarberServices
+            .AsNoTracking()
+            .FirstOrDefaultAsync(s => s.Id == id, ct);
+
+        return service == null
+            ? TypedResults.NotFound()
+            : TypedResults.Ok(service.ToDto());
+    }
 }
