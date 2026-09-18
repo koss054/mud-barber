@@ -19,6 +19,7 @@ static void UseApiService(HttpClient client) =>
 
 builder.Services.AddHttpClient<BarberApiClient>(UseApiService);
 builder.Services.AddHttpClient<BarberServiceApiClient>(UseApiService);
+builder.Services.AddHttpClient<BookingApiClient>(UseApiService);
 
 builder.Services.AddMudServices();
 
