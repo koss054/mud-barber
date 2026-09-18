@@ -103,4 +103,27 @@ public static class BarberServiceEndpoints
 
         return TypedResults.Ok(service.ToDto());
     }
+
+    // TODO: eventually add admin endpoint for fully deleting a record, instead of retiring it
+    private static async Task<Results<NoContent, NotFound>> Delete(
+        Guid id,
+        MudBarberDbContext db,
+        TimeProvider timeProvider,
+        CancellationToken ct = default)
+    {
+        // The global query filter already excludes retired barber services.
+        var service = await db.BarberServices
+            .FirstOrDefaultAsync(s => s.Id == id, ct);
+
+        if (service == null)
+        {
+            // Deleting a service twice return NotFound.
+            return TypedResults.NotFound();
+        }
+
+        service.RetiredAt = timeProvider.GetUtcNow();
+        await db.SaveChangesAsync(ct);
+
+        return TypedResults.NoContent();
+    }
 }
