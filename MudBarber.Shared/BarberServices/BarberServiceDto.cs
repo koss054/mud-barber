@@ -1,6 +1,6 @@
 namespace MudBarber.Shared.BarberServices;
 
-public class ServiceDto
+public class BarberServiceDto
 {
     public Guid Id { get; init; }
 
@@ -8,6 +8,5 @@ public class ServiceDto
 
     public decimal Price { get; init; }
 
-    // TODO: decide if this is a good name for this property
     public int EstimatedMinutes { get; init; }
 }

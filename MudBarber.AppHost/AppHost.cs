@@ -4,6 +4,8 @@ var postgres = builder
     .AddAzurePostgresFlexibleServer("postgres")
     .RunAsContainer(configure => configure
         .WithLifetime(ContainerLifetime.Persistent)
+        // Pinned so `dotnet ef` can reach the container outside Aspire.
+        .WithHostPort(5432)
         .WithDataVolume(isReadOnly: false)
         .WithPgWeb()
     );

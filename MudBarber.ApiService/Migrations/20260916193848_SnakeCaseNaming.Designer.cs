@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MudBarber.ApiService.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MudBarber.ApiService.Migrations
 {
     [DbContext(typeof(MudBarberDbContext))]
-    partial class MudBarberDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260916193848_SnakeCaseNaming")]
+    partial class SnakeCaseNaming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,36 +54,6 @@ namespace MudBarber.ApiService.Migrations
                         .HasName("pk_barbers");
 
                     b.ToTable("barbers", (string)null);
-                });
-
-            modelBuilder.Entity("MudBarber.ApiService.Data.Entities.BarberService", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<int>("EstimatedMinutes")
-                        .HasColumnType("integer")
-                        .HasColumnName("estimated_minutes");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("price");
-
-                    b.Property<DateTimeOffset?>("RetiredAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("retired_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_barber_services");
-
-                    b.ToTable("barber_services", (string)null);
                 });
 
             modelBuilder.Entity("MudBarber.ApiService.Data.Entities.Booking", b =>
@@ -131,6 +104,36 @@ namespace MudBarber.ApiService.Migrations
                     b.ToTable("bookings", (string)null);
                 });
 
+            modelBuilder.Entity("MudBarber.ApiService.Data.Entities.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("EstimatedMinutes")
+                        .HasColumnType("integer")
+                        .HasColumnName("estimated_minutes");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
+                    b.Property<DateTimeOffset?>("RetiredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("retired_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_services");
+
+                    b.ToTable("services", (string)null);
+                });
+
             modelBuilder.Entity("MudBarber.ApiService.Data.Entities.Booking", b =>
                 {
                     b.HasOne("MudBarber.ApiService.Data.Entities.Barber", "Barber")
@@ -140,12 +143,12 @@ namespace MudBarber.ApiService.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_bookings_barbers_barber_id");
 
-                    b.HasOne("MudBarber.ApiService.Data.Entities.BarberService", "Service")
+                    b.HasOne("MudBarber.ApiService.Data.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_bookings_barber_services_service_id");
+                        .HasConstraintName("fk_bookings_services_service_id");
 
                     b.Navigation("Barber");
 

@@ -1,4 +1,8 @@
+@using MudBarber.Shared.Bookings
 @using MudBarber.Web.Models
+@using MudBarber.Web.Services
+
+@inject BookingApiClient BookingsApi
 
 @* TODO: add onclick to MudTextFields which open the step responsible for the data in it *@
 @*          might need to use another, more suitable MudBlazor component for this or a custom one *@
@@ -36,7 +40,7 @@
         T="string"
     />
     <MudTextField
-        Class="confirm-step-field"
+        Class="mb-4 confirm-step-field"
         Text="@Time"
         Label="Time"
         Variant="Variant.Outlined"
@@ -44,6 +48,50 @@
         ReadOnly="true"
         T="string"
     />
+    <MudTextField
+        @bind-Value="Model.CustomerName"
+        Label="Your name"
+        Variant="Variant.Outlined"
+        Typo="Typo.body1"
+        Immediate="true"
+        MaxLength="50"
+        Disabled="@(_booking is not null)"
+        T="string"
+    />
+
+    @if (_booking is not null)
+    {
+        <MudAlert Severity="Severity.Success" Class="mt-4">
+            Booked for @_booking.Start.ToLocalTime().ToString("yyyy-MM-dd HH:mm").
+        </MudAlert>
+    }
+    else
+    {
+        @if (_errors.Count > 0)
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">
+                @foreach (var error in _errors)
+                {
+                    <div>@error</div>
+                }
+            </MudAlert>
+        }
+
+        <MudButton
+            Class="mt-4"
+            Variant="Variant.Filled"
+            Color="Color.Primary"
+            FullWidth="true"
+            Disabled="@(_busy || !CanSubmit)"
+            OnClick="Submit"
+        >
+            @if (_busy)
+            {
+                <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+            }
+            Confirm booking
+        </MudButton>
+    }
 </div>
 
 @code {
@@ -51,6 +99,57 @@
     public BookingModel Model { get; set; } = default!;
 
     private const string _emptyFieldPlaceholder = "---";
+
+    private BookingDto? _booking;
+    private IReadOnlyList<string> _errors = [];
+    private bool _busy;
+
+    private bool CanSubmit =>
+        Model.Service is not null
+        && Model.Barber is not null
+        && Model.Date is not null
+        && Model.Time is not null
+        && !string.IsNullOrWhiteSpace(Model.CustomerName);
+
+    private async Task Submit()
+    {
+        _busy = true;
+        _errors = [];
+
+        try
+        {
+            // Date and time are picked on separate steps, so they're stitched back
+            // together against the server's offset before the API sees them.
+            var start = Model.Date!.Value.ToDateTime(Model.Time!.Value);
+
+            var request = new CreateBookingRequest(
+                Model.Barber!.Id,
+                Model.Service!.Id,
+                new DateTimeOffset(start, TimeZoneInfo.Local.GetUtcOffset(start)),
+                Model.CustomerName!.Trim());
+
+            var result = await BookingsApi.CreateBookingAsync(request);
+
+            if (result.Succeeded)
+            {
+                _booking = result.Booking;
+            }
+            else
+            {
+                _errors = result.Errors.Count > 0
+                    ? [.. result.Errors.SelectMany(e => e.Value)]
+                    : ["Couldn't create the booking."];
+            }
+        }
+        catch (Exception)
+        {
+            _errors = ["Couldn't reach the booking service. Try again."];
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
 
     private string ServiceName =>
         Model.Service?.Name ?? _emptyFieldPlaceholder;

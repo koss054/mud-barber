@@ -1,24 +1,63 @@
 @using MudBarber.Shared.BarberServices
+@using MudBarber.Shared.Paging
 @using MudBarber.Web.Models
+@using MudBarber.Web.Services
+
+@inject BarberServiceApiClient ServicesApi
 
 <div class="service-step">
     <MudText Align="Align.Center" Typo="Typo.h6" Class="mb-3">
         Choose a service
     </MudText>
-    <div class="service-grid">
-        @foreach (var service in _services)
-        {
-            <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service)">
-                <MudText Typo="Typo.subtitle1">
-                    @service.Name
-                </MudText>
-                <MudText Typo="Typo.body2" Class="mud-text-secondary">
-                    @service.EstimatedMinutes min · @service.Price lv
-                </MudText>
-            </MudPaper>
-        }
+    @if (_busy && Services is null)
+    {
+        <div class="service-grid">
+            @foreach (var _ in Enumerable.Range(0, PageSize)) 
+            {
+                @* TODO: update styling so it matches actual grid step *@
+                <MudSkeleton 
+                    SkeletonType="SkeletonType.Rectangle"
+                    Animation="Animation.Wave"
+                    Height="118px"
+                />   
+            }
+        </div>
+    }
+    else if (_failed)
+    {
+        <MudAlert Severity="Severity.Error" Class="my-2">
+            Couldn't load services.
+            <MudButton Variant="Variant.Text" Size="Size.Small" OnClick="Load">
+                Retry
+            </MudButton>
+        </MudAlert>
+    }
+    else if (Services is null || Services.Items.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Class="my-2">
+            No services are available right now.
+        </MudAlert>
+    }
+    else
+    {
+        <div class="service-grid">
+            @* TODO: add if check for count - similar to BarberGrid.razor *@
+            @foreach (var service in Services?.Items ?? Enumerable.Empty<BarberServiceDto>())
+            {
+                <MudPaper Class="@CardClass(service.Name)" @onclick="() => Select(service)">
+                    <MudText Typo="Typo.subtitle1">
+                        @service.Name
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        @service.EstimatedMinutes min · @service.Price lv
+                    </MudText>
+                </MudPaper>
+            }
+        </div>
+        
+        @* TODO: add page navigation *@
+    }
     </div>
-</div>
 
 @code {
     [Parameter, EditorRequired]
@@ -27,21 +66,58 @@
     [Parameter]
     public EventCallback OnChanged { get; set; }
 
-    private record ServiceOption(string Name, int Duration, int Price);
+    // TODO: extract services grid to a separate component and move PageSize and IncludeRetired to it
+    [Parameter]
+    public int PageSize { get; set; } = 4;
 
-    // TODO: replace with actual API result
+    [Parameter]
+    public bool IncludeRetired { get; set; } = false;
+
+    private int _page = 1;
+    private bool _busy;
+    private bool _failed;
+
     // TODO: readonly struct for Price, maybe Money with Currency enum and Value decimal?
-    private IReadOnlyList<ServiceDto> _services = [
-        new() { Id = Guid.NewGuid(), Name = "Classic cut", EstimatedMinutes = 30, Price = 25 },
-        new() { Id = Guid.NewGuid(), Name = "Cut + beard trim", EstimatedMinutes = 45, Price = 38 },
-        new() { Id = Guid.NewGuid(), Name = "Beard sculpt", EstimatedMinutes = 20, Price = 18 },
-        new() { Id = Guid.NewGuid(), Name = "Kids cut", EstimatedMinutes = 25, Price = 20 }
-    ];
+    [PersistentState]
+    public PagedResult<BarberServiceDto>? Services { get; set; }
 
     private string CardClass(string name) =>
         $"service-card {(Model.Service?.Name == name ? "selected" : "")}";
 
-    private async Task Select(ServiceDto service)
+    protected override async Task OnInitializedAsync()
+    {
+        if (Services is null)
+        {
+            await Load();
+        }
+        else
+        {
+            _page = Services.Page;
+        }
+    }
+
+    private async Task Load()
+    {
+        _busy = true;
+        _failed = false;
+
+        try
+        {
+            Services = await ServicesApi.GetBarberServicesAsync(_page, PageSize, IncludeRetired);
+            _page = Services.Page;
+        }
+        catch (Exception)
+        {
+            Services = null;
+            _failed = true;
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
+
+    private async Task Select(BarberServiceDto service)
     {
         Model.Service = service;
         await OnChanged.InvokeAsync();

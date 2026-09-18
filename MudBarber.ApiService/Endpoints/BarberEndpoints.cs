@@ -108,7 +108,7 @@ public static class BarberEndpoints
 
         if (barber == null)
         {
-            // Deleting one twice returns NotFound.
+            // Deleting a barber twice returns NotFound.
             return TypedResults.NotFound();
         }
 

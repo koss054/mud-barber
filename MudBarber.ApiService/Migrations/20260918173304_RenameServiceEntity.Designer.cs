@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MudBarber.ApiService.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MudBarber.ApiService.Migrations
 {
     [DbContext(typeof(MudBarberDbContext))]
-    partial class MudBarberDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260918173304_RenameServiceEntity")]
+    partial class RenameServiceEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +81,9 @@ namespace MudBarber.ApiService.Migrations
                         .HasColumnName("retired_at");
 
                     b.HasKey("Id")
-                        .HasName("pk_barber_services");
+                        .HasName("pk_services");
 
-                    b.ToTable("barber_services", (string)null);
+                    b.ToTable("services", (string)null);
                 });
 
             modelBuilder.Entity("MudBarber.ApiService.Data.Entities.Booking", b =>
@@ -145,7 +148,7 @@ namespace MudBarber.ApiService.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_bookings_barber_services_service_id");
+                        .HasConstraintName("fk_bookings_services_service_id");
 
                     b.Navigation("Barber");
 

@@ -12,12 +12,14 @@ builder.Services.AddRazorComponents()
 builder.Services.AddOutputCache();
 
 
-builder.Services.AddHttpClient<BarberApiClient>(client =>
-{
-    // "https+http://" prefers HTTPS over HTTP.
-    // "apiservice" is the AppHost resource name, resolved by service discovery.
+// "https+http://" prefers HTTPS over HTTP.
+// "apiservice" is the AppHost resource name, resolved by service discovery.
+static void UseApiService(HttpClient client) =>
     client.BaseAddress = new("https+http://apiservice");
-});
+
+builder.Services.AddHttpClient<BarberApiClient>(UseApiService);
+builder.Services.AddHttpClient<BarberServiceApiClient>(UseApiService);
+builder.Services.AddHttpClient<BookingApiClient>(UseApiService);
 
 builder.Services.AddMudServices();
 
