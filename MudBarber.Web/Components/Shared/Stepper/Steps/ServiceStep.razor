@@ -31,7 +31,7 @@
 
     // TODO: replace with actual API result
     // TODO: readonly struct for Price, maybe Money with Currency enum and Value decimal?
-    private IReadOnlyList<ServiceDto> _services = [
+    private IReadOnlyList<BarberServiceDto> _services = [
         new() { Id = Guid.NewGuid(), Name = "Classic cut", EstimatedMinutes = 30, Price = 25 },
         new() { Id = Guid.NewGuid(), Name = "Cut + beard trim", EstimatedMinutes = 45, Price = 38 },
         new() { Id = Guid.NewGuid(), Name = "Beard sculpt", EstimatedMinutes = 20, Price = 18 },
@@ -41,7 +41,7 @@
     private string CardClass(string name) =>
         $"service-card {(Model.Service?.Name == name ? "selected" : "")}";
 
-    private async Task Select(ServiceDto service)
+    private async Task Select(BarberServiceDto service)
     {
         Model.Service = service;
         await OnChanged.InvokeAsync();
