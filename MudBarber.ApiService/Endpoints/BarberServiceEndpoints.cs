@@ -105,6 +105,7 @@ public static class BarberServiceEndpoints
     }
 
     // TODO: eventually add admin endpoint for fully deleting a record, instead of retiring it
+    // TODO: rename this endpoint to Retire when above TODO is implemented
     private static async Task<Results<NoContent, NotFound>> Delete(
         Guid id,
         MudBarberDbContext db,
@@ -125,5 +126,29 @@ public static class BarberServiceEndpoints
         await db.SaveChangesAsync(ct);
 
         return TypedResults.NoContent();
+    }
+
+    private static async Task<Results<Ok<BarberServiceDto>, NotFound>> Restore(
+        Guid id,
+        MudBarberDbContext db,
+        CancellationToken ct = default
+    )
+    {
+        var service = await db.BarberServices
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(s => s.Id == id, ct);
+
+        if (service == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        if (service.RetiredAt != null)
+        {
+            service.RetiredAt = null;
+            await db.SaveChangesAsync(ct);
+        }
+
+        return TypedResults.Ok(service.ToDto());
     }
 }
