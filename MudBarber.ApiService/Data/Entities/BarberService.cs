@@ -1,6 +1,6 @@
 namespace MudBarber.ApiService.Data.Entities;
 
-public class Service
+public class BarberService
 {
     public Guid Id { get; init; }
 

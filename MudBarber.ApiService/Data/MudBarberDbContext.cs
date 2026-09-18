@@ -13,7 +13,7 @@ public class MudBarberDbContext : DbContext
 
     public DbSet<Barber> Barbers { get; set; }
 
-    public DbSet<Service> Services { get; set; }
+    public DbSet<BarberService> Services { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,7 +23,7 @@ public class MudBarberDbContext : DbContext
         modelBuilder.Entity<Barber>()
             .HasQueryFilter(b => b.RetiredAt == null);
 
-        modelBuilder.Entity<Service>()
+        modelBuilder.Entity<BarberService>()
             .HasQueryFilter("NotRetired", s => s.RetiredAt == null);
 
         modelBuilder.Entity<Booking>(booking =>

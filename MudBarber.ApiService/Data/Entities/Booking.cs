@@ -8,7 +8,7 @@ public class Booking
     public Barber Barber { get; set; } = null!;
 
     public Guid ServiceId { get; set; }
-    public Service Service { get; set; } = null!;
+    public BarberService Service { get; set; } = null!;
 
     public DateTimeOffset Start { get; set; }
 
