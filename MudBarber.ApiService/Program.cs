@@ -36,6 +36,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapBookingEndpoints();
 app.MapBarberEndpoints();
+app.MapBarberServiceEndpoints();
 app.MapDefaultEndpoints();
 
 app.Run();

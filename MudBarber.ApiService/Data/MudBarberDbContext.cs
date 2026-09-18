@@ -13,7 +13,7 @@ public class MudBarberDbContext : DbContext
 
     public DbSet<Barber> Barbers { get; set; }
 
-    public DbSet<BarberService> Services { get; set; }
+    public DbSet<BarberService> BarberServices { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
