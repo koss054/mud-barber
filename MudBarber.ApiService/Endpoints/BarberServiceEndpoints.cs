@@ -18,6 +18,11 @@ public static class BarberServiceEndpoints
         var group = app.MapGroup("/barber-services").WithTags("Barber Services");
 
         group.MapPost("/", Create);
+        group.MapGet("/", GetAll);
+        group.MapGet("/{id:guid}", GetById);
+        group.MapPut("/{id:guid}", Update);
+        group.MapPost("/{id:guid}/restore", Restore);
+        group.MapDelete("/{id:guid}", Delete);
 
         return group;
     }
