@@ -3,6 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using MudBarber.Shared.Bookings;
 using MudBarber.Shared.Paging;
+using MudBarber.Web.Models.Results;
 
 namespace MudBarber.Web.Services;
 
