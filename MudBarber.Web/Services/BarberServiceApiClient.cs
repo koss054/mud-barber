@@ -27,6 +27,52 @@ public class BarberServiceApiClient(HttpClient httpClient)
             ?? new PagedResult<BarberServiceDto> { Page = page, PageSize = pageSize };
     }
 
+    public async Task<BarberServiceDto?> GetBarberServiceAsync(
+        Guid id,
+        CancellationToken ct = default)
+    {
+        var response = await httpClient.GetAsync($"/barber-services/{id}", ct);
+
+        return await ReadBarberAsync(response, ct);
+    }
+
+    public async Task<BarberServiceDto?> UpdateBarberServiceAsync(
+        Guid id,
+        UpdateBarberServiceRequest request,
+        CancellationToken ct = default)
+    {
+        var response = await httpClient.PutAsJsonAsync($"/barber-services/{id}", request, ct);
+
+        return await ReadBarberAsync(response, ct);
+    }
+
+    public async Task<bool> RetireBarberServiceAsync(
+        Guid id,
+        CancellationToken ct = default)
+    {
+        var response = await httpClient.DeleteAsync($"barber-services/{id}", ct);
+
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return false;
+        }
+
+        response.EnsureSuccessStatusCode();
+
+        return true;
+    }
+
+    // TODO: decide if this style of parameter parentheses is the way to go
+    public async Task<BarberServiceDto?> RestoreBarberServiceAsync(
+        Guid id,
+        CancellationToken ct = default
+    )
+    {
+        var response = await httpClient.PostAsync($"barber-services/{id}/restore", content: null, ct);
+
+        return await ReadBarberAsync(response, ct);
+    }
+
     private static async Task<BarberServiceDto?> ReadBarberAsync(
         HttpResponseMessage response,
         CancellationToken ct)

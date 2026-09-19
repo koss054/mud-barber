@@ -1,5 +1,6 @@
 using MudBarber.Shared.Bookings;
 
+// TODO: decide if this is the actual directory for this record
 namespace MudBarber.Web.Models.Results;
 
 public record CreateBookingResult(
