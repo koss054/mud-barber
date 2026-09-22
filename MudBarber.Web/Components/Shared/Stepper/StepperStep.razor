@@ -1,0 +1,17 @@
+﻿<div class="step-container">
+    <p>@Index</p>
+</div>
+
+@code {
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string? ExtraInfo { get; set; }
+
+    [Parameter]
+    public StepState State { get; set; } 
+}
