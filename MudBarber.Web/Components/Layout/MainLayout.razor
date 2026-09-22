@@ -12,11 +12,11 @@
 <MudLayout>
     <MudAppBar>
         <AppBarContent />
+        <DisplayModeToggle @bind-DarkMode="_darkMode" />
     </MudAppBar>
 
     <MudMainContent>
         @Body
-        <DisplayModeToggle @bind-DarkMode="_darkMode" />
     </MudMainContent>
 </MudLayout>
 

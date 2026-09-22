@@ -1,16 +1,14 @@
 @using MudBarber.Web.Providers;
 
-<div id="toggle-corner">
-    <MudToggleIconButton
-        Toggled="DarkMode"
-        ToggledChanged="ToggleDarkMode"
-        Icon="@Icons.Material.Outlined.LightMode"
-        Color="@Color.Default"
-        ToggledIcon="@Icons.Material.Outlined.DarkMode"
-        ToggledColor="@Color.Default"
-        title="@(DarkMode ? "Switch to Light Mode" : "Switch to Dark Mode")"
-    />
-</div>
+<MudToggleIconButton
+    Toggled="DarkMode"
+    ToggledChanged="ToggleDarkMode"
+    Icon="@Icons.Material.Outlined.LightMode"
+    Color="@Color.Default"
+    ToggledIcon="@Icons.Material.Outlined.DarkMode"
+    ToggledColor="@Color.Default"
+    title="@(DarkMode ? "Switch to Light Mode" : "Switch to Dark Mode")"
+/>
 
 @code {
     [CascadingParameter]
