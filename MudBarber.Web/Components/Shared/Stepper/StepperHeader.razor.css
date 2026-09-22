@@ -3,5 +3,7 @@
     flex-direction: row;
     align-items: center;
     background-color: var(--mud-palette-surface);
+    border-color: var(--mud-palette-lines-default);
+    border-width: 0.5px;
     padding: 1rem 2rem;
 }
