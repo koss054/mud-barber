@@ -12,7 +12,9 @@
     FlowSteps="_flowSteps"
 />
 
-<Stepper />
+<Stepper 
+    Steps="_flowSteps"
+/>
 
 @code {
     private readonly BookingModel _model = new();
@@ -25,7 +27,7 @@
         {
             new StepModel
             {
-                Title = "1. Service",
+                Title = "Service",
                 IsComplete = () => IsStepComplete(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"
@@ -34,7 +36,7 @@
             },
             new StepModel
             {
-                Title = "2. Barber",
+                Title = "Barber",
                 IsComplete = () => IsStepComplete(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
@@ -43,7 +45,7 @@
             },
             new StepModel
             {
-                Title = "3. Time",
+                Title = "Time",
                 IsComplete = () => IsStepComplete(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
@@ -52,7 +54,7 @@
             },
             new StepModel
             {
-                Title = "4. Confirm",
+                Title = "Confirm",
                 IsComplete = () => IsStepComplete(Step.Confirm),
                 RenderFragment = @<ConfirmStep
                     Model="_model"

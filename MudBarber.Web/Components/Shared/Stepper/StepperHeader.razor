@@ -1,27 +1,16 @@
-﻿<div class="header-container">
-    <StepperStep
-        Index="1"
-        LabelTop="NOW"
-        LabelBottom="Service"
-        State="StepState.Available"
-    />
-    <StepperStep
-        Index="2"
-        LabelTop="Barber"
-        State="StepState.Available"
-    />
-    <StepperStep
-        Index="3"
-        LabelTop="Time"
-        State="StepState.Available"
-    />
-    <StepperStep
-        Index="4"
-        LabelTop="Confirm"
-        State="StepState.Available"
-    />
+﻿@using MudBarber.Web.Models
+<div class="header-container">
+    @for (var i = 1; i <= Steps.Count; i++)
+    {
+        <StepperStep 
+            Index="@i"
+            LabelTop="@Steps[i - 1].Title"
+            State="StepState.Available"
+        />
+    }
 </div>
 
 @code {
-
+    [Parameter]
+    public IReadOnlyList<StepModel> Steps { get; set; } = [];
 }

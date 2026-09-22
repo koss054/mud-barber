@@ -1,5 +1,8 @@
-﻿<StepperHeader />
+﻿@using MudBarber.Web.Models
+
+<StepperHeader Steps="Steps" />
 
 @code {
-
+    [Parameter]
+    public IReadOnlyList<StepModel> Steps { get; set; } = [];
 }
