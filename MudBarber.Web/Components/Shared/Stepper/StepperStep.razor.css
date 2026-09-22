@@ -1,8 +1,27 @@
 .step-container {
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+}
+
+.step-container:last-child {
+    flex: 0 0 auto;
+}
+
+.step-container::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    min-width: 2.5rem;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+    background-color: var(--mud-palette-lines-default);
+}
+
+.step-container:last-child::after {
+    display: none;
 }
 
 .step-index {
