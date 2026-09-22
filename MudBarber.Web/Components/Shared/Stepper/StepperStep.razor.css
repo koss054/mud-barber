@@ -1,6 +1,8 @@
 .step-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .step-index {
@@ -14,4 +16,18 @@
     aspect-ratio: 1;
     margin: 0;
     user-select: none;
+}
+
+.step-label-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-label-top {
+    color: var(--mud-palette-text-secondary);
+}
+
+.step-label-bottom {
+    color: var(--mud-palette-text-primary);
+    font-weight: 500;
 }

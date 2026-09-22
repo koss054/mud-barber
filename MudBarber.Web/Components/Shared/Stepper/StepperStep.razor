@@ -1,5 +1,12 @@
 ﻿<div class="step-container">
     <p class="step-index">@Index</p>
+    <div class="step-label-container">
+        <p class="step-label-top">@LabelTop</p>
+        @if (!string.IsNullOrEmpty(LabelBottom))
+        {
+            <p class="step-label-bottom">@LabelBottom</p>
+        }
+    </div>
 </div>
 
 @code {
@@ -7,10 +14,10 @@
     public int Index { get; set; }
 
     [Parameter]
-    public string Label { get; set; }
+    public string LabelTop { get; set; } = null!;
 
     [Parameter]
-    public string? ExtraInfo { get; set; }
+    public string? LabelBottom { get; set; }
 
     [Parameter]
     public StepState State { get; set; } 
