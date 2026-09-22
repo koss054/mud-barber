@@ -15,12 +15,6 @@
         MudBarber
     </MudAppBar>
 
-    <MudDrawer Class="overflow-hidden" Open="_drawerOpen" Variant="@DrawerVariant.Mini">
-        <ScissorsLogo />
-        <DrawerNavigation />
-        <DrawerToggle @bind-DrawerOpen="_drawerOpen" />
-    </MudDrawer>
-
     <MudMainContent>
         @Body
         <DisplayModeToggle @bind-DarkMode="_darkMode" />
