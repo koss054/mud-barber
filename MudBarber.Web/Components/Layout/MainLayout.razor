@@ -24,7 +24,15 @@
     [CascadingParameter]
     private DisplayModeStateProvider? DisplayModeStateProvider { get; set; }
 
-    private MudTheme _theme = new();
+    private MudTheme _theme = new()
+    {
+        PaletteLight = new PaletteLight
+        {
+            AppbarBackground = Colors.Shades.White,
+            AppbarText = "rgba(66,66,66,1)",
+        },
+    };
+
     private bool _darkMode;
     private bool _drawerOpen = false;
 
