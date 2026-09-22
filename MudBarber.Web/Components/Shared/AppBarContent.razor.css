@@ -10,3 +10,7 @@
     gap: 1rem;
     justify-content: end;
 }
+
+.appbar-navigation ::deep .mud-nav-item {
+    width: auto!important;
+}
