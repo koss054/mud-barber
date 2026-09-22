@@ -2,3 +2,16 @@
     display: flex;
     flex-direction: row;
 }
+
+.step-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mud-palette-primary);
+    color: var(--mud-palette-primary-text);
+    border-radius: 50%;
+    width: 2rem;
+    aspect-ratio: 1;
+    margin: 0;
+    user-select: none;
+}
