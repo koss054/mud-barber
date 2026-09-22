@@ -1,0 +1,12 @@
+.appbar-container,
+.appbar-navigation {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.appbar-navigation {
+    gap: 1rem;
+    justify-content: end;
+}
