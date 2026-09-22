@@ -1,17 +1,34 @@
 ﻿@using MudBarber.Web.Components.Shared.CustomIcons
 
+@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
 <div class="appbar-container">
     <ScissorsLogo />
     <div class="appbar-navigation">
-        <MudNavLink Href="/reserve" Icon="@Icons.Material.Filled.EditCalendar">
+        <MudNavLink Href="/reserve" ActiveClass="active" Icon="@Icons.Material.Filled.EditCalendar" IconColor="@IconColor("reserve")">
             Reserve
         </MudNavLink>
-        <MudNavLink Href="/barbers" Icon="@Icons.Material.Filled.Person">
+        <MudNavLink Href="/barbers" ActiveClass="active" Icon="@Icons.Material.Filled.Person" IconColor="@IconColor("barbers")">
             Barbers
         </MudNavLink>
    </div>
 </div>
 
 @code {
+    protected override void OnInitialized() =>
+        NavigationManager.LocationChanged += OnLocationChanged;
 
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e) =>
+        InvokeAsync(StateHasChanged);
+
+    private MudBlazor.Color IconColor(string navLinkHref) =>
+        NavigationManager.ToBaseRelativePath(NavigationManager.Uri)
+            .StartsWith(navLinkHref, StringComparison.OrdinalIgnoreCase)
+                ? Color.Primary
+                : Color.Default;
+
+    public void Dispose() =>
+        NavigationManager.LocationChanged -= OnLocationChanged;
 }

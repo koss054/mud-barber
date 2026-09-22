@@ -14,3 +14,7 @@
 .appbar-navigation ::deep .mud-nav-item {
     width: auto!important;
 }
+
+.appbar-navigation ::deep .active {
+    color: var(--mud-palette-primary);
+}
