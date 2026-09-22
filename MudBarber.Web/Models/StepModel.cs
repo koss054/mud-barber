@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MudBarber.Web.Models;
 
-public class FlowStepModel
+public class StepModel
 {
     public string Title { get; set; } = null!;
 

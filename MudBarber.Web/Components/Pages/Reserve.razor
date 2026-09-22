@@ -17,13 +17,13 @@
 @code {
     private readonly BookingModel _model = new();
 
-    private IReadOnlyList<FlowStepModel> _flowSteps = [];
+    private IReadOnlyList<StepModel> _flowSteps = [];
 
     protected override void OnInitialized()
     {
-        _flowSteps = new List<FlowStepModel>
+        _flowSteps = new List<StepModel>
         {
-            new FlowStepModel
+            new StepModel
             {
                 Title = "1. Service",
                 IsComplete = () => IsStepComplete(Step.Service),
@@ -32,7 +32,7 @@
                     OnChanged="StateHasChanged"
                 />
             },
-            new FlowStepModel
+            new StepModel
             {
                 Title = "2. Barber",
                 IsComplete = () => IsStepComplete(Step.Barber),
@@ -41,7 +41,7 @@
                     OnChanged="StateHasChanged"
                 />
             },
-            new FlowStepModel
+            new StepModel
             {
                 Title = "3. Time",
                 IsComplete = () => IsStepComplete(Step.Time),
@@ -50,7 +50,7 @@
                     OnChanged="StateHasChanged"
                 />
             },
-            new FlowStepModel
+            new StepModel
             {
                 Title = "4. Confirm",
                 IsComplete = () => IsStepComplete(Step.Confirm),
