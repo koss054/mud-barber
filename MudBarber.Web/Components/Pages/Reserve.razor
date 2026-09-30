@@ -28,6 +28,7 @@
             new StepModel
             {
                 Title = "Service",
+                SelectedLabel = _model.Service?.Name,
                 IsComplete = () => IsStepComplete(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"

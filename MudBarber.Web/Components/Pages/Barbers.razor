@@ -25,7 +25,7 @@
         </MudAvatar>
 
         <MudText Class="barbers-name" Typo="Typo.h2">
-            @BarberFullName
+            @_selectedBarber?.FullName
         </MudText>
 
         @if (_selectedBarber is not null)
@@ -179,11 +179,6 @@
     }
 
     // TODO: decide if these barber specific values should live here or somewhere else.
-    private string BarberFullName =>
-        _selectedBarber is null
-            ? ""
-            : $"{_selectedBarber.FirstName} {_selectedBarber.LastName}";
-
     private int BarberRating =>
         _selectedBarber is null
             ? 0

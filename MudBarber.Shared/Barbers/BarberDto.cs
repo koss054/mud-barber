@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace MudBarber.Shared.Barbers;
 
 public class BarberDto
@@ -11,4 +13,7 @@ public class BarberDto
     public decimal Rating { get; set; }
 
     public DateTimeOffset? RetiredAt { get; set; }
+
+    [JsonIgnore]
+    public string FullName => $"{FirstName} {LastName}".Trim();
 }

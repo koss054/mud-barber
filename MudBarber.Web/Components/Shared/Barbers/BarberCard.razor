@@ -6,7 +6,7 @@
             @Initial
         </MudAvatar>
         <MudText Typo="Typo.subtitle1">
-            @DisplayName
+            @Barber.FullName
         </MudText>
         @if (IsRetired)
         {
@@ -61,8 +61,6 @@
 
     private string CardClass =>
         $"barber-card {(Selected ? "selected" : "")} {(IsRetired ? "retired" : "")}";
-
-    private string DisplayName => $"{Barber.FirstName} {Barber.LastName}".Trim();
 
     // TODO: DRY this (repeated in Barbers.razor)
     private string Initial =>

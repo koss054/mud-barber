@@ -156,7 +156,7 @@
 
     private string BarberName
         => Model.Barber is not null
-            ? $"{Model.Barber.FirstName} {Model.Barber.LastName}"
+            ? Model.Barber.FullName
             : _emptyFieldPlaceholder;
 
     private string Date =>
