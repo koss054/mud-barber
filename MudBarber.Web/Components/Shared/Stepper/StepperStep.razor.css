@@ -41,22 +41,21 @@
     margin: 0;
     user-select: none;
     transition:
-        background-color 0.25s ease,
-        color 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.step-container.active .step-index,
-.step-container.completed .step-index {
-    background-color: var(--mud-palette-primary);
-    color: var(--mud-palette-primary-text);
+        background-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.5s ease;
 }
 
 .step-container.active .step-index {
+    background-color: var(--mud-palette-primary);
+    color: var(--mud-palette-primary-text);
     box-shadow: 0 0 0 3px rgba(var(--mud-palette-primary-rgb), 0.25);
 }
 
 .step-container.completed .step-index {
+    background-color: var(--mud-palette-dark);
+    border: 1px solid var(--mud-palette-primary);
+    color: var(--mud-palette-primary);
     font-size: 18px;
     font-weight: 800;
 }
