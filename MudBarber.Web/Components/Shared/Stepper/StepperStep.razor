@@ -1,3 +1,5 @@
+@using MudBarber.Web.Models
+
 <div class="step-container @StateClass">
     <p class="step-index">@Index</p>
     <div class="step-label-container">
@@ -13,14 +15,31 @@
     [Parameter]
     public int Index { get; set; }
 
+    // TODO: decide if assigning to new() is the right "step" (wink) here
     [Parameter]
-    public string LabelTop { get; set; } = null!;
-
-    [Parameter]
-    public string? LabelBottom { get; set; }
+    public StepModel Step { get; set; } = new();
 
     [Parameter]
     public StepState State { get; set; }
 
     private string StateClass => State.ToString().ToLowerInvariant();
+
+    // TODO: decide where to keep constant string values
+    private readonly string _activeLabelTop = "NOW";
+
+    private string LabelTop => State switch
+    {
+        StepState.Active => _activeLabelTop,
+        StepState.Completed => Step.Title.ToUpper(),
+        StepState.Unavailable => Step.Title,
+        _ => Step.Title
+    };
+
+    private string LabelBottom => State switch
+    {
+        StepState.Active => Step.Title,
+        StepState.Completed => Step.Summary() ?? string.Empty,
+        StepState.Unavailable => string.Empty,
+        _ => Step.Title
+    };
 }

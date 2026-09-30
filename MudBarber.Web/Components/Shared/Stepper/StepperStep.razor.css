@@ -65,14 +65,15 @@
     color: var(--mud-palette-text-secondary);
 }
 
+
 .step-label-bottom {
     color: var(--mud-palette-text-primary);
     font-weight: 500;
 }
 
-.step-container.active .step-label-top {
-    color: var(--mud-palette-text-primary);
-    font-weight: 500;
+.step-container.active .step-label-top,
+.step-container.completed .step-label-top {
+    font-size: 10px;
 }
 
 .step-container.unavailable .step-label-top,

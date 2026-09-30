@@ -28,7 +28,7 @@
             new StepModel
             {
                 Title = "Service",
-                SelectedLabel = _model.Service?.Name,
+                Summary = () => _model.Service?.Name,
                 IsComplete = () => IsStepComplete(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"
@@ -38,6 +38,7 @@
             new StepModel
             {
                 Title = "Barber",
+                Summary = () => _model.Barber?.FullName,
                 IsComplete = () => IsStepComplete(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
@@ -47,6 +48,7 @@
             new StepModel
             {
                 Title = "Time",
+                Summary = () => $"{_model.Date?.ToString("ddd dd MMM")}, {_model.Time?.ToString("HH:mm")}",
                 IsComplete = () => IsStepComplete(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
