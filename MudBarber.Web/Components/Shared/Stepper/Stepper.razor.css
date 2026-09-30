@@ -1,0 +1,12 @@
+.stepper-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    overflow: hidden;
+}
+
+.stepper-body {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+}

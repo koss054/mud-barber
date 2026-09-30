@@ -1,0 +1,5 @@
+.mud-main-content {
+    height: 100dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+}

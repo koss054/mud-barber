@@ -1,28 +1,34 @@
 @using MudBarber.Web.Models
 
-<StepperHeader
-    Steps="Steps"
-    ActiveIndex="_activeIndex"
-    FurthestIndex="_furthestIndex"
-/>
+<div class="stepper-container">
+    <StepperHeader
+        Steps="Steps"
+        ActiveIndex="_activeIndex"
+        FurthestIndex="_furthestIndex"
+    />
 
-@Steps[_activeIndex].RenderFragment
+    <div class="stepper-body">
+        @Steps[_activeIndex].RenderFragment
+    </div>
 
-<MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-    <MudButton
-        StartIcon="@Icons.Material.Filled.ArrowBack"
-        OnClick="Back"
-    >
-        Back
-    </MudButton>
+    <div class="stepper-footer">
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+            <MudButton
+                StartIcon="@Icons.Material.Filled.ArrowBack"
+                OnClick="Back"
+            >
+                Back
+            </MudButton>
 
-    <MudButton 
-        EndIcon="@Icons.Material.Filled.ArrowForward"
-        OnClick="Next"
-    >
-        Next
-    </MudButton>
-</MudButtonGroup>
+            <MudButton 
+                EndIcon="@Icons.Material.Filled.ArrowForward"
+                OnClick="Next"
+            >
+                Next
+            </MudButton>
+        </MudButtonGroup>
+    </div>
+</div>
 
 @code {
     [Parameter]
