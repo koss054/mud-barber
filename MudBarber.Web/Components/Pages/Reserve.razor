@@ -5,17 +5,17 @@
 @using MudBarber.Web.Models
 
 <Stepper 
-    Steps="_flowSteps"
+    Steps="_steps"
 />
 
 @code {
     private readonly BookingModel _model = new();
 
-    private IReadOnlyList<StepModel> _flowSteps = [];
+    private IReadOnlyList<StepModel> _steps = [];
 
     protected override void OnInitialized()
     {
-        _flowSteps = new List<StepModel>
+        _steps = new List<StepModel>
         {
             new StepModel
             {
