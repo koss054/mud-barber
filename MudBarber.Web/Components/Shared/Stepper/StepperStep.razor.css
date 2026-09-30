@@ -56,6 +56,11 @@
     box-shadow: 0 0 0 3px rgba(var(--mud-palette-primary-rgb), 0.25);
 }
 
+.step-container.completed .step-index {
+    font-size: 18px;
+    font-weight: 800;
+}
+
 .step-label-container {
     display: flex;
     flex-direction: column;

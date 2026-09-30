@@ -1,7 +1,7 @@
 @using MudBarber.Web.Models
 
 <div class="step-container @StateClass">
-    <p class="step-index">@Index</p>
+    <p class="step-index">@DisplayedIndex</p>
     <div class="step-label-container">
         <p class="step-label-top">@LabelTop</p>
         @if (!string.IsNullOrEmpty(LabelBottom))
@@ -26,6 +26,13 @@
 
     // TODO: decide where to keep constant string values
     private readonly string _activeLabelTop = "NOW";
+
+    private string DisplayedIndex => State switch
+    {
+        StepState.Active or StepState.Unavailable => Index.ToString(),
+        StepState.Completed => "✓",
+        _ => Index.ToString()
+    };
 
     private string LabelTop => State switch
     {
