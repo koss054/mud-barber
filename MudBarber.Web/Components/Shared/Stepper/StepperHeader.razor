@@ -1,11 +1,12 @@
 ﻿@using MudBarber.Web.Models
+
 <div class="header-container">
-    @for (var i = 1; i <= Steps.Count; i++)
+    @for (var i = 0; i < Steps.Count; i++)
     {
-        <StepperStep 
-            Index="@i"
-            LabelTop="@Steps[i - 1].Title"
-            State="StepState.Available"
+        <StepperStep
+            Index="@(i + 1)"
+            LabelTop="@Steps[i].Title"
+            State="@StateFor(i)"
         />
     }
 </div>
@@ -13,4 +14,12 @@
 @code {
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
+
+    [Parameter]
+    public int ActiveIndex { get; set; }
+
+    private StepState StateFor(int index) =>
+        index < ActiveIndex ? StepState.Completed
+        : index == ActiveIndex ? StepState.Active
+        : StepState.Unavailable;
 }

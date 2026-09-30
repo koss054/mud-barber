@@ -1,8 +1,27 @@
-﻿@using MudBarber.Web.Models
+@using MudBarber.Web.Models
 
-<StepperHeader Steps="Steps" />
+<StepperHeader
+    Steps="Steps"
+    ActiveIndex="ActiveIndex"
+/>
 
 @code {
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
+
+    private int ActiveIndex
+    {
+        get
+        {
+            for (var i = 0; i < Steps.Count; i++)
+            {
+                if (!Steps[i].IsComplete())
+                {
+                    return i;
+                }
+            }
+
+            return Steps.Count;
+        }
+    }
 }

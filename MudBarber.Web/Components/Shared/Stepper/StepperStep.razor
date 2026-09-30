@@ -1,4 +1,4 @@
-﻿<div class="step-container">
+<div class="step-container @StateClass">
     <p class="step-index">@Index</p>
     <div class="step-label-container">
         <p class="step-label-top">@LabelTop</p>
@@ -20,5 +20,7 @@
     public string? LabelBottom { get; set; }
 
     [Parameter]
-    public StepState State { get; set; } 
+    public StepState State { get; set; }
+
+    private string StateClass => State.ToString().ToLowerInvariant();
 }

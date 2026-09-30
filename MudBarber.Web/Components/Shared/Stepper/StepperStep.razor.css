@@ -18,6 +18,11 @@
     margin-left: 0.5rem;
     margin-right: 1rem;
     background-color: var(--mud-palette-lines-default);
+    transition: background-color 0.25s ease;
+}
+
+.step-container.completed::after {
+    background-color: var(--mud-palette-primary);
 }
 
 .step-container:last-child::after {
@@ -28,13 +33,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--mud-palette-primary);
-    color: var(--mud-palette-primary-text);
+    background-color: var(--mud-palette-lines-default);
+    color: var(--mud-palette-text-disabled);
     border-radius: 50%;
     width: 2rem;
     aspect-ratio: 1;
     margin: 0;
     user-select: none;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.step-container.active .step-index,
+.step-container.completed .step-index {
+    background-color: var(--mud-palette-primary);
+    color: var(--mud-palette-primary-text);
+}
+
+.step-container.active .step-index {
+    box-shadow: 0 0 0 3px rgba(var(--mud-palette-primary-rgb), 0.25);
 }
 
 .step-label-container {
@@ -49,4 +68,14 @@
 .step-label-bottom {
     color: var(--mud-palette-text-primary);
     font-weight: 500;
+}
+
+.step-container.active .step-label-top {
+    color: var(--mud-palette-text-primary);
+    font-weight: 500;
+}
+
+.step-container.unavailable .step-label-top,
+.step-container.unavailable .step-label-bottom {
+    opacity: 0.5;
 }

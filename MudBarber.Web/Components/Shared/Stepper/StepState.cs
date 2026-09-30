@@ -2,8 +2,7 @@ namespace MudBarber.Web.Components.Shared.Stepper;
 
 public enum StepState
 {
-    Locked,
-    Available,
+    Unavailable,
     Active,
     Completed
 }
