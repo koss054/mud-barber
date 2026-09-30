@@ -9,6 +9,14 @@
             <p class="step-label-bottom">@LabelBottom</p>
         }
     </div>
+    @if (State == StepState.Completed)
+    {
+        <MudIconButton
+            Icon="@Icons.Material.Filled.Edit"
+            Color="Color.Primary"
+            Size="Size.Small"
+        />
+    }
 </div>
 
 @code {
