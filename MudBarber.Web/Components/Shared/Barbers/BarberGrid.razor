@@ -42,7 +42,7 @@
                 <BarberCard
                     @key="barber.Id"
                     Barber="barber"
-                    Selected="@(SelectedBarber == barber)"
+                    Selected="@(SelectedBarber?.Id == barber.Id)"
                     OnSelect="OnSelect"
                 />
             }
