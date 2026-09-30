@@ -63,11 +63,6 @@
         };
     }
 
-    private readonly string[] _titles =
-    [
-        "1. Service", "2. Barber", "3. Time", "4. Confirm"
-    ];
-
     private enum Step
     {
         Service,
@@ -84,20 +79,4 @@
         Step.Confirm => !string.IsNullOrEmpty(_model.Phone),
         _ => false
     };
-
-    private int FirstIncomplete
-    {
-        get
-        {
-            for (var i = 0; i < _titles.Length; i++)
-            {
-                if (!IsStepComplete((Step)i))
-                {
-                    return i;
-                }
-            }
-
-            return _titles.Length;
-        }
-    }
 }
