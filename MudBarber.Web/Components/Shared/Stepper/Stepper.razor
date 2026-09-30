@@ -3,6 +3,7 @@
 <StepperHeader
     Steps="Steps"
     ActiveIndex="_activeIndex"
+    FurthestIndex="_furthestIndex"
 />
 
 @Steps[_activeIndex].RenderFragment
@@ -27,7 +28,8 @@
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
 
-    private int _activeIndex = 0;
+    private int _activeIndex;
+    private int _furthestIndex;
 
     private bool CanAdvance =>
         _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsCompleted();
@@ -40,6 +42,7 @@
         if (CanAdvance)
         {
             _activeIndex++;
+            _furthestIndex = Math.Max(_furthestIndex, _activeIndex);
         }
     }
 

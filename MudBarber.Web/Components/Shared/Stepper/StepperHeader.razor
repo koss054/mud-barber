@@ -15,12 +15,18 @@
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
 
+    // TODO: decide if i'll ever need this
     [Parameter]
     public int ActiveIndex { get; set; }
 
+    [Parameter]
+    public int FurthestIndex { get; set; }
+
+    private int CompletedSteps => Steps.Count(s => s.IsCompleted());
+
     private StepState StateFor(int index) => 
         Steps[index].IsCompleted() ? StepState.Completed
-        : index == ActiveIndex ? StepState.Active
+        : index <= FurthestIndex ? StepState.Active
         : StepState.Unavailable;
 
     /*
