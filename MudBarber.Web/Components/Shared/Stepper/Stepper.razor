@@ -5,6 +5,8 @@
     ActiveIndex="ActiveIndex"
 />
 
+@Steps[ActiveIndex].RenderFragment
+
 @code {
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
