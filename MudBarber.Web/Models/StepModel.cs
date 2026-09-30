@@ -9,7 +9,7 @@ public class StepModel
     public Func<string?> Summary { get; set; } = () => null;
 
     // Evaluated on every render so the Next button tracks the live model.
-    public Func<bool> IsComplete { get; set; } = () => true;
+    public Func<bool> IsCompleted { get; set; } = () => true;
 
     public RenderFragment RenderFragment { get; set; } = null!;
 }

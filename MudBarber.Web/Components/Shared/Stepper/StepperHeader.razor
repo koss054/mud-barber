@@ -18,8 +18,15 @@
     [Parameter]
     public int ActiveIndex { get; set; }
 
-    private StepState StateFor(int index) =>
-        index < ActiveIndex ? StepState.Completed
+    private StepState StateFor(int index) => 
+        Steps[index].IsCompleted() ? StepState.Completed
         : index == ActiveIndex ? StepState.Active
         : StepState.Unavailable;
+
+    /*
+    private StepState StateFor(int index) =>
+        index == ActiveIndex ? StepState.Active
+        : index < CompletedCount ? StepState.Completed
+        : StepState.Unavailable;
+    */
 }

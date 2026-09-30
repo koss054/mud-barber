@@ -2,28 +2,52 @@
 
 <StepperHeader
     Steps="Steps"
-    ActiveIndex="ActiveIndex"
+    ActiveIndex="_activeIndex"
 />
 
-@Steps[ActiveIndex].RenderFragment
+@Steps[_activeIndex].RenderFragment
+
+<MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+    <MudButton
+        StartIcon="@Icons.Material.Filled.ArrowBack"
+        OnClick="Back"
+    >
+        Back
+    </MudButton>
+
+    <MudButton 
+        EndIcon="@Icons.Material.Filled.ArrowForward"
+        OnClick="Next"
+    >
+        Next
+    </MudButton>
+</MudButtonGroup>
 
 @code {
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
 
-    private int ActiveIndex
-    {
-        get
-        {
-            for (var i = 0; i < Steps.Count; i++)
-            {
-                if (!Steps[i].IsComplete())
-                {
-                    return i;
-                }
-            }
+    private int _activeIndex = 0;
 
-            return Steps.Count;
+    private bool CanAdvance =>
+        _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsCompleted();
+
+    private bool CanReturn =>
+        _activeIndex > 0;
+
+    private void Next()
+    {
+        if (CanAdvance)
+        {
+            _activeIndex++;
+        }
+    }
+
+    private void Back()
+    {
+        if (CanReturn)
+        {
+            _activeIndex--;
         }
     }
 }

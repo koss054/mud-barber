@@ -1,16 +1,8 @@
 @page "/reserve"
 
-@using MudBarber.Web.Components.Shared
-@* TODO: decide if chaning the stepper folder structure is needed - replaced the custom stepper with custom flow form *@
 @using MudBarber.Web.Components.Shared.Stepper
 @using MudBarber.Web.Components.Shared.Stepper.Steps
 @using MudBarber.Web.Models
-@using MudBarber.Web.Theme
-
-<FlowForm 
-    FlowIcon="@ImportedIcons.Scissors"
-    FlowSteps="_flowSteps"
-/>
 
 <Stepper 
     Steps="_flowSteps"
@@ -29,7 +21,7 @@
             {
                 Title = "Service",
                 Summary = () => _model.Service?.Name,
-                IsComplete = () => IsStepComplete(Step.Service),
+                IsCompleted = () => IsStepCompleted(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -39,7 +31,7 @@
             {
                 Title = "Barber",
                 Summary = () => _model.Barber?.FullName,
-                IsComplete = () => IsStepComplete(Step.Barber),
+                IsCompleted = () => IsStepCompleted(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -49,7 +41,7 @@
             {
                 Title = "Time",
                 Summary = () => $"{_model.Date?.ToString("ddd dd MMM")}, {_model.Time?.ToString("HH:mm")}",
-                IsComplete = () => IsStepComplete(Step.Time),
+                IsCompleted = () => IsStepCompleted(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -58,7 +50,7 @@
             new StepModel
             {
                 Title = "Confirm",
-                IsComplete = () => IsStepComplete(Step.Confirm),
+                IsCompleted = () => IsStepCompleted(Step.Confirm),
                 RenderFragment = @<ConfirmStep
                     Model="_model"
                 />
@@ -74,7 +66,7 @@
         Confirm
     }
 
-    private bool IsStepComplete(Step step) => step switch
+    private bool IsStepCompleted(Step step) => step switch
     {
         Step.Service => _model.Service is not null,
         Step.Barber => _model.Barber is not null,
