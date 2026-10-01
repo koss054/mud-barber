@@ -1,0 +1,56 @@
+@using MudBarber.Web.Models
+
+<MudButton
+    Variant="Variant.Text"
+    Color="Color.Secondary"
+    OnClick="OnReset"
+>
+    @* Using MudText to remove MubButton's auto ToUpper for the button text *@
+    <MudText>
+        Reset
+    </MudText>
+</MudButton>
+<MudButton
+    StartIcon="@Icons.Material.Filled.ArrowBack"
+    Variant="Variant.Outlined"
+    Disabled="!CanReturn"
+    Color="Color.Inherit"
+    OnClick="OnBack"
+>
+    <MudText>
+        Back
+    </MudText>
+</MudButton>
+
+@* // TODO: change EndIcon when on final step *@
+<MudButton 
+    EndIcon="@Icons.Material.Filled.ArrowForward"
+    Variant="Variant.Outlined"
+    Disabled="!CanAdvance"
+    Color="Color.Primary"
+    OnClick="OnNext"
+>
+    <MudText>
+        @NextLabel
+    </MudText>
+</MudButton>
+
+@code {
+    [Parameter]
+    public string? NextLabel { get; set; }
+
+    [Parameter]
+    public bool CanAdvance { get; set; }
+
+    [Parameter]
+    public bool CanReturn { get; set; }
+
+    [Parameter]
+    public EventCallback OnNext { get; set;}
+
+    [Parameter]
+    public EventCallback OnBack { get; set;}
+
+    [Parameter]
+    public EventCallback OnReset { get; set; }
+}

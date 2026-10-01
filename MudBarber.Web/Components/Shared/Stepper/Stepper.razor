@@ -18,48 +18,14 @@
     </div>
 
     <div class="stepper-footer">
-        <MudButton
-            Variant="Variant.Text"
-            Color="Color.Secondary"
-            OnClick="Reset"
-        >
-            @* Using MudText to remove MubButton's auto ToUpper for the button text *@
-            <MudText>
-                Reset
-            </MudText>
-        </MudButton>
-        <MudButton
-            StartIcon="@Icons.Material.Filled.ArrowBack"
-            Variant="Variant.Outlined"
-            Disabled="!CanReturn"
-            Color="Color.Inherit"
-            OnClick="GoToPreviousStep"
-        >
-            <MudText>
-                Back
-            </MudText>
-        </MudButton>
-
-        <MudButton 
-            EndIcon="@Icons.Material.Filled.ArrowForward"
-            Variant="Variant.Outlined"
-            Disabled="!CanAdvance"
-            Color="Color.Primary"
-            OnClick="GoToNextStep"
-        >
-            @if (_activeIndex + 1 < Steps.Count)
-            {
-                <MudText>
-                    @Steps[_activeIndex + 1].EntryLabel
-                </MudText>
-            }
-            else
-            {
-                <MudText>
-                    Next
-                </MudText>
-            }
-        </MudButton>
+        <StepperFooter
+            NextLabel="@NextLabel"
+            CanAdvance="CanAdvance"
+            CanReturn="CanReturn"
+            OnNext="GoToNextStep"
+            OnBack="GoToPreviousStep"
+            OnReset="Reset"
+        />
     </div>
 </div>
 
@@ -72,6 +38,11 @@
 
     private int _activeIndex = 0;
     private int _furthestIndex = 0;
+
+    private string? NextLabel =>
+        _activeIndex + 1 < Steps.Count ? Steps[_activeIndex + 1].EntryLabel
+        : _activeIndex + 1 == Steps.Count ? "Confirm Booking" 
+        : null;
 
     private bool CanAdvance =>
         _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsValid();
