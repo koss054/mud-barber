@@ -22,10 +22,16 @@
     [Parameter]
     public int FurthestIndex { get; set; }
 
-    private int CompletedSteps => Steps.Count(s => s.IsCompleted());
+    private StepState StateFor(int index)
+    {
+        if (Steps[index].IsCompleted())
+        {
+            return StepState.Completed;
+        }
 
-    private StepState StateFor(int index) => 
-        Steps[index].IsCompleted() ? StepState.Completed
-        : (index == 0)  || (index > 0 && Steps[index - 1].IsCompleted()) ? StepState.Active
-        : StepState.Unavailable;
+        var isUnlocked = index == 0 || Steps[index - 1].IsCompleted();
+        var wasDisplayed = index <= FurthestIndex;
+
+        return isUnlocked && wasDisplayed ? StepState.Active : StepState.Unavailable;
+    }
 }
