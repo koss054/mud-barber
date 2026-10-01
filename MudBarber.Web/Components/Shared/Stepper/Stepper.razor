@@ -38,7 +38,7 @@
     private int _furthestIndex;
 
     private bool CanAdvance =>
-        _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsCompleted();
+        _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsValid();
 
     private bool CanReturn =>
         _activeIndex > 0;

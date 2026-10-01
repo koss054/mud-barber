@@ -110,5 +110,5 @@
 
     private int _index;
 
-    private bool CurrentStepComplete => FlowSteps[_index].IsCompleted();
+    private bool CurrentStepComplete => FlowSteps[_index].IsValid();
 }

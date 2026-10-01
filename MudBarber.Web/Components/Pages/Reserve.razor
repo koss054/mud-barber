@@ -21,7 +21,7 @@
             {
                 Title = "Service",
                 Summary = () => _model.Service?.Name,
-                IsCompleted = () => IsStepCompleted(Step.Service),
+                IsValid = () => IsStepValid(Step.Service),
                 RenderFragment = @<ServiceStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -31,7 +31,7 @@
             {
                 Title = "Barber",
                 Summary = () => _model.Barber?.FullName,
-                IsCompleted = () => IsStepCompleted(Step.Barber),
+                IsValid = () => IsStepValid(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -41,7 +41,7 @@
             {
                 Title = "Time",
                 Summary = () => $"{_model.Date?.ToString("ddd dd MMM")}, {_model.Time?.ToString("HH:mm")}",
-                IsCompleted = () => IsStepCompleted(Step.Time),
+                IsValid = () => IsStepValid(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
                     OnChanged="StateHasChanged"
@@ -50,7 +50,7 @@
             new StepModel
             {
                 Title = "Confirm",
-                IsCompleted = () => IsStepCompleted(Step.Confirm),
+                IsValid = () => IsStepValid(Step.Confirm),
                 RenderFragment = @<ConfirmStep
                     Model="_model"
                 />
@@ -66,7 +66,7 @@
         Confirm
     }
 
-    private bool IsStepCompleted(Step step) => step switch
+    private bool IsStepValid(Step step) => step switch
     {
         Step.Service => _model.Service is not null,
         Step.Barber => _model.Barber is not null,
