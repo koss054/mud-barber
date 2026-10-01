@@ -31,6 +31,7 @@
             {
                 Title = "Barber",
                 Summary = () => _model.Barber?.FullName,
+                EntryLabel = "Choose your barber",
                 IsValid = () => IsStepValid(Step.Barber),
                 RenderFragment = @<BarberStep
                     Model="_model"
@@ -41,6 +42,7 @@
             {
                 Title = "Time",
                 Summary = () => $"{_model.Date?.ToString("ddd dd MMM")}, {_model.Time?.ToString("HH:mm")}",
+                EntryLabel = "Pick a time",
                 IsValid = () => IsStepValid(Step.Time),
                 RenderFragment = @<TimeStep
                     Model="_model"
@@ -50,6 +52,7 @@
             new StepModel
             {
                 Title = "Confirm",
+                EntryLabel = "Review booking",
                 IsValid = () => IsStepValid(Step.Confirm),
                 RenderFragment = @<ConfirmStep
                     Model="_model"

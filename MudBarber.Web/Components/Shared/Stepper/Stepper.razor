@@ -30,7 +30,19 @@
                 EndIcon="@Icons.Material.Filled.ArrowForward"
                 OnClick="GoToNextStep"
             >
-                Next
+                @if (_activeIndex + 1 < Steps.Count)
+                {
+                    @* Using MudText to remove MubButton's auto ToUpper for the button text *@
+                    <MudText>
+                        @Steps[_activeIndex + 1].EntryLabel
+                    </MudText>
+                }
+                else
+                {
+                    <MudText>
+                        Next
+                    </MudText>
+                }
             </MudButton>
         </MudButtonGroup>
     </div>
