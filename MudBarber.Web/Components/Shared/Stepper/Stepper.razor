@@ -21,6 +21,7 @@
         <MudButton
             Variant="Variant.Text"
             Color="Color.Secondary"
+            OnClick="Reset"
         >
             @* Using MudText to remove MubButton's auto ToUpper for the button text *@
             <MudText>
@@ -66,8 +67,11 @@
     [Parameter]
     public IReadOnlyList<StepModel> Steps { get; set; } = [];
 
-    private int _activeIndex;
-    private int _furthestIndex;
+    [Parameter]
+    public EventCallback OnReset { get; set; }
+
+    private int _activeIndex = 0;
+    private int _furthestIndex = 0;
 
     private bool CanAdvance =>
         _activeIndex < Steps.Count - 1 && Steps[_activeIndex].IsValid();
@@ -95,5 +99,12 @@
     private void GoToStep(int index)
     {
         _activeIndex = index;
+    }
+
+    private async Task Reset()
+    {
+        _activeIndex = 0;
+        _furthestIndex = 0;
+        await OnReset.InvokeAsync();
     }
 }

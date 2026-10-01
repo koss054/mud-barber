@@ -6,10 +6,11 @@
 
 <Stepper 
     Steps="_steps"
+    OnReset="ResetBooking"
 />
 
 @code {
-    private readonly BookingModel _model = new();
+    private BookingModel _model = new();
 
     private IReadOnlyList<StepModel> _steps = [];
 
@@ -77,4 +78,10 @@
         Step.Confirm => !string.IsNullOrEmpty(_model.Phone),
         _ => false
     };
+
+
+    private void ResetBooking()
+    {
+        _model = new BookingModel();
+    }
 }
