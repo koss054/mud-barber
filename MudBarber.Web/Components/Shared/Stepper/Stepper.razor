@@ -18,35 +18,47 @@
     </div>
 
     <div class="stepper-footer">
-        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-            <MudButton
-                StartIcon="@Icons.Material.Filled.ArrowBack"
-                Disabled="!CanReturn"
-                OnClick="GoToPreviousStep"
-            >
+        <MudButton
+            Variant="Variant.Text"
+            Color="Color.Secondary"
+        >
+            @* Using MudText to remove MubButton's auto ToUpper for the button text *@
+            <MudText>
+                Reset
+            </MudText>
+        </MudButton>
+        <MudButton
+            StartIcon="@Icons.Material.Filled.ArrowBack"
+            Variant="Variant.Outlined"
+            Disabled="!CanReturn"
+            Color="Color.Inherit"
+            OnClick="GoToPreviousStep"
+        >
+            <MudText>
                 Back
-            </MudButton>
+            </MudText>
+        </MudButton>
 
-            <MudButton 
-                EndIcon="@Icons.Material.Filled.ArrowForward"
-                Disabled="!CanAdvance"
-                OnClick="GoToNextStep"
-            >
-                @if (_activeIndex + 1 < Steps.Count)
-                {
-                    @* Using MudText to remove MubButton's auto ToUpper for the button text *@
-                    <MudText>
-                        @Steps[_activeIndex + 1].EntryLabel
-                    </MudText>
-                }
-                else
-                {
-                    <MudText>
-                        Next
-                    </MudText>
-                }
-            </MudButton>
-        </MudButtonGroup>
+        <MudButton 
+            EndIcon="@Icons.Material.Filled.ArrowForward"
+            Variant="Variant.Outlined"
+            Disabled="!CanAdvance"
+            Color="Color.Primary"
+            OnClick="GoToNextStep"
+        >
+            @if (_activeIndex + 1 < Steps.Count)
+            {
+                <MudText>
+                    @Steps[_activeIndex + 1].EntryLabel
+                </MudText>
+            }
+            else
+            {
+                <MudText>
+                    Next
+                </MudText>
+            }
+        </MudButton>
     </div>
 </div>
 
