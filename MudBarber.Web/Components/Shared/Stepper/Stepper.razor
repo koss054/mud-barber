@@ -21,6 +21,7 @@
         <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
             <MudButton
                 StartIcon="@Icons.Material.Filled.ArrowBack"
+                Disabled="!CanReturn"
                 OnClick="GoToPreviousStep"
             >
                 Back
@@ -28,6 +29,7 @@
 
             <MudButton 
                 EndIcon="@Icons.Material.Filled.ArrowForward"
+                Disabled="!CanAdvance"
                 OnClick="GoToNextStep"
             >
                 @if (_activeIndex + 1 < Steps.Count)
