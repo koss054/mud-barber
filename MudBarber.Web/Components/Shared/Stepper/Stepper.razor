@@ -5,6 +5,7 @@
         Steps="Steps"
         ActiveIndex="_activeIndex"
         FurthestIndex="_furthestIndex"
+        OnStepEdit="GoToStep"
     />
 
     <div class="stepper-body">
@@ -15,14 +16,14 @@
         <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
             <MudButton
                 StartIcon="@Icons.Material.Filled.ArrowBack"
-                OnClick="Back"
+                OnClick="GoToPreviousStep"
             >
                 Back
             </MudButton>
 
             <MudButton 
                 EndIcon="@Icons.Material.Filled.ArrowForward"
-                OnClick="Next"
+                OnClick="GoToNextStep"
             >
                 Next
             </MudButton>
@@ -43,7 +44,7 @@
     private bool CanReturn =>
         _activeIndex > 0;
 
-    private void Next()
+    private void GoToNextStep()
     {
         if (CanAdvance)
         {
@@ -52,11 +53,16 @@
         }
     }
 
-    private void Back()
+    private void GoToPreviousStep()
     {
         if (CanReturn)
         {
             _activeIndex--;
         }
+    }
+
+    private void GoToStep(int index)
+    {
+        _activeIndex = index;
     }
 }

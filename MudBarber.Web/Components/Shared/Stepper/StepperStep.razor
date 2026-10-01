@@ -15,6 +15,7 @@
             Icon="@Icons.Material.Filled.Edit"
             Color="Color.Primary"
             Size="Size.Small"
+            OnClick="OnEdit"
         />
     }
 </div>
@@ -29,6 +30,9 @@
 
     [Parameter]
     public StepState State { get; set; }
+
+    [Parameter]
+    public EventCallback OnEdit { get; set; }
 
     private string StateClass => State.ToString().ToLowerInvariant();
 

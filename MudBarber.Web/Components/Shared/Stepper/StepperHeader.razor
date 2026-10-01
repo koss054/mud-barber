@@ -3,10 +3,12 @@
 <div class="header-container">
     @for (var i = 0; i < Steps.Count; i++)
     {
+        var index = i;
         <StepperStep
-            Index="@(i + 1)"
-            Step="@Steps[i]"
-            State="@StateFor(i)"
+            Index="@(index + 1)"
+            Step="@Steps[index]"
+            State="@StateFor(index)"
+            OnEdit="@(() => OnStepEdit.InvokeAsync(index))"
         />
     }
 </div>
@@ -21,6 +23,9 @@
 
     [Parameter]
     public int FurthestIndex { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnStepEdit { get; set; }
 
     private bool IsCompleted(int index) =>
         index < FurthestIndex && Steps[index].IsValid();
