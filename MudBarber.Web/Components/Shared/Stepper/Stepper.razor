@@ -9,7 +9,12 @@
     />
 
     <div class="stepper-body">
-        @Steps[_activeIndex].RenderFragment
+        @for (var i = 0; i < Steps.Count; i++)
+        {
+            <div hidden="@(i != _activeIndex)">
+                @Steps[i].RenderFragment
+            </div>
+        }
     </div>
 
     <div class="stepper-footer">
