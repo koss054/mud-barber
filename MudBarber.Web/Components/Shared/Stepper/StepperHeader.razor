@@ -26,13 +26,6 @@
 
     private StepState StateFor(int index) => 
         Steps[index].IsCompleted() ? StepState.Completed
-        : index <= FurthestIndex ? StepState.Active
+        : (index == 0)  || (index > 0 && Steps[index - 1].IsCompleted()) ? StepState.Active
         : StepState.Unavailable;
-
-    /*
-    private StepState StateFor(int index) =>
-        index == ActiveIndex ? StepState.Active
-        : index < CompletedCount ? StepState.Completed
-        : StepState.Unavailable;
-    */
 }
